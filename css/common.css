@@ -1,0 +1,28 @@
+/* 웹표준을 위한 요소 숨기는 클래스. section 태그 아래 h태그에 사용 등등 */
+.blind {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+}
+
+/* 이미지 크기 맞춤 */
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 렌더링 공통부분 */
+#main {
+  display: block;
+}
+
+.container {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+}

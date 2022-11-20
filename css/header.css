@@ -1,0 +1,10 @@
+.header {
+  height: 80px;
+  width: 100%;
+  padding: 30px 0;
+}
+
+.sidebar > a {
+  margin: 0.5rem 0;
+  margin-right: 30px;
+}
