@@ -45,19 +45,29 @@
 .boardRow {
   display: flex;
   flex-direction: row;
+  justify-content: space-between; 
 }
 
-.boardRow i {
+.boardMesageAndHeart {
+  display: flex;
+  flex-direction: row;
+}
+
+.boardMesageAndHeart i {
   width: 28px;
   height: 25px;
   margin-right: -9px;
 }
 
-.fa-heart:hover {
+.youTubeIcon a:hover{
+  text-decoration: none;
+}
+
+.fa-heart:hover, .fa-youtube:hover{
   color: red;
 }
 
-.boardRow p {
+.boardMesageAndHeart p {
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
