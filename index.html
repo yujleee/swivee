@@ -25,7 +25,7 @@
 
   <body>
     <div id="root">
-      <header class="header">
+      <header class="header" id="header">
         <div class="container">
           <!-- 임시로 페이지 이동을 위해 설정해두었습니다. -->
           <nav class="sidebar">
@@ -36,13 +36,19 @@
             <a href="#review" onclick="goToReview()">Review</a>
             <a href="#mypage" onclick="goToMypage()">Mypage</a>
           </nav>
-        </div>
       </header>
-
+     
       <!-- 각 페이지가 렌더링 되는 부분 -->
       <main id="main"></main>
     </div>
 
+
+    <!-- 페이지 스크롤 -->
+    <button href="#" class="toTop">
+      <i class="fa-sharp fa-solid fa-chevron-up"></i>
+    </button>
+
     <script src="js/main.js" type="module"></script>
+    <script src="js/utill.js"></script>
   </body>
 </html>

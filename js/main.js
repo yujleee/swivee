@@ -1,4 +1,11 @@
-import { handleLocation, goToLogin, goToJoin, goToBoard, goToReview, goToMypage } from './router.js';
+import {
+  handleLocation,
+  goToLogin,
+  goToJoin,
+  goToBoard,
+  goToReview,
+  goToMypage,
+} from './router.js';
 import { authService } from './firebase.js';
 
 // url 바뀌면 handleLocation 실행하여 화면 변경
