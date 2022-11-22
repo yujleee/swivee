@@ -8,9 +8,10 @@ import {
 } from "./router.js";
 import { handleAuth, socialLogin } from "./pages/auth.js";
 import { authService } from './firebase.js';
+
 import { changeProfile, imgFileUpload, saveReview } from './board.js';
 import { toggleMoreBrand, changeShoesList, showMoreShoes } from './pages/home.js';
-import { onFileChange } from './mypage.js';
+import { onFileChange,changeProfiles} from './mypage.js';
 
 
 // url 바뀌면 handleLocation 실행하여 화면 변경
@@ -49,6 +50,7 @@ window.goToMypage = goToMypage;
 window.onFileChange = onFileChange;
 window.changeProfile = changeProfile;
 window.toggleMoreBrand = toggleMoreBrand;
+
 window.handleAuth = handleAuth;
 window.socialLogin = socialLogin;
 window.changeShoesList = changeShoesList;
@@ -56,3 +58,11 @@ window.showMoreShoes = showMoreShoes;
 window.imgFileUpload = imgFileUpload;
 window.saveReview = saveReview;
 // window.getReviewList = getReviewList;
+window.changeProfiles=changeProfiles;
+//
+//
+//
+//
+//
+
+
