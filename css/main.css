@@ -244,6 +244,10 @@ html {
   font-weight: 500;
 }
 
+.shoesListWrap .btnMoreWrap .btnMoreShoes.hide {
+  display: none;
+}
+
 @media only screen and (max-width: 810px) {
   .home {
     padding: 30px;
