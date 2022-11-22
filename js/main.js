@@ -1,7 +1,15 @@
-import { handleLocation, goToLogin, goToJoin, goToBoard, goToReview, goToMypage } from './router.js';
+import {
+  handleLocation,
+  goToLogin,
+  goToJoin,
+  goToBoard,
+  goToReview,
+  goToMypage,
+} from './router.js';
 import { authService } from './firebase.js';
+import { toggleMoreBrand, changeShoesList, showMoreShoes } from './pages/home.js';
+import { changeProfile, imgFileUpload } from './board.js';
 import { onFileChange } from './mypage.js';
-import { toggleMoreBrand } from './pages/home.js';
 
 // url 바뀌면 handleLocation 실행하여 화면 변경
 window.addEventListener('hashchange', handleLocation);
@@ -37,10 +45,8 @@ window.goToBoard = goToBoard;
 window.goToReview = goToReview;
 window.goToMypage = goToMypage;
 window.onFileChange = onFileChange;
+window.changeProfile = changeProfile;
 window.toggleMoreBrand = toggleMoreBrand;
-//
-//
-//
-//
-//
-
+window.changeShoesList = changeShoesList;
+window.showMoreShoes = showMoreShoes;
+window.imgFileUpload = imgFileUpload;
