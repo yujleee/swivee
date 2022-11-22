@@ -1,5 +1,6 @@
 import { handleLocation, goToLogin, goToJoin, goToBoard, goToReview, goToMypage } from './router.js';
 import { authService } from './firebase.js';
+import { changeProfile, onFileChange } from './board.js';
 import { toggleMoreBrand, changeShoesList } from './pages/home.js';
 import { onFileChange } from './mypage.js';
 
@@ -37,10 +38,10 @@ window.goToBoard = goToBoard;
 window.goToReview = goToReview;
 window.goToMypage = goToMypage;
 window.onFileChange = onFileChange;
+window.changeProfile = changeProfile;
 window.toggleMoreBrand = toggleMoreBrand;
 window.changeShoesList = changeShoesList;
 //
 //
 //
 //
-
