@@ -1,4 +1,14 @@
-import { authService, storageService } from './firebase.js';
+import { dbService, authService, storageService } from './firebase.js';
+import {
+  doc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  orderBy,
+  query,
+  getDocs,
+} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 import {
   ref,
   uploadString,
@@ -13,7 +23,6 @@ export const changeProfile = async (event) => {
   document.getElementById('boardReviewButton').disabled = true;
   const imgRef = ref(
     storageService,
-    // `/${uuidv4()}`
     `${authService.currentUser.uid}/${uuidv4()}`
   );
 
@@ -55,29 +64,68 @@ export const imgFileUpload = (event) => {
   };
 };
 
-// export const uploadReview = () => {
-//   const fileCheck = document.getElementById('imgInput').value;
-//   const reviewCheck = document.getElementById('reviewCheck').value;
-//   const uploadReview = document.getElementById('uploadReview').value;
+// 리뷰 DB에 저장
+export const saveReview = async (event) => {
+  event.preventDefault();
+  const comment = document.getElementById('reviewCheck');
+  // const { photoURL, displayName } = authService.currentUser;
+  try {
+    await addDoc(collection(dbService, 'reviews'), {
+      text: comment.value,
+      createdAt: Date.now(),
+      creatorId: 'testTest',
+      nickname: 'displayName',
+    });
+    comment.value = '';
+    getReviewList();
+  } catch (error) {
+    alert(error);
+    console.log('error in addDoc:', error);
+  }
+};
 
-//   console.log('fileCheck', fileCheck);
-//   console.log('reviewCheck', reviewCheck);
+export const getReviewList = async () => {
+  let cmtObjList = [];
+  const q = query(
+    collection(dbService, 'reviewPosting'),
+    orderBy('createdAt', 'desc')
+  );
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    const commentObj = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    cmtObjList.push(commentObj);
+  });
+  const reviewList = document.getElementById('reviewList');
+  // const currentUid = authService.currentUser.uid;
+  reviewList.innerHTML = '';
+  cmtObjList.forEach((cmtObj) => {
+    // const isOwner = currentUid === cmtObj.creatorId;
+    const temp_html = `<div class="boardReview">
+        <div class="boardReviewersImg">
+          <img src="./assets/nike_review_1.png" alt="" />
+        </div>
+        <div class="boardReviewersRow boardProfileImageAndNickName">
+          <img
+            class="boardReviewersProfile"
+            src="./assets/blank-profile-picture.png"
+            alt=""
+          />
+          <p class="boardReviewersNickname">__dw__00</p>
+        </div>
+        <div class="boardReviewersRow boardReviewersSmileAndComment">
+          <i class="fa-regular fa-face-grin-squint"></i>
+          <p>23</p>
+          <i class="fa-regular fa-comment"></i>
+          <p>3</p>
+        </div>
+      </div>`;
 
-//   console.log('uploadReview', uploadReview);
-
-//   // fileCheck.addEventListener('input', uploadReview);
-//   // reviewCheck.addEventListener('input', uploadReview);
-//   // fileCheck.addEventListener('keyup', uploadReview);
-//   // reviewCheck.addEventListener('keyup', uploadReview);
-
-//   switch (!(fileCheck.value && reviewCheck.value)) {
-//     case true:
-//       document.getElementById('uploadReview').disabled = true;
-//       // loginButton.disabled = true;
-//       break;
-//     case false:
-//       loginButton.disabled = false;
-//       break;
-//   }
-// };
-// // 파일 첨부 여부 체크
+    const div = document.createElement('div');
+    div.classList.add('boardReviews');
+    div.innerHTML = temp_html;
+    reviewList.appendChild(div);
+  });
+};
