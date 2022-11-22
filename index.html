@@ -1,40 +1,46 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>swivee</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/common.css" />
-    <!-- 페이지별 css -->
-    <link rel="stylesheet" href="css/header.css" />
-    <link rel="stylesheet" href="css/main.css" />
-    <link rel="stylesheet" href="css/login.css" />
-    <link rel="stylesheet" href="css/join.css" />
-    <link rel="stylesheet" href="css/board.css" />
-    <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/mypage.css" />
-  </head>
 
-  <body>
-    <div id="root">
-      <header class="header">
-        <div class="container">
-          <!-- 임시로 페이지 이동을 위해 설정해두었습니다. -->
-          <nav class="sidebar">
-            <a href="/">Home</a>
-            <a href="#login" onclick="goToLogin()">Login</a>
-            <a href="#join" onclick="goToJoin()">Join</a>
-            <a href="#board" onclick="goToBoard()">board</a>
-            <a href="#review" onclick="goToReview()">Review</a>
-            <a href="#mypage" onclick="goToMypage()">Mypage</a>
-          </nav>
-        </div>
-      </header>
+<head>
+  <title>swivee</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/common.css" />
+  <!-- 페이지별 css -->
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/login.css" />
+  <link rel="stylesheet" href="css/join.css" />
+  <link rel="stylesheet" href="css/board.css" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/mypage.css" />
+  <link rel="stylesheet" href="css/review.css">
+  <script src="https://kit.fontawesome.com/401e560ad8.js" crossorigin="anonymous"></script>
+</head>
 
-      <!-- 각 페이지가 렌더링 되는 부분 -->
-      <main id="main"></main>
-    </div>
+<body>
+  <div id="root">
 
-    <script src="js/main.js" type="module"></script>
-  </body>
+    <header class="header">
+      <div class="headerBox">
+        <h1 class="logo"><a href="#"><img class="statusBarImg" src="screen/sweeve.png" alt="swivee"></a></h1>
+        <!-- 임시로 페이지 이동을 위해 설정해두었습니다. -->
+        <nav class="sidebar">
+          <a href="/">Home</a>
+          <a href="#login" onclick="goToLogin()">Login</a>
+          <a href="#join" onclick="goToJoin()">Join</a>
+          <a href="#board" onclick="goToBoard()">board</a>
+          <a href="#review" onclick="goToReview()">Review</a>
+          <a href="#mypage" onclick="goToMypage()">Mypage</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- 각 페이지가 렌더링 되는 부분 -->
+    <main id="main"></main>
+  </div>
+
+  <script src="js/main.js" type="module"></script>
+</body>
+
 </html>

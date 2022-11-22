@@ -110,3 +110,7 @@ div {
 main {
   display: block;
 }
+
+a:hover {
+  text-decoration: none;
+}

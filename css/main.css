@@ -1,0 +1,288 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.home .contentTitle {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.brandList {
+  width: 100%;
+  padding: 30px 0;
+  margin-bottom: 50px;
+}
+
+.allBrandList {
+  max-width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 auto 10px;
+}
+
+.allBrandList .brandItem {
+  min-width: 130px;
+  text-align: center;
+  margin-right: 30px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.brandItem.show {
+  margin-bottom: 16px;
+}
+
+.brandItem.hide {
+  display: none;
+}
+
+.allBrandList .brandItem:nth-child(5n) {
+  margin-right: 0;
+}
+
+.allBrandList .brandItem > .imgBox {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  overflow: hidden;
+}
+
+.brandItem .imgBox > img {
+  transition: transform 300ms ease-in-out;
+}
+
+.brandItem .imgBox:hover > img {
+  transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+}
+
+.btnMoreWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnMoreWrap > i {
+  font-size: 30px;
+  color: #333;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* 하단 영역 */
+.contentWrap {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 100px;
+}
+
+/* 브랜드 리스트 */
+.topBrand,
+.realTimeReview {
+  width: 230px;
+  margin-bottom: 50px;
+}
+
+.topBrandList {
+  padding: 20px 10px 20px 20px;
+  background-color: #f9f9f9;
+  border-radius: 15px;
+}
+
+.topBrandList .topBrandItem {
+  padding: 6px 0;
+  transition: font-weight 200ms ease-in-out;
+}
+
+.topBrandList .topBrandItem:hover {
+  font-weight: 700;
+}
+
+.topBrandList .link,
+.realTimeReviewList .link {
+  display: block;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.topBrandList .rank,
+.realTimeReviewList .rank {
+  font-weight: 700;
+}
+
+.topBrandList .imgBox {
+  width: 24px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+.topBrandList .topBrandItem:first-child .imgBox {
+  margin-left: 12px;
+}
+
+/* 실시간 리뷰 */
+.realTimeReviewList {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 15px;
+}
+
+.realTimeReviewList .realTimeReviewItem {
+  margin-bottom: 16px;
+}
+
+.realTimeReviewList .realTimeReviewItem:last-child {
+  margin-bottom: 0;
+}
+
+.realTimeReviewList .realTimeReviewItem:hover .comment {
+  font-weight: 600;
+}
+
+.realTimeReviewList .rank {
+  margin-right: 10px;
+  padding-top: 6px;
+}
+
+.realTimeReviewList .reviewBox .boardProfileImageAndNickName {
+  padding: 0;
+}
+
+.realTimeReviewList .reviewBox .boardReviewersProfile {
+  width: 26px;
+  height: 26px;
+}
+
+.realTimeReviewList .reviewBox .boardReviewersNickname {
+  font-size: 14px;
+  color: #777;
+}
+
+.realTimeReviewList .reviewBox .comment {
+  margin-top: 8px;
+  color: #444;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* 브랜드 신발 리스트 */
+
+.shoesList {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin: 0 0 30px 60px;
+}
+
+.shoesList .shoesItem {
+  width: 210px;
+  margin-right: 30px;
+  margin-bottom: 30px;
+}
+
+.shoesList .shoesItem:hover .imgBox > img {
+  transform: scale(1.05);
+}
+
+.shoesList .shoesItem:hover .shoesName {
+  filter: drop-shadow(4px 4px 3px rgba(0, 0, 0, 0.25));
+}
+
+.shoesList .imgBox {
+  max-width: 210px;
+  height: 210px;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.shoesList .imgBox > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 300ms ease-in-out;
+}
+
+.shoesList .brandName {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 6px;
+}
+
+.shoesList .shoesName {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.shoesListWrap .btnMoreWrap .btnMoreShoes {
+  width: 200px;
+  padding: 12px 0;
+  background-color: #571df7;
+  border-radius: 15px;
+  color: #fff;
+  font-weight: 500;
+}
+
+@media only screen and (max-width: 810px) {
+  .home {
+    padding: 30px;
+  }
+
+  .allBrandList .brandItem {
+    min-width: 80px;
+    max-width: 100px;
+    width: 100%;
+    height: 100%;
+    margin-right: 1rem;
+  }
+
+  .brandItem.show {
+    margin-bottom: 0;
+  }
+
+  .contentWrap {
+    flex-direction: column;
+  }
+
+  /* 브랜드 */
+  .topBrand,
+  .realTimeReview {
+    width: 100%;
+    margin-bottom: 50px;
+  }
+
+  .shoesList {
+    width: 100%;
+    margin: 0;
+    justify-items: center;
+  }
+
+  .shoesList .imgBox {
+    min-width: 230px;
+    width: 100%;
+  }
+
+  .shoesList .shoesItem {
+    min-width: 230px;
+    width: calc(50% - 2rem);
+    margin-right: 2rem;
+    margin-bottom: 40px;
+  }
+
+  .shoesList .shoesItem:nth-child(2n) {
+    margin-right: 0;
+  }
+
+  .shoesList .shoesItem:nth-child(9) {
+    display: none;
+  }
+}
