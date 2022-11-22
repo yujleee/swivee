@@ -40,7 +40,7 @@ export const changeProfile = async (event) => {
     });
 };
 
-export const onFileChange = (event) => {
+export const imgFileUpload = (event) => {
   console.log('event.target.files:', event.target.files);
   const theFile = event.target.files[0]; // file 객체
   console.log('theFile', theFile);
