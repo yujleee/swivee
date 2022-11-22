@@ -12,7 +12,7 @@
           alt=""
         />
       </div>
-      <div class="boardWriteReviews">
+      <form class="boardWriteReviews">
         <p>NIKE</p>
         <h1 class="boardShoeTitle">나이키 덩크 로우</h1>
         <div class="boardRow">
@@ -28,16 +28,27 @@
         </div>
         <!-- Right -->
         <div class="boardReviewRight boardReviewColumn">
-          <button class="boardNewImage">+ 사진 올리기</button>
+          <label for="imgInput">
+            <div class="boardNewImage">
+              + 사진 올리기
+              <input
+                type="file"
+                id="imgInput"
+                accept="image/*"
+                name="imgInput"
+                onchange="onFileChange(event)"
+              />
+            </div>
+          </label>
           <div class="boardWriteReview">
-            <textarea placeholder=" 리뷰를 남겨주세요..."></textarea>
+            <input id="reviewCheck" placeholder=" 리뷰를 남겨주세요..."></input>
           </div>
           <div class="boardReviewButton">
-            <button>리뷰 작성</button>
+            <button id="uploadReview">리뷰 작성</button>
           </div>
           <div class="clear"></div>
         </div>
-      </div>
+      </form>
     </div>
     <!-- Reviews -->
     <div class="boardReviews">
@@ -157,5 +168,4 @@
       </div>
     </div>
   </div>
-  <!-- <script src="../js/board.js"></script> -->
 </div>

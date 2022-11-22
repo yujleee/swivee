@@ -7,6 +7,7 @@ import {
   goToMypage,
 } from './router.js';
 import { authService } from './firebase.js';
+import { changeProfile, onFileChange } from './board.js';
 
 // url 바뀌면 handleLocation 실행하여 화면 변경
 window.addEventListener('hashchange', handleLocation);
@@ -41,3 +42,5 @@ window.goToJoin = goToJoin;
 window.goToBoard = goToBoard;
 window.goToReview = goToReview;
 window.goToMypage = goToMypage;
+window.onFileChange = onFileChange;
+window.changeProfile = changeProfile;
