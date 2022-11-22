@@ -59,6 +59,15 @@
   margin-right: -9px;
 }
 
+.youTubeIcon {
+  /* width: 100px; */
+  writing-mode: vertical-lr;
+}
+
+/* .youTubeIcon a{
+  padding-left: 50px;
+} */
+
 .youTubeIcon a:hover{
   text-decoration: none;
 }
@@ -103,9 +112,9 @@
   box-shadow: 1px 2px 10px #c6b4f6;
 }
 
-.boardWriteReview input {
+.boardWriteReview textarea {
   width: 320px;
-  /* height: 118px; */
+  height: 118px;
   background: #F6F6F6;
   border-radius: 15px;
   border: none;

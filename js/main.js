@@ -7,7 +7,7 @@ import {
   goToMypage,
 } from './router.js';
 import { authService } from './firebase.js';
-import { changeProfile, imgFileUpload } from './board.js';
+import { changeProfile, imgFileUpload, saveReview } from './board.js';
 import { toggleMoreBrand, changeShoesList } from './pages/home.js';
 import { onFileChange } from './mypage.js';
 
@@ -49,3 +49,5 @@ window.changeProfile = changeProfile;
 window.toggleMoreBrand = toggleMoreBrand;
 window.changeShoesList = changeShoesList;
 window.imgFileUpload = imgFileUpload;
+window.saveReview = saveReview;
+// window.getReviewList = getReviewList;
