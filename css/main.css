@@ -14,7 +14,7 @@ html {
 }
 
 .allBrandList {
-  max-width: 800px;
+  max-width: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,24 +23,25 @@ html {
 }
 
 .allBrandList .brandItem {
-  min-width: 130px;
+  min-width: 80px;
+  max-width: 80px;
   text-align: center;
   margin-right: 30px;
   cursor: pointer;
-  flex: 1;
+  flex: 1 auto;
 }
 
 .brandItem.show {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .brandItem.hide {
   display: none;
 }
 
-.allBrandList .brandItem:nth-child(5n) {
+/* .allBrandList .brandItem:nth-child(5n) {
   margin-right: 0;
-}
+} */
 
 .allBrandList .brandItem > .imgBox {
   width: 100%;
