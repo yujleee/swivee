@@ -1,56 +1,61 @@
-<div class="container">
-  <h1>로그인 페이지</h1>
-</div>
-<div class="login">
-  <div class="loginContent">
-    <div class="loginArea">
-      <div class="titleLogo">
-        <a href="https://google.com">
-          <img class="logo" src="./imgs/logo-group.png" />
-        </a>
-      </div>
-      <div class="inputBox">
-        <h3 class="inputTitle">이메일 주소</h3>
-        <div class="inputItem">
-          <input
-            type="text"
-            placeholder="예) swivee@swivee.co.kr"
-            autocomplete="off"
-            class="inputTxt"
-            required
-          />
-          <div class="underline"></div>
+<form onsubmit="handleAuth(event)">
+  <div class="login">
+    <div class="loginContent">
+      <div class="loginArea">
+        <div class="titleLogo">
+          <button href="https://google.com">
+            <img class="loginLogo" src="../screen/sweeve.png" />
+          </button>
         </div>
-      </div>
-      <div class="inputBox">
-        <h3 class="inputTitle">비밀번호</h3>
-        <div class="inputItem">
-          <input
-            type="password"
-            placeholder=""
-            autocomplete="off"
-            class="inputTxt"
-            required
-          />
-          <div class="underline"></div>
+        <div class="inputBox">
+          <h3 class="inputTitle">이메일 주소</h3>
+          <div class="inputItem">
+            <input
+              id="email"
+              type="email"
+              placeholder="예) swivee@swivee.co.kr"
+              autocomplete="off"
+              class="inputTxt"
+              required
+            />
+            <div class="underline"></div>
+          </div>
         </div>
-      </div>
-      <div class="submitBox">
-        <input type="submit" name="" value="Login" />
-      </div>
-      <ul class="joinBox">
-        <li class="joinList">
-          <a href="#" class="joinLink"> 이메일 가입 </a>
-        </li>
-      </ul>
-      <div class="sociaLogin">
-        <div class="google">
-          <a href="#"> <i class="fa-brands fa-github"></i>구글로 로그인 </a>
+        <div class="inputBox">
+          <h3 class="inputTitle">비밀번호</h3>
+          <div class="inputItem">
+            <input
+              id="pw"
+              type="password"
+              placeholder=""
+              autocomplete="off"
+              class="inputTxt"
+              required
+            />
+            <div class="underline"></div>
+          </div>
         </div>
-        <div class="github">
-          <a href="#"><i class="fa-brands fa-google"></i> Github로 로그인 </a>
+        <div class="submitBox">
+          <input id="submitBox2" type="submit" value="로그인" />
+        </div>
+        <ul class="joinBox">
+          <li class="joinList">
+            <a href="#join" class="joinLink">이메일 가입</a>
+          </li>
+        </ul>
+        <div class="sociaLogin">
+          <div class="google">
+            <button onclick="socialLogin('google')">
+              <i class="fa-brands fa-google"></i>구글로 로그인
+            </button>
+          </div>
+          <div class="github">
+            <button onclick="socialLogin('github')">
+              <i class="fa-brands fa-github"></i> Github로 로그인
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</form>

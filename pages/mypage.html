@@ -5,14 +5,14 @@
       <div class="mypageBox">
         <form class="totalUserInfo">
           <label id="imgLabel" for="imgInput">
-            <img src="assets/blank-profile-picture.png" id="profileView" onclick="onFileChange()"/>
-            <input type="file" id="imgInput" accept ="image/*" />
+            <img src="assets/blank-profile-picture.png" id="profileView" />
+            <input type="file" id="imgInput" accept ="image/*" onchange="onFileChange(event)" />
           </label>
         <div class="userInfo">
           <h4 class="userName">닉네임없음</h4>
           <div class="btns"> 
             
-          <input onclick="changeProfile()" id="profileBtn" class="imgChangeBtn" type="submit" value="이미지 변경" />
+          <input onsubmit="changeProfile(event)" id="profileBtn" class="imgChangeBtn" type="submit" value="이미지 변경" />
             <input class="deleteBtn" type="button" value="삭제" />
           </div>
         </div>

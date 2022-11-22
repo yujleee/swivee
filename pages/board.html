@@ -12,7 +12,7 @@
           alt=""
         />
       </div>
-      <div class="boardWriteReviews">
+      <form class="boardWriteReviews">
         <p>NIKE</p>
         <h1 class="boardShoeTitle">나이키 덩크 로우</h1>
         <div class="boardRow">
@@ -23,24 +23,41 @@
             <p>123</p>
           </div>
           <div class="youTubeIcon">
-            <i class="fa-brands fa-youtube"><a href=""> 관련 영상</a></i>
+            <i class="fa-brands fa-youtube"><a href="">관련 영상</a></i>
           </div>
         </div>
         <!-- Right -->
         <div class="boardReviewRight boardReviewColumn">
-          <button class="boardNewImage">+ 사진 올리기</button>
+          <label for="imgInput">
+            <div class="boardNewImage">
+              + 사진 올리기
+              <input
+                type="file"
+                id="imgInput"
+                accept="image/*"
+                name="imgInput"
+                onchange="onFileChange(event)"
+              />
+            </div>
+          </label>
           <div class="boardWriteReview">
-            <textarea placeholder=" 리뷰를 남겨주세요..."></textarea>
+            <textarea
+              id="reviewCheck"
+              placeholder=" 리뷰를 남겨주세요..."
+            ></textarea>
           </div>
           <div class="boardReviewButton">
-            <button>리뷰 작성</button>
+            <button id="uploadReview" onclick="saveReview(event)" type="button">
+              리뷰 작성
+            </button>
           </div>
           <div class="clear"></div>
         </div>
-      </div>
+      </form>
     </div>
     <!-- Reviews -->
-    <div class="boardReviews">
+    <div id="reviewList"></div>
+    <!-- <div class="boardReviews" id="reviewList">
       <div class="boardReview">
         <div class="boardReviewersImg">
           <img src="./assets/nike_review_1.png" alt="" />
@@ -155,7 +172,6 @@
           <p>3</p>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
-  <!-- <script src="../js/board.js"></script> -->
 </div>
