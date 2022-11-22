@@ -8,8 +8,8 @@ import {
 } from "./router.js";
 import { handleAuth, socialLogin } from "./pages/auth.js";
 import { authService } from './firebase.js';
+import { changeProfile, imgFileUpload, saveReview } from './board.js';
 import { toggleMoreBrand, changeShoesList, showMoreShoes } from './pages/home.js';
-import { changeProfile, imgFileUpload } from './board.js';
 import { onFileChange } from './mypage.js';
 
 
@@ -54,3 +54,5 @@ window.socialLogin = socialLogin;
 window.changeShoesList = changeShoesList;
 window.showMoreShoes = showMoreShoes;
 window.imgFileUpload = imgFileUpload;
+window.saveReview = saveReview;
+// window.getReviewList = getReviewList;

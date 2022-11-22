@@ -23,7 +23,7 @@
             <p>123</p>
           </div>
           <div class="youTubeIcon">
-            <i class="fa-brands fa-youtube"><a href=""> 관련 영상</a></i>
+            <i class="fa-brands fa-youtube"><a href="">관련 영상</a></i>
           </div>
         </div>
         <!-- Right -->
@@ -41,17 +41,23 @@
             </div>
           </label>
           <div class="boardWriteReview">
-            <input id="reviewCheck" placeholder=" 리뷰를 남겨주세요..."></input>
+            <textarea
+              id="reviewCheck"
+              placeholder=" 리뷰를 남겨주세요..."
+            ></textarea>
           </div>
           <div class="boardReviewButton">
-            <button id="uploadReview">리뷰 작성</button>
+            <button id="uploadReview" onclick="saveReview(event)" type="button">
+              리뷰 작성
+            </button>
           </div>
           <div class="clear"></div>
         </div>
       </form>
     </div>
     <!-- Reviews -->
-    <div class="boardReviews">
+    <div id="reviewList"></div>
+    <!-- <div class="boardReviews" id="reviewList">
       <div class="boardReview">
         <div class="boardReviewersImg">
           <img src="./assets/nike_review_1.png" alt="" />
@@ -166,6 +172,6 @@
           <p>3</p>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
