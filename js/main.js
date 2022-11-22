@@ -1,6 +1,7 @@
 import { handleLocation, goToLogin, goToJoin, goToBoard, goToReview, goToMypage } from './router.js';
 import { authService } from './firebase.js';
 import { toggleMoreBrand, changeShoesList } from './pages/home.js';
+import { onFileChange } from './mypage.js';
 
 // url 바뀌면 handleLocation 실행하여 화면 변경
 window.addEventListener('hashchange', handleLocation);
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // 로그인 상태이므로 항상 팬명록 화면으로 이동
       if (hash === '') {
         // 로그인 상태에서는 로그인 화면으로 되돌아갈 수 없게 설정
-        window.location.replace('#fanLog');
+        window.location.replace('#mypage');
       }
     } else {
       // 로그아웃 상태이므로 로그인 화면으로 강제 이동
@@ -35,9 +36,11 @@ window.goToJoin = goToJoin;
 window.goToBoard = goToBoard;
 window.goToReview = goToReview;
 window.goToMypage = goToMypage;
+window.onFileChange = onFileChange;
 window.toggleMoreBrand = toggleMoreBrand;
 window.changeShoesList = changeShoesList;
 //
 //
 //
 //
+
