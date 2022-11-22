@@ -9,6 +9,24 @@ const routes = {
   review: '/pages/review.html',
 };
 
+// const kimTaeWook = "남자 28 개발자";
+// 위처럼 표현했을 때 문제? 
+// 김태욱의 성별이 뭐에요? --> 
+
+// 객체는 비슷한 주제로 묶여있어.
+const kimTaeWook = {
+  성별: "남자",
+  나이: 28,
+  직업: "개발자"
+}
+
+// html 에서는 <script> </script>
+
+// kimTaeWook.나이 = 28
+
+// 객체는 "키 - 값" 이 있고 "key - value"
+// 객체는 키로 값을 불러온다.
+
 export const handleLocation = async () => {
   let path = window.location.hash.replace('#', '');
   const pathName = window.location.pathname;
