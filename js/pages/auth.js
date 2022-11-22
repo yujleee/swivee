@@ -17,6 +17,7 @@ export const handleAuth = (event) => {
   const emailVal = email.value;
   const pw = document.getElementById("pw");
   const pwVal = pw.value;
+  console.log(emailVal, pwVal);
 
   // 유효성 검사 진행
   if (!emailVal) {
@@ -45,15 +46,15 @@ export const handleAuth = (event) => {
   }
 
   // 유효성 검사 통과 후 로그인 또는 회원가입 API 요청
-  const authBtnText = document.querySelector("#authBtn").value;
-  if (authBtnText === "로그인") {
+  const submitBox2 = document.querySelector("#submitBox2").value;
+  if (submitBox2 === "로그인") {
     // 유효성검사 후 로그인 성공 시 화면으로
 
     signInWithEmailAndPassword(authService, emailVal, pwVal)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        window.location.hash = "#mainpage";
+        window.location.hash = "#";
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -85,12 +86,11 @@ export const handleAuth = (event) => {
 
 // 소셜 로그인
 
-export const socialLogin = (event) => {
-  const { name } = event.target;
+export const socialLogin = (str) => {
   let provider;
-  if (name === "google") {
+  if (str === "google") {
     provider = new GoogleAuthProvider();
-  } else if (name === "github") {
+  } else if (str === "github") {
     provider = new GithubAuthProvider();
   }
   signInWithPopup(authService, provider)
