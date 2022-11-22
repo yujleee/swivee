@@ -62,8 +62,8 @@ body {
   height: 52px;
 }
 
-.google a,
-.github a {
+.google button,
+.github button {
   display: block;
   height: 45px;
   width: 100%;
@@ -81,7 +81,7 @@ body {
   padding-right: 12px;
   font-size: 16px;
 }
-.google a {
+.google button {
   height: 52px;
   box-sizing: border-box;
   background: transparent;
@@ -93,7 +93,7 @@ body {
   align-items: center;
   justify-content: center;
 }
-.google a:hover {
+.google button:hover {
   height: 52px;
 
   box-sizing: border-box;
@@ -106,7 +106,7 @@ body {
   align-items: center;
   justify-content: center;
 }
-.github a {
+.github button {
   height: 52px;
   box-sizing: border-box;
   background: transparent;
@@ -119,7 +119,7 @@ body {
   justify-content: center;
 }
 
-.github a:hover {
+.github button:hover {
   height: 52px;
   box-sizing: border-box;
   background: black;
@@ -210,6 +210,6 @@ li {
   list-style: none;
 }
 
-a {
+button {
   text-decoration: none;
 }
