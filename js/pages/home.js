@@ -27,7 +27,12 @@ export const toggleMoreBrand = (event) => {
 
 // 브랜드별 신발 리스트
 export const changeShoesList = async (event) => {
+  const btnMoreShoes = document.querySelector('.btnMoreShoes');
   const currentTarget = Number(event.target.parentNode.parentNode.dataset.brand);
+
+  if (btnMoreShoes.classList.contains('hide')) {
+    btnMoreShoes.classList.remove('hide');
+  }
 
   let shoesObjList = [];
 
@@ -44,8 +49,6 @@ export const changeShoesList = async (event) => {
 
   const shoesList = document.querySelector('.shoesList');
   shoesList.innerHTML = '';
-
-  console.log(shoesObjList.length);
 
   const temp = shoesObjList
     .map(
@@ -68,4 +71,22 @@ export const changeShoesList = async (event) => {
     .join('');
 
   shoesList.innerHTML = temp;
+};
+
+// 신발 더보기
+export const showMoreShoes = () => {
+  const allShoesList = document.querySelectorAll('.shoesItem');
+  const btnMoreShoes = document.querySelector('.btnMoreShoes');
+
+  const listLength = allShoesList.length;
+
+  allShoesList.forEach((shoes, idx) => {
+    if (shoes.classList.contains('hide')) {
+      shoes.classList.remove('hide');
+    }
+
+    if (idx === listLength - 1) {
+      btnMoreShoes.classList.add('hide');
+    }
+  });
 };
