@@ -1,10 +1,30 @@
 .header {
-  height: 80px;
+  height: 100px;
   width: 100%;
   padding: 30px 0;
+  display: flex;
+  justify-content: space-between;
 }
 
 .sidebar > a {
   margin: 0.5rem 0;
   margin-right: 30px;
+}
+.sidebar {
+  display: flex;
+  align-items: center;
+ 
+}
+.statusBarImg{
+  width: 230px;
+}
+.headerBox{
+  display: flex;
+  width: 1024px;
+  margin: auto;
+  justify-content: space-between;
+}
+.logo{
+  margin-right: auto;
+  width: 240px;
 }
