@@ -7,8 +7,8 @@ import {
   goToMypage,
 } from './router.js';
 import { authService } from './firebase.js';
+import { toggleMoreBrand, changeShoesList, showMoreShoes } from './pages/home.js';
 import { changeProfile, imgFileUpload } from './board.js';
-import { toggleMoreBrand, changeShoesList } from './pages/home.js';
 import { onFileChange } from './mypage.js';
 
 // url 바뀌면 handleLocation 실행하여 화면 변경
@@ -48,4 +48,5 @@ window.onFileChange = onFileChange;
 window.changeProfile = changeProfile;
 window.toggleMoreBrand = toggleMoreBrand;
 window.changeShoesList = changeShoesList;
+window.showMoreShoes = showMoreShoes;
 window.imgFileUpload = imgFileUpload;
