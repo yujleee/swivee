@@ -3,33 +3,32 @@
     <div class="boxalign">
     <section> 
       <div class="mypageBox">
-        <div class="totalUserInfo">
+        <form class="totalUserInfo">
           <label id="imgLabel" for="imgInput">
-            <img src="assets/blank-profile-picture.png" id="profileView"/>
-            <input type="file" id="imgInput" onchange="onFileChange(event)"
-              accept ="image/*" />
+            <img src="assets/blank-profile-picture.png" id="profileView" onclick="onFileChange()"/>
+            <input type="file" id="imgInput" accept ="image/*" />
           </label>
         <div class="userInfo">
           <h4 class="userName">닉네임없음</h4>
           <div class="btns"> 
             
-          <input class="imgChangeBtn" type="submit" value="이미지 변경" />
+          <input onclick="changeProfile()" id="profileBtn" class="imgChangeBtn" type="submit" value="이미지 변경" />
             <input class="deleteBtn" type="button" value="삭제" />
           </div>
         </div>
-      </div>
+      </form>
 
      <div class="loginInform">
-        <h4 style="font-size:15px;font-weight: bold">로그인 정보</h4>
+        <h4 style="font-size:17px;font-weight: bold">로그인 정보</h4>
 
        <div id="nickName">
-        <p>닉네임</p>
+        <p style="font-size: 0.9rem;">닉네임</p>
           <input class="nickNameInput" type="text" value="닉네임없음">
           <input class="nickNameChangeBtn" type="button" value="변경">
        </div>
 
        <div id="password">
-        <p>비밀번호</p>
+        <p style="font-size: 0.9rem;">비밀번호</p>
           <input class="passwordInput" type="password" >
           <input class="passwordChangeBtn" type="button" value="변경">
        </div>
@@ -37,7 +36,7 @@
     </section>
 
     <article>
-      <h3>내 포스트</h3>
+      <h2 id="mypostList">내 포스트</h2>
       <span class="line2"></span>
       <div class="boardReviews">
         <div class="boardReview">
