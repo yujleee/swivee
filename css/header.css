@@ -6,25 +6,34 @@
   justify-content: space-between;
 }
 
-.sidebar > a {
-  margin: 0.5rem 0;
-  margin-right: 30px;
-}
-.sidebar {
+.nav {
   display: flex;
   align-items: center;
- 
 }
-.statusBarImg{
+
+.nav > span {
+  width: 60px;
+  margin: 0.5rem 0;
+  margin-right: 30px;
+  cursor: pointer;
+  color: #222;
+}
+
+.nav > span:hover,
+.nav > span:hover > a {
+  filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.25));
+}
+
+.statusBarImg {
   width: 230px;
 }
-.headerBox{
+.headerBox {
   display: flex;
   width: 1024px;
   margin: auto;
   justify-content: space-between;
 }
-.logo{
+.logo {
   margin-right: auto;
   width: 240px;
 }
