@@ -3,7 +3,7 @@ import { handleAuth, socialLogin, logout } from './pages/auth.js';
 import { authService } from './firebase.js';
 import { changeProfile, imgFileUpload, saveReview, receiveDataFromMain } from './board.js';
 import { toggleMoreBrand, changeShoesList, showMoreShoes, getBrandList, getRealtimeReviews } from './pages/home.js';
-import { onFileChange, changeProfiles, onChangeNickname } from './mypage.js';
+import { onFileChange, changeProfiles, onChangeNickname, onDeleteImg } from './mypage.js';
 
 const activeMenu = document.querySelector('.active');
 
@@ -68,5 +68,7 @@ window.receiveDataFromMain = receiveDataFromMain;
 window.changeProfiles = changeProfiles;
 window.logout = logout;
 window.getBrandList = getBrandList;
-window.onChangeNickname = onChangeNickname;
 window.getRealtimeReviews = getRealtimeReviews;
+window.onChangeNickname = onChangeNickname;
+window.onDeleteImg = onDeleteImg;
+
