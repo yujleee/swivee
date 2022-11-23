@@ -1,3 +1,51 @@
-<div class="container">
-  <h1>리뷰 상세 페이지</h1>
+<div class="box">
+  <div class="review">
+    <div class="reviewHead">
+      <div class="reviewHeadProfile">
+        <a href="#"><img src="assets/cat.jpg"></a>
+        <div class="reviewHeadProfileName">
+          <div class="reviewHeadProfileNameN">cat_30</div>
+          <div class="reviewHeadProfileNameD">2일전</div>
+        </div>
+      </div>
+      <!-- <img class="reviewHeadProfileEmoticon" src="smile.svg"> -->
+
+      <i class="fa-regular fa-face-grin-squint fa-xl"></i>
+
+    </div>
+    <img src="assets/sho.jpg">
+    <p class="reviewComment">
+      이 신발 멋있네여이 신발 멋있네여이 신발 멋있네여이 신발 멋있네여이 신발 멋있네여
+      이 신발 멋있네여이 신발 멋있네여이 신발 멋있네여이 신발 멋있네여이 신발 멋있네여
+      이 신발 멋있네여이 신발 멋있네여이 신발 멋있네여이 신발 멋있네여이 신발 멋있네여
+      이 신발 멋있네여이 신발 멋있네여이 신발 멋있네여이 신발 멋있네여이 신발 멋있네여
+    </p>
+
+    <div>
+      <div id="reviews" class="commentHead">
+        <input type="text" id="comment-input" class="commentBox" placeholder="이 신발은 어떠셨나요?" name="comment"></input>
+        <button class="commentButton" onclick="save_comment()">입력</button>
+      </div>
+
+      <div class="commentLineBox">
+        <div class="commentLine"></div>
+        <div class="commentLineTitle">댓글 126개</div>
+      </div>
+
+    </div>
+
+    <div>
+      <div id="reviews" class="reviewList">
+      </div>
+    </div>
+    <div class="commentList">
+    </div>
+
+
+
+  </div>
+  <script src="js/main.js"></script>
+  <!-- <script src="js/main.js" type="module"></script> -->
+
+
 </div>
