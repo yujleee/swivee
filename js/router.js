@@ -31,19 +31,15 @@ export const handleLocation = async () => {
     console.log('getReviewList');
     getReviewList();
 
-  if (path === "mypage") {
-    // 프로필 관리 화면 일 때 현재 프로필 사진과 닉네임 할당
-    document.getElementById("profileView").src =
-      authService.currentUser.photoURL ?? "/assets/blank-profile-picture.png";
-    document.getElementById("profileNickname").value =
-      authService.currentUser.displayName ?? "닉네임없나";
+    if (path === 'mypage') {
+      // 프로필 관리 화면 일 때 현재 프로필 사진과 닉네임 할당
+      document.getElementById('profileView').src =
+        authService.currentUser.photoURL ?? '/assets/blank-profile-picture.png';
+      document.getElementById('profileNickname').value =
+        authService.currentUser.displayName ?? '닉네임없나';
+    }
   }
 };
-
-
-
-
-
 
 // 페이지 이동
 export const goToLogin = () => {
