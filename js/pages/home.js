@@ -4,6 +4,8 @@ import {
   where,
   getDocs,
   orderBy,
+  onSnapshot,
+  limit,
 } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 import { dbService } from '../firebase.js';
 
@@ -139,4 +141,50 @@ export const getBrandList = async () => {
     .join('');
 
   allBrandList.innerHTML = temp;
+};
+
+// 실시간 리뷰
+export const getRealtimeReviews = async () => {
+  const q = query(collection(dbService, 'reviews'), orderBy('createdAt', 'desc'), limit(5));
+
+  let reviewsObjList = [];
+
+  await onSnapshot(q, (snapshot) => {
+    console.log(snapshot);
+    snapshot.forEach((doc) => {
+      const reviewObj = {
+        id: doc.id,
+        ...doc.data(),
+      };
+      reviewsObjList.push(reviewObj);
+    });
+
+    renderRealtimeReviews(reviewsObjList);
+  });
+};
+
+const renderRealtimeReviews = (reviews) => {
+  console.log(reviews);
+  const realTimeReviewList = document.querySelector('.realTimeReviewList');
+  realTimeReviewList.innerHTML = '';
+
+  const temp = reviews
+    .map(
+      (review, idx) => `
+              <li class="realTimeReviewItem">
+                <span class="rank">${idx + 1}</span>
+                <div class="reviewBox">
+                  <div class="boardReviewersRow boardProfileImageAndNickName">
+                    <img class="boardReviewersProfile" src="${
+                      review.profileImg ?? '/assets/blank-profile-picture.png'
+                    }" alt="프로필" />
+                    <p class="boardReviewersNickname ellipsis">${review.nickname}</p>
+                  </div>
+                  <p class="comment">${review.text}</p>
+                </div>
+            </li>`
+    )
+    .join('');
+
+  realTimeReviewList.innerHTML = temp;
 };
