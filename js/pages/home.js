@@ -1,4 +1,9 @@
-import { collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 import { dbService } from '../firebase.js';
 
 // 브랜드 더보기
@@ -20,7 +25,6 @@ export const toggleMoreBrand = (event) => {
       }
     });
   }
-
   btnMoreBrand.classList.toggle('fa-chevron-down');
   btnMoreBrand.classList.toggle('fa-chevron-up');
 };
@@ -28,15 +32,19 @@ export const toggleMoreBrand = (event) => {
 // 브랜드별 신발 리스트
 export const changeShoesList = async (event) => {
   const btnMoreShoes = document.querySelector('.btnMoreShoes');
-  const currentTarget = Number(event.target.parentNode.parentNode.dataset.brand);
-
+  const currentTarget = Number(
+    event.target.parentNode.parentNode.dataset.brand
+  );
   if (btnMoreShoes.classList.contains('hide')) {
     btnMoreShoes.classList.remove('hide');
   }
 
   let shoesObjList = [];
 
-  const q = query(collection(dbService, 'shoesList'), where('brand', '==', currentTarget));
+  const q = query(
+    collection(dbService, 'shoesList'),
+    where('brand', '==', currentTarget)
+  );
   const querySnapShot = await getDocs(q);
 
   querySnapShot.forEach((doc) => {
@@ -53,8 +61,10 @@ export const changeShoesList = async (event) => {
   const temp = shoesObjList
     .map(
       (shoes, idx) =>
-        `<li class="shoesItem ${idx >= 9 ? 'hide' : ''}">
-        <a href="#" class="shoesLink">
+        `<li onclick="receiveDataFromMain(event)" class="shoesItem ${
+          idx >= 9 ? 'hide' : ''
+        }">
+        <a href="#board" class="shoesLink">
         <div class="imgBox">
             <img
             src="${shoes.image}"
