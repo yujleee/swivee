@@ -4,7 +4,7 @@ import { authService } from './firebase.js';
 
 import { changeProfile, imgFileUpload, saveReview, receiveDataFromMain } from './board.js';
 import { toggleMoreBrand, changeShoesList, showMoreShoes, getBrandList } from './pages/home.js';
-import { onFileChange, changeProfiles } from './mypage.js';
+import { onFileChange, changeProfiles, onChangeNickname } from './mypage.js';
 
 const activeMenu = document.querySelector('.active');
 
@@ -68,7 +68,4 @@ window.receiveDataFromMain = receiveDataFromMain;
 window.changeProfiles = changeProfiles;
 window.logout = logout;
 window.getBrandList = getBrandList;
-//
-//
-//
-//
+window.onChangeNickname = onChangeNickname;
