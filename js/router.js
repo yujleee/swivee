@@ -1,4 +1,5 @@
 import { authService } from './firebase.js';
+import { getBrandList, changeShoesList, getRealtimeReviews } from './pages/home.js';
 
 const routes = {
   '/': '/pages/main.html',
@@ -37,6 +38,12 @@ export const handleLocation = async () => {
     document.getElementById('profileView').src =
       authService.currentUser.photoURL ?? '/assets/blank-profile-picture.png';
     document.getElementById('profileNickname').value = authService.currentUser.displayName ?? '닉네임없나';
+  }
+
+  if (path === '/') {
+    getBrandList();
+    changeShoesList();
+    getRealtimeReviews();
   }
 };
 
