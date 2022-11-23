@@ -99,6 +99,7 @@ html {
   display: flex;
   justify-content: flex-start;
   transition: font-weight 200ms ease-in-out;
+  cursor: pointer;
 }
 
 .topBrandList .topBrandItem:hover {
@@ -133,6 +134,13 @@ html {
   display: flex;
   justify-content: flex-start;
   margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.realTimeReviewList .realTimeReviewItem.empty {
+  padding: 120px 0;
+  justify-content: center;
+  color: #999;
 }
 
 .realTimeReviewList .realTimeReviewItem:last-child {
