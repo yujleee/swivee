@@ -150,7 +150,6 @@ export const getRealtimeReviews = async () => {
   let reviewsObjList = [];
 
   await onSnapshot(q, (snapshot) => {
-    console.log(snapshot);
     snapshot.forEach((doc) => {
       const reviewObj = {
         id: doc.id,
@@ -163,28 +162,33 @@ export const getRealtimeReviews = async () => {
   });
 };
 
+// 실시간 리뷰 렌더링
 const renderRealtimeReviews = (reviews) => {
-  console.log(reviews);
   const realTimeReviewList = document.querySelector('.realTimeReviewList');
   realTimeReviewList.innerHTML = '';
 
-  const temp = reviews
-    .map(
-      (review, idx) => `
-              <li class="realTimeReviewItem">
-                <span class="rank">${idx + 1}</span>
-                <div class="reviewBox">
-                  <div class="boardReviewersRow boardProfileImageAndNickName">
-                    <img class="boardReviewersProfile" src="${
-                      review.profileImg ?? '/assets/blank-profile-picture.png'
-                    }" alt="프로필" />
-                    <p class="boardReviewersNickname ellipsis">${review.nickname}</p>
-                  </div>
-                  <p class="comment">${review.text}</p>
-                </div>
-            </li>`
-    )
-    .join('');
+  let temp = '';
+  if (reviews.length === 0) {
+    temp = '<li class="realTimeReviewItem empty">최근 작성된 리뷰가 없어요.</li>';
+  } else {
+    temp = reviews
+      .map(
+        (review, idx) => `
+                  <li class="realTimeReviewItem">
+                    <span class="rank">${idx + 1}</span>
+                    <div class="reviewBox">
+                      <div class="boardReviewersRow boardProfileImageAndNickName">
+                        <img class="boardReviewersProfile" src="${
+                          review.profileImg ?? '/assets/blank-profile-picture.png'
+                        }" alt="프로필" />
+                        <p class="boardReviewersNickname ellipsis">${review.nickname}</p>
+                      </div>
+                      <p class="comment">${review.text}</p>
+                    </div>
+                </li>`
+      )
+      .join('');
+  }
 
   realTimeReviewList.innerHTML = temp;
 };
