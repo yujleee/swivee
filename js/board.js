@@ -29,10 +29,10 @@ export const changeProfile = async (event) => {
 
   const newReview = document.getElementById('boardWriteReview').value;
   // 프로필 이미지 dataUrl을 Storage에 업로드 후 다운로드 링크를 받아서 photoURL에 저장.
-  const imgDataUrl = localStorage.getItem('imgDataUrl');
+  const reviewImgDataUrl = localStorage.getItem('reviewImgDataUrl');
   let downloadUrl;
-  if (imgDataUrl) {
-    const response = await uploadString(imgRef, imgDataUrl, 'data_url');
+  if (reviewImgDataUrl) {
+    const response = await uploadString(imgRef, reviewImgDataUrl, 'data_url');
     console.log('response: ', response);
     downloadUrl = await getDownloadURL(response.ref);
   }
@@ -50,7 +50,11 @@ export const changeProfile = async (event) => {
     });
 };
 
-export const imgFileUpload = (event) => {
+export const imgFileUpload = (event) => {};
+
+// 리뷰 DB에 저장
+export const saveReview = async (event) => {
+  event.preventDefault();
   console.log('event.target.files:', event.target.files);
   const theFile = event.target.files[0]; // file 객체
   console.log('theFile', theFile);
@@ -58,20 +62,16 @@ export const imgFileUpload = (event) => {
   reader.readAsDataURL(theFile); // file 객체를 브라우저가 읽을 수 있는 data URL로 읽음.
   reader.onloadend = (finishedEvent) => {
     // 파일리더가 파일객체를 data URL로 변환 작업을 끝났을 때
-    const imgDataUrl = finishedEvent.currentTarget.result;
-    localStorage.setItem('imgDataUrl', imgDataUrl);
-    // document.getElementById('reviewPostingImg').src = imgDataUrl;
-    // console.log(imgDataUrl);
+    const reviewImgDataUrl = finishedEvent.currentTarget.result;
+    localStorage.setItem('reviewImgDataUrl', reviewImgDataUrl);
+    // document.getElementById('reviewPostingImg').src = reviewImgDataUrl;
+    // console.log(reviewImgDataUrl);
   };
-};
-
-// 리뷰 DB에 저장
-export const saveReview = async (event) => {
-  event.preventDefault();
 
   // 현재 페이지의 신발이름을 가져와
   const shoeName =
     document.getElementsByClassName('boardShoeTitle')[0].innerHTML;
+  console.log('shoeName', shoeName);
   // db의 shoeList에서 showName이 같은것을 찾아서
 
   // 거기에 사진과 리뷰를 쓴 리뷰글이 저장되야 한다.
@@ -85,7 +85,7 @@ export const saveReview = async (event) => {
       text: comment.value,
       createdAt: Date.now(),
       creatorId: 'testTest',
-      nickname: 'displayName',
+      nickname: shoeName,
     });
     comment.value = '';
     getReviewList();
@@ -98,7 +98,7 @@ export const saveReview = async (event) => {
 export const getReviewList = async () => {
   let cmtObjList = [];
   const q = query(
-    collection(dbService, 'reviewPosting'),
+    collection(dbService, 'reviews'),
     orderBy('createdAt', 'desc')
   );
   const querySnapshot = await getDocs(q);
@@ -108,8 +108,10 @@ export const getReviewList = async () => {
       ...doc.data(),
     };
     cmtObjList.push(commentObj);
+    console.log(commentObj.id);
   });
-  const reviewList = document.getElementById('reviewList');
+
+  const reviewList = document.querySelector('.reviewList');
   // const currentUid = authService.currentUser.uid;
   reviewList.innerHTML = '';
   cmtObjList.forEach((cmtObj) => {
@@ -200,7 +202,6 @@ export const receiveDataFromMain = async (event) => {
                 id="imgInput"
                 accept="image/*"
                 name="imgInput"
-                onchange="imgFileUpload(event)"
               />
             </div>
           </label>
