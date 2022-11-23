@@ -72,6 +72,7 @@ export const saveReview = async (event) => {
   // 현재 페이지의 신발이름을 가져와
   const shoeName =
     document.getElementsByClassName('boardShoeTitle')[0].innerHTML;
+  console.log('shoeName', shoeName);
   // db의 shoeList에서 showName이 같은것을 찾아서
 
   // 거기에 사진과 리뷰를 쓴 리뷰글이 저장되야 한다.
@@ -85,7 +86,7 @@ export const saveReview = async (event) => {
       text: comment.value,
       createdAt: Date.now(),
       creatorId: 'testTest',
-      nickname: 'displayName',
+      nickname: shoeName,
     });
     comment.value = '';
     getReviewList();
@@ -98,7 +99,7 @@ export const saveReview = async (event) => {
 export const getReviewList = async () => {
   let cmtObjList = [];
   const q = query(
-    collection(dbService, 'reviewPosting'),
+    collection(dbService, 'reviews'),
     orderBy('createdAt', 'desc')
   );
   const querySnapshot = await getDocs(q);
@@ -108,8 +109,10 @@ export const getReviewList = async () => {
       ...doc.data(),
     };
     cmtObjList.push(commentObj);
+    console.log(commentObj.id);
   });
-  const reviewList = document.getElementById('reviewList');
+
+  const reviewList = document.querySelector('.reviewList');
   // const currentUid = authService.currentUser.uid;
   reviewList.innerHTML = '';
   cmtObjList.forEach((cmtObj) => {
