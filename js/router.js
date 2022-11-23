@@ -8,7 +8,7 @@ const routes = {
   board: '/pages/board.html',
   review: '/pages/review.html',
 };
-// import { getReviewList } from './board';
+import { getReviewList } from './board.js';
 
 export const handleLocation = async () => {
   let path = window.location.hash.replace('#', '');
@@ -27,10 +27,9 @@ export const handleLocation = async () => {
   document.getElementById('main').innerHTML = html;
 
   // 특정 화면 렌더링 되자마자 DOM 조작 처리
-  // if (path === 'board') {
-  //   console.log('getReviewList');
-  //   getReviewList();
-  // }
+  if (path === 'board') {
+    console.log('getReviewList');
+    getReviewList();
 
   if (path === "mypage") {
     // 프로필 관리 화면 일 때 현재 프로필 사진과 닉네임 할당
