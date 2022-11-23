@@ -1,5 +1,6 @@
 import { emailRegex, pwRegex } from "../utill.js";
 import { authService } from "../firebase.js";
+import { goToLogin } from "../router.js";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -78,13 +79,14 @@ export const handleAuth = (event) => {
       });
   } else {
     // 회원가입 버튼 클릭의 경우
-    console.log('회원가입함수')
     createUserWithEmailAndPassword(authService, emailVal, pwVal)
       .then((userCredential) => {
         console.log(userCredential)
         // Signed in
-        alert("회원가입 성공!");
+        alert("회원가입이 완료되었습니다!");
         // const user = userCredentialdebugger.user;
+        const user = userCredential.user;
+        goToLogin();
       })
       .catch((error) => {
         const errorMessage = error.message;
