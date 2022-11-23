@@ -2,7 +2,7 @@ import { handleLocation, goToLogin, goToJoin, goToBoard, goToReview, goToMypage 
 import { handleAuth, socialLogin, logout } from './pages/auth.js';
 import { authService } from './firebase.js';
 
-import { changeProfile, imgFileUpload, saveReview } from './board.js';
+import { changeProfile, imgFileUpload, saveReview, receiveDataFromMain } from './board.js';
 import { toggleMoreBrand, changeShoesList, showMoreShoes } from './pages/home.js';
 import { onFileChange, changeProfiles } from './mypage.js';
 
@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
     handleLocation();
     const hash = window.location.hash;
     if (user) {
+
+      // 로그인 상태이므로 항상 팬명록 화면으로 이동
       console.log(user);
 
       activeMenu.textContent = 'Logout';
@@ -58,6 +60,8 @@ window.changeShoesList = changeShoesList;
 window.showMoreShoes = showMoreShoes;
 window.imgFileUpload = imgFileUpload;
 window.saveReview = saveReview;
+
+window.receiveDataFromMain = receiveDataFromMain;
 // window.getReviewList = getReviewList;
 window.changeProfiles = changeProfiles;
 window.logout = logout;
