@@ -8,6 +8,7 @@ import {
   orderBy,
   query,
   getDocs,
+  where,
 } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 import {
   ref,
@@ -40,11 +41,11 @@ export const changeProfile = async (event) => {
     photoURL: downloadUrl ? downloadUrl : null,
   })
     .then(() => {
-      alert('프로필 수정 완료');
+      alert('리뷰 업로드 완료');
       window.location.hash = '#board';
     })
     .catch((error) => {
-      alert('프로필 수정 실패');
+      alert('리뷰 업로드 실패');
       console.log('error:', error);
     });
 };
@@ -59,7 +60,7 @@ export const imgFileUpload = (event) => {
     // 파일리더가 파일객체를 data URL로 변환 작업을 끝났을 때
     const imgDataUrl = finishedEvent.currentTarget.result;
     localStorage.setItem('imgDataUrl', imgDataUrl);
-    // document.getElementById('profileView').src = imgDataUrl;
+    // document.getElementById('reviewPostingImg').src = imgDataUrl;
     // console.log(imgDataUrl);
   };
 };
@@ -67,9 +68,19 @@ export const imgFileUpload = (event) => {
 // 리뷰 DB에 저장
 export const saveReview = async (event) => {
   event.preventDefault();
+
+  // 현재 페이지의 신발이름을 가져와
+  const shoeName =
+    document.getElementsByClassName('boardShoeTitle')[0].innerHTML;
+  // db의 shoeList에서 showName이 같은것을 찾아서
+
+  // 거기에 사진과 리뷰를 쓴 리뷰글이 저장되야 한다.
+
   const comment = document.getElementById('reviewCheck');
   // const { photoURL, displayName } = authService.currentUser;
+
   try {
+    // reviews 파일을 만든후, 아래 내용들이 저장된다.
     await addDoc(collection(dbService, 'reviews'), {
       text: comment.value,
       createdAt: Date.now(),
@@ -105,7 +116,7 @@ export const getReviewList = async () => {
     // const isOwner = currentUid === cmtObj.creatorId;
     const temp_html = `<div class="boardReview">
         <div class="boardReviewersImg">
-          <img src="./assets/nike_review_1.png" alt="" />
+          <img class="reviewPostingImg" src="./assets/nike_review_1.png" alt="" />
         </div>
         <div class="boardReviewersRow boardProfileImageAndNickName">
           <img
@@ -128,4 +139,86 @@ export const getReviewList = async () => {
     div.innerHTML = temp_html;
     reviewList.appendChild(div);
   });
+};
+
+// home.html에서 신발 클릭시
+export const receiveDataFromMain = async (event) => {
+  const currentTarget = event.target.parentNode.children[0].alt;
+  console.log(event.target.parentNode.children[0].src);
+  console.log(event.target.parentNode.children[0].alt);
+
+  let reviewObjList = [];
+
+  const q = query(
+    collection(dbService, 'shoesList'),
+    where('shoesName', '==', currentTarget)
+  );
+  const querySnapShot = await getDocs(q);
+
+  querySnapShot.forEach((doc) => {
+    const reviewsObj = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    reviewObjList.push(reviewsObj);
+  });
+
+  const boardTop = document.querySelector('.boardTop');
+  boardTop.innerHTML = '';
+
+  const temp = reviewObjList
+    .map(
+      (shoes, idx) =>
+        `<!-- Left -->
+      <div class="boardShoeImg boardImgLeft">
+        <img
+          src="${shoes.image}"
+          alt="${shoes.shoesName}"
+        />
+      </div>
+      <form class="boardWriteReviews">
+        <p>${shoes.brandName}</p>
+        <h1 class="boardShoeTitle">${shoes.shoesName}</h1>
+        <div class="boardRow">
+          <div class="boardMesageAndHeart">
+            <i class="fa-regular fa-comment"></i>
+            <p>123</p>
+            <i class="fas fa-solid fa-heart"></i>
+            <p>123</p>
+          </div>
+          <div class="youTubeIcon">
+            <i class="fa-brands fa-youtube"><a href="">관련 영상</a></i>
+          </div>
+        </div>
+        <!-- Right -->
+        <div class="boardReviewRight boardReviewColumn">
+          <label for="imgInput">
+            <div class="boardNewImage">
+              + 사진 올리기
+              <input
+                type="file"
+                id="imgInput"
+                accept="image/*"
+                name="imgInput"
+                onchange="imgFileUpload(event)"
+              />
+            </div>
+          </label>
+          <div class="boardWriteReview">
+            <textarea
+              id="reviewCheck"
+              placeholder=" 리뷰를 남겨주세요..."
+            ></textarea>
+          </div>
+          <div class="boardReviewButton">
+            <button id="uploadReview" onclick="saveReview(event)" type="button">
+              리뷰 작성
+            </button>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </form>`
+    )
+    .join('');
+  boardTop.innerHTML = temp;
 };
