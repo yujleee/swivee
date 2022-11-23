@@ -3,7 +3,7 @@ import { handleAuth, socialLogin, logout } from './pages/auth.js';
 import { authService } from './firebase.js';
 
 import { changeProfile, imgFileUpload, saveReview, receiveDataFromMain } from './board.js';
-import { toggleMoreBrand, changeShoesList, showMoreShoes } from './pages/home.js';
+import { toggleMoreBrand, changeShoesList, showMoreShoes, getBrandList } from './pages/home.js';
 import { onFileChange, changeProfiles } from './mypage.js';
 
 const activeMenu = document.querySelector('.active');
@@ -13,6 +13,9 @@ window.addEventListener('hashchange', handleLocation);
 
 // 첫 랜딩 또는 새로고침 시 handleLocation 실행하여 화면 변경
 document.addEventListener('DOMContentLoaded', function () {
+  getBrandList();
+  changeShoesList();
+
   // 인증 관련 수정 추가 필요!
   // Firebase 연결상태를 감시
   authService.onAuthStateChanged((user) => {
@@ -20,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
     handleLocation();
     const hash = window.location.hash;
     if (user) {
-
       // 로그인 상태이므로 항상 팬명록 화면으로 이동
       console.log(user);
 
@@ -65,6 +67,8 @@ window.receiveDataFromMain = receiveDataFromMain;
 // window.getReviewList = getReviewList;
 window.changeProfiles = changeProfiles;
 window.logout = logout;
+window.getBrandList = getBrandList;
+//
 //
 //
 //
