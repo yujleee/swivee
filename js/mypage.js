@@ -9,15 +9,13 @@ import {
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 
 
-export const changeProfile = async(event) => {
-  event.prevenDefault();
+  export const changeProfiles = async(event) => {
+  event.preventDefault();
   document.getElementById("profileBtn").disabled = true; 
   const imgRef= ref(
     storageService,
-    `${authService.currentUser.uid}/${uuidv4}`
-  );
-
- 
+    `${authService.currentUser.uid}/${uuidv4()}`
+    )
   const newNickname = document.getElementById("profilenickname").value;
   const imgDataUrl = localStorage.getItem("imgDataUrl");
   let downloadUrl;
@@ -44,8 +42,6 @@ export const changeProfile = async(event) => {
 };
 
 
-
-
 export const onFileChange = (event) => {
   console.log('event.target.files:', event.target.files);
   const theFile = event.target.files[0]; // file 객체
@@ -59,17 +55,3 @@ export const onFileChange = (event) => {
   };
 };
 
-
-//<이미지가 클릭했을 때 파일이 뜨는 코드>
-// export const onFileChange = (event) =>{
-//   console.log("evet.target:", event.target.files);
-//   const theFile = event.target.files[0]; //file객체
-//   //파일의 열기버튼을 누르면 그제서야 event가 발생
-//   const reader = new FileReader(); 
-//   reader.readAsDataURL(theFile);
-//   reader.onloadend = (finishedEvent) => {
-//     const imgDataUrl = finishedEvent.currentTarget.result;
-//     localStorage.setItem("imgDataUrl",imgDataUrl);
-//     document.getElementById("profileView").src = imgDataUrl 
-//   } 
-// }
