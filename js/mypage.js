@@ -27,23 +27,16 @@ export const changeProfiles = async event => {
     const response = await uploadString(imgRef, imgDataUrl, 'data_url'); //imgRef:이미지저장 위치
     downloadUrl = await getDownloadURL(response.ref);
   }
-  const storageRef = ref(storageService, 'some-child');
-  const userName1 = document.getElementById('userNickname').textContent;
-  const message = document.getElementById('profileNickname').value;
 
-  uploadString(storageRef, message)
-    .then(() => {
-      alert('프로필 수정 완료');
-      window.location.hash = '#mypage';
-    })
-    .catch(error => {
-      alert('프로필 수정 실패');
-      console.log('error:', error);
-    });
+
   await updateProfile(authService.currentUser, {
-    displayName: message ? message : null,
-    //displayName에다가 새로운 닉네임을 넣고
     photoURL: downloadUrl ? downloadUrl : null,
+  }).then(()=>{
+    alert('프로필 수정 완료!');
+    window.location.hash ='#mypage';
+  }).catch(error=>{
+    alert('프로필 수정 실패!');
+    console.log('error:',error);
   });
 
   try {
@@ -57,15 +50,14 @@ export const changeProfiles = async event => {
   }
 };
 
+
 export const onChangeNickname = async event => {
   event.preventDefault();
   document.getElementById('changeNickname').disabled = true;
-
   const storageRef = ref(storageService, 'some-child');
-  const userName1 = document.getElementById('userNickname').textContent;
+  const userName1 = document.getElementById('userNickname');
   const message = document.getElementById('profileNickname').value;
-
-  uploadString(storageRef, message)
+    uploadString(storageRef, message)
     .then(() => {
       alert('닉네임 수정 완료');
       window.location.hash = '#mypage';
@@ -77,7 +69,11 @@ export const onChangeNickname = async event => {
   await updateProfile(authService.currentUser, {
     displayName: message ? message : null,
   });
+  const temp_html=message;
+
+ $('#userNickname').append(temp_html);
 };
+
 
 
 // 삭제버튼 기능 구현 중
@@ -107,6 +103,7 @@ export const onDeleteImg = async (event) => {
     ).then(()=>{
       const deleteuserImg = document.getElementById('profileView');
       deleteuserImg.src = authService.currentUser.photoURL; 
+      alert('이미지 삭제');
       }).catch(error=>{
         console.log('error:', error)
       });

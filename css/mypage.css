@@ -119,13 +119,14 @@ h4 {
 #password > p {
   margin: 10px 0 6px 0;
   color: rgb(147, 147, 147);
+  
 }
 .passwordInput {
   width: 390px;
   height: 30px;
   border: none;
   border-bottom: 1px solid #ddd;
-  font-size: 1.3rem;
+  font-size: 1rem;
 }
 
 
