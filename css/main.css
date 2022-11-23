@@ -40,8 +40,8 @@ html {
 }
 
 /* .allBrandList .brandItem:nth-child(5n) {
-  margin-right: 0;
-} */
+      margin-right: 0;
+    } */
 
 .allBrandList .brandItem > .imgBox {
   width: 100%;
@@ -235,6 +235,24 @@ html {
   text-overflow: ellipsis;
 }
 
+.shoesListWrap .empty {
+  width: 100%;
+  padding: 100px 0;
+  text-align: center;
+}
+
+.shoesListWrap .empty > i {
+  width: 100px;
+  display: inline-block;
+  font-size: 100px;
+  color: #ddd;
+}
+
+.shoesListWrap .empty .emptyMessage {
+  margin-top: 32px;
+  color: #999;
+}
+
 .shoesListWrap .btnMoreWrap .btnMoreShoes {
   width: 200px;
   padding: 12px 0;
@@ -244,7 +262,7 @@ html {
   font-weight: 500;
 }
 
-.shoesListWrap .btnMoreWrap .btnMoreShoes.hide {
+.shoesListWrap .hide {
   display: none;
 }
 
