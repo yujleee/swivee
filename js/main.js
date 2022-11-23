@@ -11,7 +11,7 @@ import { authService } from './firebase.js';
 
 import { changeProfile, imgFileUpload, saveReview } from './board.js';
 import { toggleMoreBrand, changeShoesList, showMoreShoes } from './pages/home.js';
-import { onFileChange,changeProfiles} from './mypage.js';
+import { onFileChange,changeProfiles, onChangeNickname} from './mypage.js';
 
 
 // url 바뀌면 handleLocation 실행하여 화면 변경
@@ -64,5 +64,5 @@ window.changeProfiles=changeProfiles;
 //
 //
 //
-
+window.onChangeNickname=onChangeNickname;
 
