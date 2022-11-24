@@ -30,7 +30,8 @@ export const saveComment = async (event) => {
   }
 };
 
-//
+//수정, 삭제 부분
+
 export const onEditing = (event) => {
   // 수정버튼 클릭
   event.preventDefault();
@@ -144,6 +145,9 @@ export const getCommentList = async () => {
     </div>
     <div class="commentAndDelEd">
     <p class="card-text">${cmtObj.text}</p>
+    <p id="${
+      cmtObj.id
+    }" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
     <div class="${isOwner ? "updateBtns" : "noDisplay"}">
     <button onclick="onEditing(event)" class="editBtn">수정</button>
     <button
