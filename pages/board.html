@@ -4,8 +4,8 @@
   <!-- Board Page -->
   <div class="writeReview">
     <!-- Top Page (Img & Review) -->
-    <div class="boardTop">
-      <!-- Left -->
+    <div class="boardTop"></div>
+    <!-- <div class="boardTop">
       <div class="boardShoeImg boardImgLeft">
         <img
           src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/9670c92c-da84-4dd4-8ac2-801e200498f5/%EB%8D%A9%ED%81%AC-%EB%A1%9C%EC%9A%B0-%EC%97%AC%EC%84%B1-%EC%8B%A0%EB%B0%9C-ZuZyA5Sj.png"
@@ -26,7 +26,6 @@
             <i class="fa-brands fa-youtube"><a href="">관련 영상</a></i>
           </div>
         </div>
-        <!-- Right -->
         <div class="boardReviewRight boardReviewColumn">
           <label for="imgInput">
             <div class="boardNewImage">
@@ -36,7 +35,7 @@
                 id="imgInput"
                 accept="image/*"
                 name="imgInput"
-                onchange="onFileChange(event)"
+                onchange="imgFileUpload(event)"
               />
             </div>
           </label>
@@ -54,124 +53,92 @@
           <div class="clear"></div>
         </div>
       </form>
-    </div>
-    <!-- Reviews -->
-    <div id="reviewList"></div>
-    <!-- <div class="boardReviews" id="reviewList">
-      <div class="boardReview">
-        <div class="boardReviewersImg">
-          <img src="./assets/nike_review_1.png" alt="" />
-        </div>
-        <div class="boardReviewersRow boardProfileImageAndNickName">
-          <img
-            class="boardReviewersProfile"
-            src="./assets/blank-profile-picture.png"
-            alt=""
-          />
-          <p class="boardReviewersNickname">__dw__00</p>
-        </div>
-        <div class="boardReviewersRow boardReviewersSmileAndComment">
-          <i class="fa-regular fa-face-grin-squint"></i>
-          <p>23</p>
-          <i class="fa-regular fa-comment"></i>
-          <p>3</p>
-        </div>
-      </div>
-      <div class="boardReview">
-        <div class="boardReviewersImg">
-          <img src="./assets/nike_review_1.png" alt="" />
-        </div>
-        <div class="boardReviewersRow boardProfileImageAndNickName">
-          <img
-            class="boardReviewersProfile"
-            src="./assets/blank-profile-picture.png"
-            alt=""
-          />
-          <p class="boardReviewersNickname">__dw__00</p>
-        </div>
-        <div class="boardReviewersRow boardReviewersSmileAndComment">
-          <i class="fa-regular fa-face-grin-squint"></i>
-          <p>23</p>
-          <i class="fa-regular fa-comment"></i>
-          <p>3</p>
-        </div>
-      </div>
-      <div class="boardReview">
-        <div class="boardReviewersImg">
-          <img src="./assets/nike_review_1.png" alt="" />
-        </div>
-        <div class="boardReviewersRow boardProfileImageAndNickName">
-          <img
-            class="boardReviewersProfile"
-            src="./assets/blank-profile-picture.png"
-            alt=""
-          />
-          <p class="boardReviewersNickname">__dw__00</p>
-        </div>
-        <div class="boardReviewersRow boardReviewersSmileAndComment">
-          <i class="fa-regular fa-face-grin-squint"></i>
-          <p>23</p>
-          <i class="fa-regular fa-comment"></i>
-          <p>3</p>
-        </div>
-      </div>
-      <div class="boardReview">
-        <div class="boardReviewersImg">
-          <img src="./assets/nike_review_1.png" alt="" />
-        </div>
-        <div class="boardReviewersRow boardProfileImageAndNickName">
-          <img
-            class="boardReviewersProfile"
-            src="./assets/blank-profile-picture.png"
-            alt=""
-          />
-          <p class="boardReviewersNickname">__dw__00</p>
-        </div>
-        <div class="boardReviewersRow boardReviewersSmileAndComment">
-          <i class="fa-regular fa-face-grin-squint"></i>
-          <p>23</p>
-          <i class="fa-regular fa-comment"></i>
-          <p>3</p>
-        </div>
-      </div>
-      <div class="boardReview">
-        <div class="boardReviewersImg">
-          <img src="./assets/nike_review_1.png" alt="" />
-        </div>
-        <div class="boardReviewersRow boardProfileImageAndNickName">
-          <img
-            class="boardReviewersProfile"
-            src="./assets/blank-profile-picture.png"
-            alt=""
-          />
-          <p class="boardReviewersNickname">__dw__00</p>
-        </div>
-        <div class="boardReviewersRow boardReviewersSmileAndComment">
-          <i class="fa-regular fa-face-grin-squint"></i>
-          <p>23</p>
-          <i class="fa-regular fa-comment"></i>
-          <p>3</p>
-        </div>
-      </div>
-      <div class="boardReview">
-        <div class="boardReviewersImg">
-          <img src="./assets/nike_review_1.png" alt="" />
-        </div>
-        <div class="boardReviewersRow boardProfileImageAndNickName">
-          <img
-            class="boardReviewersProfile"
-            src="./assets/blank-profile-picture.png"
-            alt=""
-          />
-          <p class="boardReviewersNickname">__dw__00</p>
-        </div>
-        <div class="boardReviewersRow boardReviewersSmileAndComment">
-          <i class="fa-regular fa-face-grin-squint"></i>
-          <p>23</p>
-          <i class="fa-regular fa-comment"></i>
-          <p>3</p>
-        </div>
-      </div>
     </div> -->
+    <!-- Reviews -->
+    <div id="reviewList" class="reviewList">
+      <div class="boardReviews"></div>
+    </div>
+    <div class="boardReviews" id="reviewList">
+      <!-- <div class="boardReview">
+        <div class="boardReviewersImg">
+          <img src="./assets/nike_review_1.png" alt="" />
+        </div>
+        <div class="boardReviewersRow boardProfileImageAndNickName">
+          <img
+            class="boardReviewersProfile"
+            src="./assets/blank-profile-picture.png"
+            alt=""
+          />
+          <p class="boardReviewersNickname">__dw__00</p>
+        </div>
+        <div class="boardReviewersRow boardReviewersSmileAndComment">
+          <i class="fa-regular fa-face-grin-squint"></i>
+          <p>23</p>
+          <i class="fa-regular fa-comment"></i>
+          <p>3</p>
+        </div>
+      </div>
+      <div class="boardReview">
+        <div class="boardReviewersImg">
+          <img src="./assets/nike_review_1.png" alt="" />
+        </div>
+        <div class="boardReviewersRow boardProfileImageAndNickName">
+          <img
+            class="boardReviewersProfile"
+            src="./assets/blank-profile-picture.png"
+            alt=""
+          />
+          <p class="boardReviewersNickname">__dw__00</p>
+        </div>
+        <div class="boardReviewText">
+          신발이 너무너무너무너무 이뻐요!!!!!!!!!!
+        </div>
+
+        <div class="boardReviewersRow boardReviewersSmileAndComment">
+          <i class="fa-regular fa-face-grin-squint"></i>
+          <p>23</p>
+          <i class="fa-regular fa-comment"></i>
+          <p>3</p>
+        </div>
+      </div>
+      <div class="boardReview">
+        <div class="boardReviewersImg">
+          <img src="./assets/nike_review_1.png" alt="" />
+        </div>
+        <div class="boardReviewersRow boardProfileImageAndNickName">
+          <img
+            class="boardReviewersProfile"
+            src="./assets/blank-profile-picture.png"
+            alt=""
+          />
+          <p class="boardReviewersNickname">__dw__00</p>
+        </div>
+        <div class="boardReviewersRow boardReviewersSmileAndComment">
+          <i class="fa-regular fa-face-grin-squint"></i>
+          <p>23</p>
+          <i class="fa-regular fa-comment"></i>
+          <p>3</p>
+        </div>
+      </div>
+      <div class="boardReview">
+        <div class="boardReviewersImg">
+          <img src="./assets/nike_review_1.png" alt="" />
+        </div>
+        <div class="boardReviewersRow boardProfileImageAndNickName">
+          <img
+            class="boardReviewersProfile"
+            src="./assets/blank-profile-picture.png"
+            alt=""
+          />
+          <p class="boardReviewersNickname">__dw__00</p>
+        </div>
+        <div class="boardReviewersRow boardReviewersSmileAndComment">
+          <i class="fa-regular fa-face-grin-squint"></i>
+          <p>23</p>
+          <i class="fa-regular fa-comment"></i>
+          <p>3</p>
+        </div>
+      </div> -->
+    </div>
   </div>
 </div>

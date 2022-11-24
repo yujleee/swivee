@@ -1,5 +1,6 @@
 import { emailRegex, pwRegex } from "../utill.js";
 import { authService } from "../firebase.js";
+import { goToLogin } from "../router.js";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -13,11 +14,14 @@ import {
 // 로그인 성공 시 화면으로 이동
 export const handleAuth = (event) => {
   event.preventDefault();
+  const buttonText = event.target.value
   const email = document.getElementById("email");
   const emailVal = email.value;
   const pw = document.getElementById("pw");
   const pwVal = pw.value;
   console.log(emailVal, pwVal);
+  
+  
 
   // 유효성 검사 진행
   if (!emailVal) {
@@ -30,6 +34,7 @@ export const handleAuth = (event) => {
     pw.focus();
     return;
   }
+  
 
   const matchedEmail = emailVal.match(emailRegex);
   const matchedPw = pwVal.match(pwRegex);
@@ -44,7 +49,6 @@ export const handleAuth = (event) => {
     pw.focus();
     return;
   }
-
   // 유효성 검사 통과 후 로그인 또는 회원가입 API 요청
   const submitBox2 = document.querySelector("#submitBox2").value;
   if (submitBox2 === "로그인") {
@@ -53,7 +57,9 @@ export const handleAuth = (event) => {
     signInWithEmailAndPassword(authService, emailVal, pwVal)
       .then((userCredential) => {
         // Signed in
+        
         const user = userCredential.user;
+        console.log(user)
         window.location.hash = "#";
       })
       .catch((error) => {
@@ -70,9 +76,12 @@ export const handleAuth = (event) => {
     // 회원가입 버튼 클릭의 경우
     createUserWithEmailAndPassword(authService, emailVal, pwVal)
       .then((userCredential) => {
+        console.log(userCredential)
         // Signed in
-        console.log("회원가입 성공!");
-        // const user = userCredential.user;
+        alert("회원가입이 완료되었습니다!");
+        // const user = userCredentialdebugger.user;
+        const user = userCredential.user;
+        goToLogin();
       })
       .catch((error) => {
         const errorMessage = error.message;

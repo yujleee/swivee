@@ -159,7 +159,7 @@ body {
   margin: 10px 0;
 }
 
-.underline::before {
+.underline {
   content: "";
   position: absolute;
   height: 1px;
@@ -167,19 +167,6 @@ body {
   background: #ccc;
   left: 0;
   bottom: 0;
-}
-
-.underline::after {
-  content: "";
-  position: absolute;
-  height: 1px;
-  width: 100%;
-  background: black;
-  left: 0;
-  bottom: 0;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: all 0.3s ease;
 }
 
 .joinBox {
@@ -200,16 +187,16 @@ i {
   left: 15px;
 }
 
-ul {
+.joinBox {
   display: inline;
   font-size: 13px;
   text-align: center;
 }
 
-li {
-  list-style: none;
-}
-
 button {
   text-decoration: none;
+}
+.joinlistBox{
+  display: flex;
+  justify-content: space-around;
 }
