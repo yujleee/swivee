@@ -13,16 +13,16 @@ import { dbService } from '../firebase.js';
 export const toggleMoreBrand = (event) => {
   event.preventDefault();
   const btnMoreBrand = document.querySelector('.btnMoreBrand');
-  const AllBrandItems = document.querySelectorAll('.brandItem');
+  const allBrandItems = document.querySelectorAll('.brandItem');
 
   if (btnMoreBrand.classList.contains('fa-chevron-down')) {
-    AllBrandItems.forEach((item) => {
+    allBrandItems.forEach((item) => {
       if (item.classList.contains('hide')) {
         item.classList.toggle('hide');
       }
     });
   } else {
-    AllBrandItems.forEach((item) => {
+    allBrandItems.forEach((item) => {
       if (!item.classList.contains('show')) {
         item.classList.toggle('hide');
       }
@@ -116,8 +116,8 @@ export const showMoreShoes = () => {
   });
 };
 
-// 브랜드 가져오기
-export const getBrandList = async () => {
+// 브랜드 리스트 가져오기
+const getBrands = async () => {
   const q = query(collection(dbService, 'brandList'), orderBy('brand'));
   const querySnapShot = await getDocs(q);
 
@@ -130,6 +130,13 @@ export const getBrandList = async () => {
     };
     brandObjList.push(brandObj);
   });
+
+  return brandObjList;
+};
+
+// 브랜드 리스트 렌더링
+export const renderBrandList = async () => {
+  const brandObjList = await getBrands();
 
   const allBrandList = document.querySelector('.allBrandList');
   allBrandList.innerHTML = '';
