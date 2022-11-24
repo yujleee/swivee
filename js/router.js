@@ -1,5 +1,10 @@
 import { authService } from './firebase.js';
-import { renderBrandList, changeShoesList, getRealtimeReviews, renderTopbrands } from './pages/home.js';
+import {
+  renderBrandList,
+  changeShoesList,
+  getRealtimeReviews,
+  // renderTopbrands
+} from './pages/home.js';
 import { getUserReviewList } from './mypage.js';
 import { getCommentList } from './review.js';
 
@@ -46,7 +51,7 @@ export const handleLocation = async () => {
     renderBrandList();
     changeShoesList();
     getRealtimeReviews();
-    renderTopbrands();
+    // renderTopbrands();
   }
 };
 

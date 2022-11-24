@@ -8,9 +8,16 @@ import {
   showMoreShoes,
   renderBrandList,
   getRealtimeReviews,
-  renderTopbrands,
+  //   renderTopbrands,
 } from './pages/home.js';
-import { onFileChange, changeProfiles, onChangeNickname, onDeleteImg, changeUserPassword,getUserReviewList } from './mypage.js';
+import {
+  onFileChange,
+  changeProfiles,
+  onChangeNickname,
+  onDeleteImg,
+  changeUserPassword,
+  getUserReviewList,
+} from './mypage.js';
 import { saveComment } from './review.js';
 
 const activeMenu = document.querySelector('.active');
@@ -23,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
   renderBrandList();
   changeShoesList();
   getRealtimeReviews();
-  renderTopbrands();
+  //   renderTopbrands();
 
   // 인증 관련 수정 추가 필요!
   // Firebase 연결상태를 감시
@@ -83,4 +90,4 @@ window.onDeleteImg = onDeleteImg;
 window.changeUserPassword = changeUserPassword;
 window.saveComment = saveComment;
 window.renderTopbrands = renderTopbrands;
-window.getUserReviewList=getUserReviewList;
+window.getUserReviewList = getUserReviewList;
