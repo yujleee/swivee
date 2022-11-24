@@ -45,6 +45,8 @@ export const saveReview = async (event) => {
   // 현재 페이지의 신발이름
   const shoeName =
     document.getElementsByClassName('boardShoeTitle')[0].innerHTML;
+  const shoeBrand =
+    document.getElementsByClassName('boardShoeBrand')[0].innerHTML;
   // 현재 페이지의 리뷰
   const comment = document.getElementById('reviewCheck');
   // Storage에 리뷰 사진 저장할 위치 (신발 이름별 리뷰 모음)
@@ -83,6 +85,7 @@ export const saveReview = async (event) => {
       profileImg: photoURL,
       nickname: displayName,
       shoeName: shoeName,
+      brandName: shoeBrand,
     });
     comment.value = '';
     getReviewList(shoeName);
@@ -92,7 +95,28 @@ export const saveReview = async (event) => {
   }
 };
 
+const cntReviews = async (shoeName) => {
+  console.log('shoeName', shoeName);
+  let reviewObjList = [];
+  const q = query(
+    collection(dbService, 'reviews'),
+    where('shoeName', '==', shoeName)
+  );
+  const querySnapShot = await getDocs(q);
+  querySnapShot.forEach((doc) => {
+    const reviewsObj = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    reviewObjList.push(reviewsObj);
+  });
+  console.log('reviewObjList', reviewObjList.length);
+  return reviewObjList.length;
+};
+
 export const getReviewList = async (shoeName) => {
+  // await cntReviews(shoeName);
+  // console.log(cntReviews(shoeName));
   console.log('shoeName', shoeName);
   let cmtObjList = [];
   const qq = query(
@@ -106,7 +130,6 @@ export const getReviewList = async (shoeName) => {
       ...doc.data(),
     };
     cmtObjList.push(reviewsObj);
-    console.log('cmtObjList', cmtObjList);
   });
 
   const reviewList = document.querySelector('.boardReviews');
@@ -145,13 +168,11 @@ export const receiveDataFromMain = async (event) => {
   const currentTarget = event.target.parentNode.children[0].alt;
 
   let reviewObjList = [];
-
   const q = query(
     collection(dbService, 'shoesList'),
     where('shoesName', '==', currentTarget)
   );
   const querySnapShot = await getDocs(q);
-
   querySnapShot.forEach((doc) => {
     const reviewsObj = {
       id: doc.id,
@@ -159,14 +180,14 @@ export const receiveDataFromMain = async (event) => {
     };
     reviewObjList.push(reviewsObj);
   });
-
+  // 실발 리뷰 개수
   const boardTop = document.querySelector('.boardTop');
   boardTop.innerHTML = '';
-
   const temp = reviewObjList
-    .map(
-      (shoes, idx) =>
-        `<!-- Left -->
+    .map((shoes, idx) => {
+      // const shoeCnt = await cntReviews(shoes.shoesName);
+      const shoeCnt = 23;
+      return `<!-- Left -->
       <div class="boardShoeImg boardImgLeft">
         <img
           src="${shoes.image}"
@@ -174,12 +195,12 @@ export const receiveDataFromMain = async (event) => {
         />
       </div>
       <form class="boardWriteReviews">
-        <p>${shoes.brandName}</p>
+        <p class="boardShoeBrand">${shoes.brandName}</p>
         <h1 class="boardShoeTitle">${shoes.shoesName}</h1>
         <div class="boardRow">
           <div class="boardMesageAndHeart">
             <i class="fa-regular fa-comment"></i>
-            <p>123</p>
+            <p>${shoeCnt}</p>
             <button onclick="shoesBrandLike(${shoes.shoesLike})"><i class="fas fa-solid fa-heart"></i>${shoes.shoesLike}</button>
             
           </div>
@@ -214,8 +235,8 @@ export const receiveDataFromMain = async (event) => {
           </div>
           <div class="clear"></div>
         </div>
-      </form>`
-    )
+      </form>`;
+    })
     .join('');
   boardTop.innerHTML = temp;
   getReviewList(currentTarget);
