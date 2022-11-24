@@ -13,16 +13,16 @@ import { dbService } from '../firebase.js';
 export const toggleMoreBrand = (event) => {
   event.preventDefault();
   const btnMoreBrand = document.querySelector('.btnMoreBrand');
-  const AllBrandItems = document.querySelectorAll('.brandItem');
+  const allBrandItems = document.querySelectorAll('.brandItem');
 
   if (btnMoreBrand.classList.contains('fa-chevron-down')) {
-    AllBrandItems.forEach((item) => {
+    allBrandItems.forEach((item) => {
       if (item.classList.contains('hide')) {
         item.classList.toggle('hide');
       }
     });
   } else {
-    AllBrandItems.forEach((item) => {
+    allBrandItems.forEach((item) => {
       if (!item.classList.contains('show')) {
         item.classList.toggle('hide');
       }
@@ -34,6 +34,7 @@ export const toggleMoreBrand = (event) => {
 
 // 브랜드별 신발 리스트
 export const changeShoesList = async (event) => {
+  event.preventDefault();
   let currentTarget = !event ? 1 : Number(event.target.parentNode.parentNode.dataset.brand);
   let shoesObjList = [];
 
