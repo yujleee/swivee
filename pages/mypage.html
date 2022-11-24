@@ -29,7 +29,7 @@
 
        <div id="password">
         <p style="font-size: 0.9rem;">비밀번호</p>
-          <input placeholder="변경 할 비밀번호를 입력하세요" id="userPasswordInput" class="passwordInput" type="password"/>
+          <input placeholder="8자리이상 대소문자, 특수문자포함 해주세요" id="userPasswordInput" class="passwordInput" type="password"/>
           <!-- <input class="passwordChangeBtn" type="button" value="변경"/> -->
           <button onclick="changeUserPassword(event)" id="changePassword" class="passwordChangeBtn">변경</button>
        </div>
@@ -39,8 +39,8 @@
     <article>
       <h2 id="mypostList">내 포스트</h2>
       <span class="line2"></span>
-      <div class="boardReviews">
-        <div class="boardReview">
+      <div class="boardReviews" id="userReviewLists">
+        <!-- <div class="boardReview" id="reviewLists">
           <div class="boardReviewersImg">
             <img src="./assets/nike_review_1.png" alt="" />
           </div>
@@ -153,7 +153,7 @@
             <i class="fa-regular fa-comment"></i>
             <p>3</p>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <a href="#" class="toTop">
