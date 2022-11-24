@@ -196,3 +196,7 @@ i {
 button {
   text-decoration: none;
 }
+.joinlistBox{
+  display: flex;
+  justify-content: space-around;
+}
