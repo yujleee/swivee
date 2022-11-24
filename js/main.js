@@ -2,7 +2,14 @@ import { handleLocation, goToLogin, goToJoin, goToBoard, goToReview, goToMypage 
 import { handleAuth, socialLogin, logout } from './pages/auth.js';
 import { authService } from './firebase.js';
 import { imgFileUpload, saveReview, receiveDataFromMain, shoesBrandLike } from './board.js';
-import { toggleMoreBrand, changeShoesList, showMoreShoes, renderBrandList, getRealtimeReviews } from './pages/home.js';
+import {
+  toggleMoreBrand,
+  changeShoesList,
+  showMoreShoes,
+  renderBrandList,
+  getRealtimeReviews,
+  renderTopbrands,
+} from './pages/home.js';
 import { onFileChange, changeProfiles, onChangeNickname, onDeleteImg, changeUserPassword } from './mypage.js';
 import { saveComment } from './review.js';
 
@@ -16,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
   renderBrandList();
   changeShoesList();
   getRealtimeReviews();
+  renderTopbrands();
 
   // 인증 관련 수정 추가 필요!
   // Firebase 연결상태를 감시
@@ -74,3 +82,5 @@ window.onDeleteImg = onDeleteImg;
 
 window.changeUserPassword = changeUserPassword;
 window.saveComment = saveComment;
+
+window.renderTopbrands = renderTopbrands;
