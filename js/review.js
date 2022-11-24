@@ -85,7 +85,9 @@ export const getCommentList = async () => {
       }" alt="" />
       <div class="reviewListBoxNameDate">
         <div class="reviewListBoxName">${cmtObj.nickname}</div>
-        <div class="reviewListBoxDate">${cmtObj.createdAt}</div>
+        <div class="reviewListBoxDate">${new Date(cmtObj.createdAt)
+          .toLocaleString()
+          .slice(0, 25)}</div>
       </div>
     </div>
     <p class="card-text">${cmtObj.text}</p>

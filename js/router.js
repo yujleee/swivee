@@ -1,6 +1,6 @@
 import { authService } from './firebase.js';
 import { getUserReviewList } from './mypage.js';
-import { getBrandList, changeShoesList, getRealtimeReviews } from './pages/home.js';
+import { renderBrandList, changeShoesList, getRealtimeReviews } from './pages/home.js';
 import { getCommentList } from './review.js';
 
 const routes = {
@@ -43,7 +43,7 @@ export const handleLocation = async () => {
   }
 
   if (path === '/') {
-    getBrandList();
+    renderBrandList();
     changeShoesList();
     getRealtimeReviews();
   }

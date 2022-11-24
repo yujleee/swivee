@@ -18,8 +18,96 @@ import {
 import { updateProfile } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
-// 리뷰 작성을 누르면 사진과 리뷰가 올라간다. 아래 함수가 실행된다
-// 사용하지 않은 듯
+// home.html에서 신발 클릭시
+export const receiveDataFromMain = async (event) => {
+  const currentTarget = event.target.parentNode.children[0].alt;
+
+  let reviewObjList = [];
+  const q = query(
+    collection(dbService, 'shoesList'),
+    where('shoesName', '==', currentTarget)
+  );
+
+  const q2 = query(
+    collection(dbService, 'reviews'),
+    where('shoeName', '==', currentTarget)
+  );
+  // board 메인
+  const querySnapShot = await getDocs(q);
+  // 리뷰 개수
+  const querySnapShot2 = await getDocs(q2);
+  const reviewCount = querySnapShot2.docs.map((doc) => doc.data()).length;
+
+  querySnapShot.forEach((doc) => {
+    const reviewsObj = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    reviewObjList.push(reviewsObj);
+  });
+  // 실발 리뷰 개수
+  const boardTop = document.querySelector('.boardTop');
+  debugger;
+  // 신발에 리뷰 작성할때
+  // 리뷰숫자를 업데이트 +1
+  boardTop.innerHTML = '';
+  const temp = reviewObjList
+    .map((shoes, idx) => {
+      return `<!-- Left -->
+      <div class="boardShoeImg boardImgLeft">
+        <img
+          src="${shoes.image}"
+          alt="${shoes.shoesName}"
+        />
+      </div>
+      <form class="boardWriteReviews">
+        <p>${shoes.brandName}</p>
+        <h1 class="boardShoeTitle">${shoes.shoesName}</h1>
+        <div class="boardRow">
+          <div class="boardMesageAndHeart">
+            <i class="fa-regular fa-comment"></i>
+            <p>${reviewCount}</p>
+            <button onclick="shoesBrandLike(${shoes.shoesLike})"><i class="fas fa-solid fa-heart"></i>${shoes.shoesLike}</button>
+            
+          </div>
+          <div class="youTubeIcon">
+            <a href=""><pre> <i class="fa-brands fa-youtube"> 관련 영상</i></pre></a>
+          </div>
+        </div>
+        <!-- Right -->
+        <div class="boardReviewRight boardReviewColumn">
+          <label for="imgInput">
+            <div class="boardNewImage">
+              + 사진 올리기
+              <input
+                type="file"
+                id="imgInput"
+                accept="image/*"
+                name="imgInput"
+                onchange="imgFileUpload(event)"
+              />
+            </div>
+          </label>
+          <div class="boardWriteReview">
+            <textarea
+              id="reviewCheck"
+              placeholder=" 리뷰를 남겨주세요..."
+            ></textarea>
+          </div>
+          <div class="boardReviewButton">
+            <button id="uploadReview" onclick="saveReview(event)" type="button">
+              리뷰 작성
+            </button>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </form>`;
+    })
+    .join('');
+
+  boardTop.innerHTML = temp;
+  await getReviewList(currentTarget);
+};
 
 // 디비에 사진 업로드 하기
 export const imgFileUpload = (event) => {
@@ -92,7 +180,28 @@ export const saveReview = async (event) => {
   }
 };
 
+const cntReviews = async (shoeName) => {
+  console.log('shoeName', shoeName);
+  let reviewObjList = [];
+  const q = query(
+    collection(dbService, 'reviews'),
+    where('shoeName', '==', shoeName)
+  );
+  const querySnapShot = await getDocs(q);
+  querySnapShot.forEach((doc) => {
+    const reviewsObj = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    reviewObjList.push(reviewsObj);
+  });
+  console.log('reviewObjList', reviewObjList.length);
+  return reviewObjList.length;
+};
+
 export const getReviewList = async (shoeName) => {
+  // await cntReviews(shoeName);
+  // console.log(cntReviews(shoeName));
   console.log('shoeName', shoeName);
   let cmtObjList = [];
   const qq = query(
@@ -106,7 +215,6 @@ export const getReviewList = async (shoeName) => {
       ...doc.data(),
     };
     cmtObjList.push(reviewsObj);
-    console.log('cmtObjList', cmtObjList);
   });
 
   const reviewList = document.querySelector('.boardReviews');
@@ -138,87 +246,6 @@ export const getReviewList = async (shoeName) => {
     div.innerHTML = temp_html;
     reviewList.appendChild(div);
   });
-};
-
-// home.html에서 신발 클릭시
-export const receiveDataFromMain = async (event) => {
-  const currentTarget = event.target.parentNode.children[0].alt;
-
-  let reviewObjList = [];
-
-  const q = query(
-    collection(dbService, 'shoesList'),
-    where('shoesName', '==', currentTarget)
-  );
-  const querySnapShot = await getDocs(q);
-
-  querySnapShot.forEach((doc) => {
-    const reviewsObj = {
-      id: doc.id,
-      ...doc.data(),
-    };
-    reviewObjList.push(reviewsObj);
-  });
-
-  const boardTop = document.querySelector('.boardTop');
-  boardTop.innerHTML = '';
-
-  const temp = reviewObjList
-    .map(
-      (shoes, idx) =>
-        `<!-- Left -->
-      <div class="boardShoeImg boardImgLeft">
-        <img
-          src="${shoes.image}"
-          alt="${shoes.shoesName}"
-        />
-      </div>
-      <form class="boardWriteReviews">
-        <p>${shoes.brandName}</p>
-        <h1 class="boardShoeTitle">${shoes.shoesName}</h1>
-        <div class="boardRow">
-          <div class="boardMesageAndHeart">
-            <i class="fa-regular fa-comment"></i>
-            <p>123</p>
-            <button onclick="shoesBrandLike(${shoes.shoesLike})"><i class="fas fa-solid fa-heart"></i>${shoes.shoesLike}</button>
-            
-          </div>
-          <div class="youTubeIcon">
-            <a href=""><pre> <i class="fa-brands fa-youtube"> 관련 영상</i></pre></a>
-          </div>
-        </div>
-        <!-- Right -->
-        <div class="boardReviewRight boardReviewColumn">
-          <label for="imgInput">
-            <div class="boardNewImage">
-              + 사진 올리기
-              <input
-                type="file"
-                id="imgInput"
-                accept="image/*"
-                name="imgInput"
-                onchange="imgFileUpload(event)"
-              />
-            </div>
-          </label>
-          <div class="boardWriteReview">
-            <textarea
-              id="reviewCheck"
-              placeholder=" 리뷰를 남겨주세요..."
-            ></textarea>
-          </div>
-          <div class="boardReviewButton">
-            <button id="uploadReview" onclick="saveReview(event)" type="button">
-              리뷰 작성
-            </button>
-          </div>
-          <div class="clear"></div>
-        </div>
-      </form>`
-    )
-    .join('');
-  boardTop.innerHTML = temp;
-  getReviewList(currentTarget);
 };
 
 export const shoesBrandLike = async (event) => {
