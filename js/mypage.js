@@ -45,17 +45,17 @@ export const changeProfiles = async event => {
       alert('프로필 수정 실패!');
       console.log('error:', error);
     });
-
-  try {
-    const docRef = await addDoc(collection(dbService, 'users'), {
-      email: authService.currentUser.email,
-      nickname: message,
-    });
-    console.log('Document written with ID: ', docRef.id);
-  } catch (e) {
-    console.error('Error adding document: ', e);
   }
-};
+//   try {
+//     const docRef = await addDoc(collection(dbService, 'users'), {
+//       email: authService.currentUser.email,
+//       nickname: message,
+//     });
+//     console.log('Document written with ID: ', docRef.id);
+//   } catch (e) {
+//     console.error('Error adding document: ', e);
+//   }
+// };
 
 export const onChangeNickname = async event => {
   event.preventDefault();
@@ -110,7 +110,6 @@ export const onDeleteImg = async event => {
         console.log('error:', error);
       });
   }
-  console.log(authService.currentUser.photoURL);
 };
 
 
@@ -118,9 +117,10 @@ export const onDeleteImg = async event => {
 
 
 export const changeUserPassword =  async event =>{
-const userInputPassoword= document.getElementById('userPasswordInput')
+const userInputPassword= document.getElementById('userPasswordInput')
 const user = authService.currentUser;
-const newPassword = userInputPassoword.value
+const newPassword = userInputPassword.value
+
 // const passwordRegex=  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 await updatePassword(user,newPassword)
   .then(() => {
