@@ -1,17 +1,45 @@
-import { handleLocation, goToLogin, goToJoin, goToBoard, goToReview, goToMypage } from './router.js';
-import { handleAuth, socialLogin, logout } from './pages/auth.js';
-import { authService } from './firebase.js';
-import { changeProfile, imgFileUpload, saveReview, receiveDataFromMain } from './board.js';
-import { toggleMoreBrand, changeShoesList, showMoreShoes, getBrandList, getRealtimeReviews } from './pages/home.js';
-import { onFileChange, changeProfiles, onChangeNickname, onDeleteImg } from './mypage.js';
+import {
+  handleLocation,
+  goToLogin,
+  goToJoin,
+  goToBoard,
+  goToReview,
+  goToMypage,
+} from "./router.js";
+import { handleAuth, socialLogin, logout } from "./pages/auth.js";
+import { authService } from "./firebase.js";
+import {
+  changeProfile,
+  imgFileUpload,
+  saveReview,
+  receiveDataFromMain,
+} from "./board.js";
+import {
+  toggleMoreBrand,
+  changeShoesList,
+  showMoreShoes,
+  getBrandList,
+  getRealtimeReviews,
+} from "./pages/home.js";
+import {
+  onFileChange,
+  changeProfiles,
+  onChangeNickname,
+  onDeleteImg,
+} from "./mypage.js";
+import { saveComment } from "./review.js";
 
-const activeMenu = document.querySelector('.active');
+const activeMenu = document.querySelector(".active");
 
 // url 바뀌면 handleLocation 실행하여 화면 변경
-window.addEventListener('hashchange', handleLocation);
+window.addEventListener("hashchange", handleLocation);
 
 // 첫 랜딩 또는 새로고침 시 handleLocation 실행하여 화면 변경
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
+  getBrandList();
+  changeShoesList();
+  getRealtimeReviews();
+
   // 인증 관련 수정 추가 필요!
   // Firebase 연결상태를 감시
   authService.onAuthStateChanged((user) => {
@@ -22,21 +50,21 @@ document.addEventListener('DOMContentLoaded', function () {
       // 로그인 상태이므로 항상 팬명록 화면으로 이동
       console.log(user);
 
-      activeMenu.textContent = 'Logout';
-      activeMenu.setAttribute('onclick', 'logout()');
+      activeMenu.textContent = "Logout";
+      activeMenu.setAttribute("onclick", "logout()");
 
-      if (hash === '') {
+      if (hash === "") {
         // 로그인 상태에서는 로그인 화면으로 되돌아갈 수 없게 설정
-        window.location.replace('#');
+        window.location.replace("#");
       }
     } else {
       // 로그아웃 상태이므로 로그인 화면으로 강제 이동
-      if (hash !== '') {
-        window.location.replace('');
+      if (hash !== "") {
+        window.location.replace("");
       }
 
-      activeMenu.textContent = 'Login';
-      activeMenu.setAttribute('onclick', 'goToLogin()');
+      activeMenu.textContent = "Login";
+      activeMenu.setAttribute("onclick", "goToLogin()");
     }
   });
 });
@@ -67,3 +95,5 @@ window.getBrandList = getBrandList;
 window.getRealtimeReviews = getRealtimeReviews;
 window.onChangeNickname = onChangeNickname;
 window.onDeleteImg = onDeleteImg;
+
+window.saveComment = saveComment;
