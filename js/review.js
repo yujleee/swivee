@@ -30,6 +30,58 @@ export const saveComment = async (event) => {
   }
 };
 
+//
+export const onEditing = (event) => {
+  // 수정버튼 클릭
+  event.preventDefault();
+  const udBtns = document.querySelectorAll(".editBtn, .deleteBtn");
+  udBtns.forEach((udBtn) => (udBtn.disabled = "true"));
+
+  const cardBody = event.target.parentNode.parentNode;
+  const commentText = cardBody.children[0].children[0];
+  const commentInputP = cardBody.children[0].children[1];
+
+  commentText.classList.add("noDisplay");
+  commentInputP.classList.add("d-flex");
+  commentInputP.classList.remove("noDisplay");
+  commentInputP.children[0].focus();
+};
+
+export const update_comment = async (event) => {
+  event.preventDefault();
+  const newComment = event.target.parentNode.children[0].value;
+  const id = event.target.parentNode.id;
+
+  const parentNode = event.target.parentNode.parentNode;
+  const commentText = parentNode.children[0];
+  commentText.classList.remove("noDisplay");
+  const commentInputP = parentNode.children[1];
+  commentInputP.classList.remove("d-flex");
+  commentInputP.classList.add("noDisplay");
+
+  const commentRef = doc(dbService, "comments", id);
+  try {
+    await updateDoc(commentRef, { text: newComment });
+    getCommentList();
+  } catch (error) {
+    alert(error);
+  }
+};
+
+export const delete_comment = async (event) => {
+  event.preventDefault();
+  const id = event.target.name;
+  const ok = window.confirm("해당 응원글을 정말 삭제하시겠습니까?");
+  if (ok) {
+    try {
+      await deleteDoc(doc(dbService, "comments", id));
+      getCommentList();
+    } catch (error) {
+      alert(error);
+    }
+  }
+};
+
 // function save_comment() {
 //   const newWord = document.querySelector("#comment-input").value;
 //   let date = new Date();
@@ -90,7 +142,18 @@ export const getCommentList = async () => {
           .slice(0, 25)}</div>
       </div>
     </div>
+    <div class="commentAndDelEd">
     <p class="card-text">${cmtObj.text}</p>
+    <div class="${isOwner ? "updateBtns" : "noDisplay"}">
+    <button onclick="onEditing(event)" class="editBtn">수정</button>
+    <button
+      name="${cmtObj.id}"
+      onclick="delete_comment(event)"
+      class="deleteBtn"
+    >
+      삭제
+    </button>
+  </div>
   </div>`;
     console.log("commentList", commentList);
     const div = document.createElement("div");
