@@ -1,5 +1,6 @@
 import { authService } from './firebase.js';
-import { getBrandList, changeShoesList, getRealtimeReviews } from './pages/home.js';
+import { getUserReviewList } from './mypage.js';
+import { renderBrandList, changeShoesList, getRealtimeReviews } from './pages/home.js';
 import { getCommentList } from './review.js';
 
 const routes = {
@@ -38,10 +39,11 @@ export const handleLocation = async () => {
     document.getElementById('profileView').src =
       authService.currentUser.photoURL ?? '/assets/blank-profile-picture.png';
     document.getElementById('profileNickname').value = authService.currentUser.displayName ?? '닉네임없나';
+    getUserReviewList();
   }
 
   if (path === '/') {
-    getBrandList();
+    renderBrandList();
     changeShoesList();
     getRealtimeReviews();
   }
