@@ -10,7 +10,7 @@ import {
   getRealtimeReviews,
   renderTopbrands,
 } from './pages/home.js';
-import { onFileChange, changeProfiles, onChangeNickname, onDeleteImg, changeUserPassword } from './mypage.js';
+import { onFileChange, changeProfiles, onChangeNickname, onDeleteImg, changeUserPassword,getUserReviewList } from './mypage.js';
 import { saveComment } from './review.js';
 
 const activeMenu = document.querySelector('.active');
@@ -82,5 +82,5 @@ window.onDeleteImg = onDeleteImg;
 
 window.changeUserPassword = changeUserPassword;
 window.saveComment = saveComment;
-
 window.renderTopbrands = renderTopbrands;
+window.getUserReviewList=getUserReviewList;

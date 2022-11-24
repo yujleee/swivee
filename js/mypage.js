@@ -9,7 +9,12 @@ import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 import {
   collection,
   addDoc,
+  doc,
+  getDocs,
+  query,
+  where
 } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+// import{pwRegex}from './utill.js';
 
 
 export const changeProfiles = async event => {
@@ -40,17 +45,17 @@ export const changeProfiles = async event => {
       alert('프로필 수정 실패!');
       console.log('error:', error);
     });
-
-  try {
-    const docRef = await addDoc(collection(dbService, 'users'), {
-      email: authService.currentUser.email,
-      nickname: message,
-    });
-    console.log('Document written with ID: ', docRef.id);
-  } catch (e) {
-    console.error('Error adding document: ', e);
   }
-};
+//   try {
+//     const docRef = await addDoc(collection(dbService, 'users'), {
+//       email: authService.currentUser.email,
+//       nickname: message,
+//     });
+//     console.log('Document written with ID: ', docRef.id);
+//   } catch (e) {
+//     console.error('Error adding document: ', e);
+//   }
+// };
 
 export const onChangeNickname = async event => {
   event.preventDefault();
@@ -105,25 +110,26 @@ export const onDeleteImg = async event => {
         console.log('error:', error);
       });
   }
-  console.log(authService.currentUser.photoURL);
 };
 
 
 
+
+
 export const changeUserPassword =  async event =>{
-const userInputPassoword= document.getElementById('userPasswordInput')
+const userInputPassword= document.getElementById('userPasswordInput')
 const user = authService.currentUser;
-const newPassword = userInputPassoword.value
+const newPassword = userInputPassword.value
+
+// const passwordRegex=  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 await updatePassword(user,newPassword)
-.then(() => {
-  alert('비밀번호 변경 완료!')
-}).catch((error) => {
-  console.log('error:',error)
-  alert('비밀번호 변경 실패!')
-});console.log(authService.currentUser)
+  .then(() => {
+    alert('비밀번호 변경 완료!')
+  }).catch((error) => {
+    console.log('error:',error)
+    alert('비밀번호 변경 실패!')
+  });
 }
-
-
 
 
 
@@ -139,3 +145,57 @@ export const onFileChange = event => {
     document.getElementById('profileView').src = imgDataUrl;
   };
 };
+
+//내가 쓴 글 불러오기
+
+export const getUserReviewList = async () => {
+  let cmtObjList = [];
+  const qq = query(
+    collection(dbService, 'reviews'),
+    where('creatorId', '==', authService.currentUser.uid)
+  );console.log()
+  const querySnapShot = await getDocs(qq);
+  querySnapShot.forEach((doc) => {
+    const reviewsObj = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    cmtObjList.push(reviewsObj);
+    console.log('cmtObjList', cmtObjList);
+  });
+
+  const userReviewList = document.querySelector('.boardReviews');
+  userReviewList.innerHTML = '';
+  cmtObjList.forEach((cmtObj) => {
+    const temp_html = `
+        <div class="boardReviewersImg">
+          <img class="reviewPostingImg" src="${cmtObj.profileImg}" alt="" />
+        </div>
+        <div class="boardReviewersRow boardProfileImageAndNickName">
+          <img
+            class="boardReviewersProfile"
+            src="${cmtObj.profileImg}"
+            alt=""
+          />
+          <div class="boardReviewersNickname">${cmtObj.nickname}</div>
+        </div>
+        <div class="boardReviewersRow boardReviewText">${cmtObj.text}</div>
+        <div class="boardReviewersRow boardReviewersSmileAndComment">
+          <i class="fa-regular fa-face-grin-squint"></i>
+          <p>23</p>
+          <i class="fa-regular fa-comment"></i>
+          <p>3</p>
+        </div>
+      `;
+    console.log(temp_html)
+    const div = document.createElement('div');
+    div.classList.add('boardReview');
+    div.innerHTML = temp_html;
+    userReviewList.appendChild(div);
+  });
+};
+
+
+
+
+

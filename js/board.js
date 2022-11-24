@@ -18,8 +18,116 @@ import {
 import { updateProfile } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
-// 리뷰 작성을 누르면 사진과 리뷰가 올라간다. 아래 함수가 실행된다
-// 사용하지 않은 듯
+// async function cntRevew(shoe) {
+//   console.log('cntRevew', shoe);
+//   // 리뷰 개수
+//   const q2 = query(
+//     collection(dbService, 'reviews'),
+//     where('shoeName', '==', shoe)
+//   );
+//   const querySnapShot2 = await getDocs(q2);
+//   return querySnapShot2.docs.map((doc) => doc.data()).length;
+// }
+
+// home.html에서 신발 클릭시
+export const receiveDataFromMain = async (event) => {
+  // console.log(event);
+
+  const currentTarget = event.target.parentNode.children[0].alt;
+
+  let reviewObjList = [];
+
+  // board 메인
+  const q = query(
+    collection(dbService, 'shoesList'),
+    where('shoesName', '==', currentTarget)
+  );
+  const querySnapShot = await getDocs(q);
+  // 리뷰 개수
+  const q2 = query(
+    collection(dbService, 'reviews'),
+    where('shoeName', '==', currentTarget)
+  );
+  const querySnapShot2 = await getDocs(q2);
+  const reviewCount = querySnapShot2.docs.map((doc) => doc.data()).length;
+  // 좋아요 개수
+  const q3 = query(
+    collection(dbService, 'shoesList'),
+    where('shoesName', '==', currentTarget)
+  );
+  const querySnapShot3 = await getDocs(q3);
+  const likeCount = querySnapShot3.docs.map((doc) => doc.data().shoesLike);
+  const brandLikeNumber = Number(likeCount.toString());
+
+  querySnapShot.forEach((doc) => {
+    const reviewsObj = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    reviewObjList.push(reviewsObj);
+  });
+  // 실발 리뷰 개수
+  const boardTop = document.querySelector('.boardTop');
+  // 신발에 리뷰 작성할때
+  // 리뷰숫자를 업데이트 +1
+  boardTop.innerHTML = '';
+  const temp = reviewObjList
+    .map((shoes, idx) => {
+      return `<!-- Left -->
+      <div class="boardShoeImg boardImgLeft">
+        <img
+          src="${shoes.image}"
+          alt="${shoes.shoesName}"
+        />
+      </div>
+      <form class="boardWriteReviews">
+        <p>${shoes.brandName}</p>
+        <h1 class="boardShoeTitle">${shoes.shoesName}</h1>
+        <div class="boardRow">
+          <div class="boardMesageAndHeart">
+            <i class="fa-regular fa-comment"></i>
+            <p id="reviewCount">${reviewCount}</p>
+            <button onclick="shoesBrandLike(${shoes.shoesLike})"><i class="fas fa-solid fa-heart"></i>${brandLikeNumber}</button>
+            
+          </div>
+          <div class="youTubeIcon">
+            <a href=""><pre> <i class="fa-brands fa-youtube"> 관련 영상</i></pre></a>
+          </div>
+        </div>
+        <!-- Right -->
+        <div class="boardReviewRight boardReviewColumn">
+          <label for="imgInput">
+            <div class="boardNewImage">
+              + 사진 올리기
+              <input
+                type="file"
+                id="imgInput"
+                accept="image/*"
+                name="imgInput"
+                onchange="imgFileUpload(event)"
+              />
+            </div>
+          </label>
+          <div class="boardWriteReview">
+            <textarea
+              id="reviewCheck"
+              placeholder=" 리뷰를 남겨주세요..."
+            ></textarea>
+          </div>
+          <div class="boardReviewButton">
+            <button id="uploadReview" onclick="saveReview(event)" type="button">
+              리뷰 작성
+            </button>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </form>`;
+    })
+    .join('');
+
+  boardTop.innerHTML = temp;
+  await getReviewList(currentTarget);
+};
 
 // 디비에 사진 업로드 하기
 export const imgFileUpload = (event) => {
@@ -45,8 +153,6 @@ export const saveReview = async (event) => {
   // 현재 페이지의 신발이름
   const shoeName =
     document.getElementsByClassName('boardShoeTitle')[0].innerHTML;
-  const shoeBrand =
-    document.getElementsByClassName('boardShoeBrand')[0].innerHTML;
   // 현재 페이지의 리뷰
   const comment = document.getElementById('reviewCheck');
   // Storage에 리뷰 사진 저장할 위치 (신발 이름별 리뷰 모음)
@@ -63,6 +169,9 @@ export const saveReview = async (event) => {
   })
     .then(() => {
       alert('리뷰 업로드 완료');
+      // 리뷰 개수 1 더해주기
+      const countReview = document.getElementById('reviewCount');
+      countReview.innerText = Number(countReview.innerText) + 1;
       window.location.hash = '#board';
     })
     .catch((error) => {
@@ -85,7 +194,6 @@ export const saveReview = async (event) => {
       profileImg: photoURL,
       nickname: displayName,
       shoeName: shoeName,
-      brandName: shoeBrand,
     });
     comment.value = '';
     getReviewList(shoeName);
@@ -161,85 +269,6 @@ export const getReviewList = async (shoeName) => {
     div.innerHTML = temp_html;
     reviewList.appendChild(div);
   });
-};
-
-// home.html에서 신발 클릭시
-export const receiveDataFromMain = async (event) => {
-  const currentTarget = event.target.parentNode.children[0].alt;
-
-  let reviewObjList = [];
-  const q = query(
-    collection(dbService, 'shoesList'),
-    where('shoesName', '==', currentTarget)
-  );
-  const querySnapShot = await getDocs(q);
-  querySnapShot.forEach((doc) => {
-    const reviewsObj = {
-      id: doc.id,
-      ...doc.data(),
-    };
-    reviewObjList.push(reviewsObj);
-  });
-  // 실발 리뷰 개수
-  const boardTop = document.querySelector('.boardTop');
-  boardTop.innerHTML = '';
-  const temp = reviewObjList
-    .map((shoes, idx) => {
-      // const shoeCnt = await cntReviews(shoes.shoesName);
-      const shoeCnt = 23;
-      return `<!-- Left -->
-      <div class="boardShoeImg boardImgLeft">
-        <img
-          src="${shoes.image}"
-          alt="${shoes.shoesName}"
-        />
-      </div>
-      <form class="boardWriteReviews">
-        <p class="boardShoeBrand">${shoes.brandName}</p>
-        <h1 class="boardShoeTitle">${shoes.shoesName}</h1>
-        <div class="boardRow">
-          <div class="boardMesageAndHeart">
-            <i class="fa-regular fa-comment"></i>
-            <p>${shoeCnt}</p>
-            <button onclick="shoesBrandLike(${shoes.shoesLike})"><i class="fas fa-solid fa-heart"></i>${shoes.shoesLike}</button>
-            
-          </div>
-          <div class="youTubeIcon">
-            <a href=""><pre> <i class="fa-brands fa-youtube"> 관련 영상</i></pre></a>
-          </div>
-        </div>
-        <!-- Right -->
-        <div class="boardReviewRight boardReviewColumn">
-          <label for="imgInput">
-            <div class="boardNewImage">
-              + 사진 올리기
-              <input
-                type="file"
-                id="imgInput"
-                accept="image/*"
-                name="imgInput"
-                onchange="imgFileUpload(event)"
-              />
-            </div>
-          </label>
-          <div class="boardWriteReview">
-            <textarea
-              id="reviewCheck"
-              placeholder=" 리뷰를 남겨주세요..."
-            ></textarea>
-          </div>
-          <div class="boardReviewButton">
-            <button id="uploadReview" onclick="saveReview(event)" type="button">
-              리뷰 작성
-            </button>
-          </div>
-          <div class="clear"></div>
-        </div>
-      </form>`;
-    })
-    .join('');
-  boardTop.innerHTML = temp;
-  getReviewList(currentTarget);
 };
 
 export const shoesBrandLike = async (event) => {
