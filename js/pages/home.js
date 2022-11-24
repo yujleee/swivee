@@ -34,10 +34,15 @@ export const toggleMoreBrand = (event) => {
 
 // 브랜드별 신발 리스트
 export const changeShoesList = async (event) => {
-  let currentTarget = !event ? 1 : Number(event.target.parentNode.parentNode.dataset.brand);
+  let currentTarget = !event
+    ? 1
+    : Number(event.target.parentNode.parentNode.dataset.brand);
   let shoesObjList = [];
 
-  const q = query(collection(dbService, 'shoesList'), where('brand', '==', currentTarget));
+  const q = query(
+    collection(dbService, 'shoesList'),
+    where('brand', '==', currentTarget)
+  );
   const querySnapShot = await getDocs(q);
 
   const btnMoreShoes = document.querySelector('.btnMoreShoes');
@@ -53,7 +58,8 @@ export const changeShoesList = async (event) => {
   if (shoesObjList.length < 9) {
     btnMoreShoes.classList.add('hide');
   } else {
-    if (btnMoreShoes.classList.contains('hide')) btnMoreShoes.classList.remove('hide');
+    if (btnMoreShoes.classList.contains('hide'))
+      btnMoreShoes.classList.remove('hide');
   }
 
   const shoesList = document.querySelector('.shoesList');
@@ -69,7 +75,9 @@ export const changeShoesList = async (event) => {
     temp = shoesObjList
       .map(
         (shoes, idx) =>
-          `<li onclick="receiveDataFromMain(event)" class="shoesItem ${idx >= 9 ? 'hide' : ''}">
+          `<li onclick="receiveDataFromMain(event)" class="shoesItem ${
+            idx >= 9 ? 'hide' : ''
+          }">
             <a href="#board" class="shoesLink">
             <div class="imgBox">
                 <img
@@ -129,9 +137,9 @@ export const getBrandList = async () => {
   const temp = brandObjList
     .map(
       (brand, idx) => `
-            <li class="brandItem ${idx < 5 ? 'show' : 'hide'}" onclick="changeShoesList(event)" data-brand="${
-        brand.brand
-      }">
+            <li class="brandItem ${
+              idx < 5 ? 'show' : 'hide'
+            }" onclick="changeShoesList(event)" data-brand="${brand.brand}">
                 <div class="imgBox">
                     <img src="${brand.logo}" alt="${brand.brandName}" />
                 </div>
@@ -145,7 +153,11 @@ export const getBrandList = async () => {
 
 // 실시간 리뷰
 export const getRealtimeReviews = async () => {
-  const q = query(collection(dbService, 'reviews'), orderBy('createdAt', 'desc'), limit(5));
+  const q = query(
+    collection(dbService, 'reviews'),
+    orderBy('createdAt', 'desc'),
+    limit(5)
+  );
 
   let reviewsObjList = [];
 
@@ -169,7 +181,8 @@ const renderRealtimeReviews = (reviews) => {
 
   let temp = '';
   if (reviews.length === 0) {
-    temp = '<li class="realTimeReviewItem empty">최근 작성된 리뷰가 없어요.</li>';
+    temp =
+      '<li class="realTimeReviewItem empty">최근 작성된 리뷰가 없어요.</li>';
   } else {
     temp = reviews
       .map(
@@ -179,9 +192,12 @@ const renderRealtimeReviews = (reviews) => {
                     <div class="reviewBox">
                       <div class="boardReviewersRow boardProfileImageAndNickName">
                         <img class="boardReviewersProfile" src="${
-                          review.profileImg ?? '/assets/blank-profile-picture.png'
+                          review.profileImg ??
+                          '/assets/blank-profile-picture.png'
                         }" alt="프로필" />
-                        <p class="boardReviewersNickname ellipsis">${review.nickname}</p>
+                        <p class="boardReviewersNickname ellipsis">${
+                          review.nickname
+                        }</p>
                       </div>
                       <p class="comment">${review.text}</p>
                     </div>
