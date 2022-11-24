@@ -95,18 +95,15 @@ html {
 
 .topBrandList .topBrandItem {
   padding: 6px 0;
+  display: block;
+  display: flex;
+  justify-content: flex-start;
   transition: font-weight 200ms ease-in-out;
+  cursor: pointer;
 }
 
 .topBrandList .topBrandItem:hover {
   font-weight: 700;
-}
-
-.topBrandList .link,
-.realTimeReviewList .link {
-  display: block;
-  display: flex;
-  justify-content: flex-start;
 }
 
 .topBrandList .rank,
@@ -133,7 +130,17 @@ html {
 }
 
 .realTimeReviewList .realTimeReviewItem {
+  display: block;
+  display: flex;
+  justify-content: flex-start;
   margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.realTimeReviewList .realTimeReviewItem.empty {
+  padding: 120px 0;
+  justify-content: center;
+  color: #999;
 }
 
 .realTimeReviewList .realTimeReviewItem:last-child {
@@ -161,6 +168,13 @@ html {
 .realTimeReviewList .reviewBox .boardReviewersNickname {
   font-size: 14px;
   color: #777;
+}
+
+.realTimeReviewList .reviewBox .boardReviewersNickname.ellipsis {
+  width: 138px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .realTimeReviewList .reviewBox .comment {
