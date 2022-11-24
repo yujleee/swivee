@@ -41,7 +41,7 @@
 .userName {
   margin-left: 20px;
   font-weight: bold;
-
+ font-size: 1.3rem;
 }
 
 .btns {
@@ -63,7 +63,7 @@
   color: #571DF7;
 }
 
-.deleteBtn {
+.UserDeleteBtn {
   background: #ffffff;
   border: 1px solid lightgray;
   padding: 7px;
@@ -71,7 +71,7 @@
   color: gray;
 }
 
-.deleteBtn:hover {
+.UserDeleteBtn:hover {
   font-weight: bold;
   border: 1px solid#571DF7;
   color: #571DF7;
@@ -119,13 +119,14 @@ h4 {
 #password > p {
   margin: 10px 0 6px 0;
   color: rgb(147, 147, 147);
+  
 }
 .passwordInput {
   width: 390px;
   height: 30px;
   border: none;
   border-bottom: 1px solid #ddd;
-  font-size: 1.3rem;
+  font-size: 1rem;
 }
 
 

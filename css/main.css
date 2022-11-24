@@ -118,8 +118,16 @@ html {
   margin: 0 10px;
 }
 
+.topBrandList .topBrandItem .imgBox > img {
+  border-radius: 50%;
+}
+
 .topBrandList .topBrandItem:first-child .imgBox {
   margin-left: 12px;
+}
+
+.topBrandList .topBrandItem .brandName {
+  padding-top: 4px;
 }
 
 /* 실시간 리뷰 */
@@ -137,7 +145,8 @@ html {
   cursor: pointer;
 }
 
-.realTimeReviewList .realTimeReviewItem.empty {
+.realTimeReviewList .realTimeReviewItem.empty,
+.topBrandList .topBrandItem.empty {
   padding: 120px 0;
   justify-content: center;
   color: #999;

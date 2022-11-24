@@ -1,5 +1,12 @@
 import { authService } from './firebase.js';
-import { getBrandList, changeShoesList, getRealtimeReviews } from './pages/home.js';
+import {
+  renderBrandList,
+  changeShoesList,
+  getRealtimeReviews,
+  // renderTopbrands
+} from './pages/home.js';
+import { getUserReviewList } from './mypage.js';
+import { getCommentList } from './review.js';
 
 const routes = {
   '/': '/pages/main.html',
@@ -27,18 +34,24 @@ export const handleLocation = async () => {
   document.getElementById('main').innerHTML = html;
 
   // 특정 화면 렌더링 되자마자 DOM 조작 처리
+  if (path === 'review') {
+    console.log('getCommentList');
+    getCommentList();
+  }
+
   if (path === 'mypage') {
     // 프로필 관리 화면 일 때 현재 프로필 사진과 닉네임 할당
     document.getElementById('profileView').src =
       authService.currentUser.photoURL ?? '/assets/blank-profile-picture.png';
-    document.getElementById('profileNickname').value =
-      authService.currentUser.displayName ?? '닉네임없나';
+    document.getElementById('profileNickname').value = authService.currentUser.displayName ?? '닉네임없나';
+    getUserReviewList();
   }
 
   if (path === '/') {
-    getBrandList();
+    renderBrandList();
     changeShoesList();
     getRealtimeReviews();
+    // renderTopbrands();
   }
 };
 
