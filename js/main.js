@@ -1,7 +1,7 @@
 import { handleLocation, goToLogin, goToJoin, goToBoard, goToReview, goToMypage } from './router.js';
 import { handleAuth, socialLogin, logout } from './pages/auth.js';
 import { authService } from './firebase.js';
-import { changeProfile, imgFileUpload, saveReview, receiveDataFromMain } from './board.js';
+import { imgFileUpload, saveReview, receiveDataFromMain, shoesBrandLike } from './board.js';
 import { toggleMoreBrand, changeShoesList, showMoreShoes, getBrandList, getRealtimeReviews } from './pages/home.js';
 import { onFileChange, changeProfiles, onChangeNickname, onDeleteImg } from './mypage.js';
 
@@ -49,7 +49,6 @@ window.goToBoard = goToBoard;
 window.goToReview = goToReview;
 window.goToMypage = goToMypage;
 window.onFileChange = onFileChange;
-window.changeProfile = changeProfile;
 window.toggleMoreBrand = toggleMoreBrand;
 
 window.handleAuth = handleAuth;
@@ -59,8 +58,8 @@ window.showMoreShoes = showMoreShoes;
 window.imgFileUpload = imgFileUpload;
 window.saveReview = saveReview;
 
+window.shoesBrandLike = shoesBrandLike;
 window.receiveDataFromMain = receiveDataFromMain;
-// window.getReviewList = getReviewList;
 window.changeProfiles = changeProfiles;
 window.logout = logout;
 window.getBrandList = getBrandList;

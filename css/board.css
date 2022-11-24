@@ -54,19 +54,25 @@
 }
 
 .boardMesageAndHeart i {
-  width: 28px;
   height: 25px;
-  margin-right: -9px;
+  margin-right: -7px;
 }
+
+.imagePreview {
+      width: 200px;
+      height: 200px;
+      background-color: aquamarine;
+      margin: 0 auto;
+      gap: 20px;
+    }
 
 .youTubeIcon {
-  /* width: 100px; */
-  writing-mode: vertical-lr;
+  width: 100px;
 }
 
-/* .youTubeIcon a{
-  padding-left: 50px;
-} */
+.fa-youtube a{
+  margin-right: 30px;
+}
 
 .youTubeIcon a:hover{
   text-decoration: none;
@@ -100,8 +106,8 @@
   line-height: 19px;
   color: #FFFFFF;
   margin: 16px 0px 14px;
-  padding: 15px 120px;
-  /* justify-content: center; */
+  text-align : center;
+  padding: 15px 0px;
   cursor:pointer;
 }
 
@@ -200,17 +206,33 @@
   align-items: center;
 }
 
+.reviewPostingImg {
+  width: 234px;
+  height: 234px;
+  object-fit: cover;
+  /* object-fit: contain; */
+  overflow: hidden;
+}
+
+.boardReviewText {
+  padding: 12px 0px 0px 15px;
+  white-space:nowrap; 
+  overflow:hidden; 
+  text-overflow:ellipsis;
+  width: 235px;
+}
+
 .boardProfileImageAndNickName {
   padding: 20px 0px 0px 15px;
 }
 
 .boardReviewersSmileAndComment {
-  padding: 16px 0px 0px 15px;
+  padding: 10px 0px 0px 15px;
   color: #AFAFAF;
 }
 
 .boardReviewersSmileAndComment i {
-  margin-right: 5px;
+  margin-right: -8px;
 }
 
 .boardReviewersSmileAndComment i:hover {
