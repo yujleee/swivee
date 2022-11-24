@@ -34,7 +34,6 @@ export const toggleMoreBrand = (event) => {
 
 // 브랜드별 신발 리스트
 export const changeShoesList = async (event) => {
-  event.preventDefault();
   let currentTarget = !event ? 1 : Number(event.target.parentNode.parentNode.dataset.brand);
   let shoesObjList = [];
 
@@ -109,8 +108,8 @@ export const showMoreShoes = () => {
   });
 };
 
-// 브랜드 가져오기
-export const getBrandList = async () => {
+// 브랜드 리스트 가져오기
+const getBrands = async () => {
   const q = query(collection(dbService, 'brandList'), orderBy('brand'));
   const querySnapShot = await getDocs(q);
 
@@ -123,6 +122,13 @@ export const getBrandList = async () => {
     };
     brandObjList.push(brandObj);
   });
+
+  return brandObjList;
+};
+
+// 브랜드 리스트 렌더링
+export const renderBrandList = async () => {
+  const brandObjList = await getBrands();
 
   const allBrandList = document.querySelector('.allBrandList');
   allBrandList.innerHTML = '';
