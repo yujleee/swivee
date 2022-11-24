@@ -4,6 +4,7 @@ import { authService } from './firebase.js';
 import { imgFileUpload, saveReview, receiveDataFromMain, shoesBrandLike } from './board.js';
 import { toggleMoreBrand, changeShoesList, showMoreShoes, getBrandList, getRealtimeReviews } from './pages/home.js';
 import { onFileChange, changeProfiles, onChangeNickname, onDeleteImg } from './mypage.js';
+import { saveComment } from './review.js';
 
 const activeMenu = document.querySelector('.active');
 
@@ -12,6 +13,10 @@ window.addEventListener('hashchange', handleLocation);
 
 // 첫 랜딩 또는 새로고침 시 handleLocation 실행하여 화면 변경
 document.addEventListener('DOMContentLoaded', function () {
+  getBrandList();
+  changeShoesList();
+  getRealtimeReviews();
+
   // 인증 관련 수정 추가 필요!
   // Firebase 연결상태를 감시
   authService.onAuthStateChanged((user) => {
@@ -66,3 +71,5 @@ window.getBrandList = getBrandList;
 window.getRealtimeReviews = getRealtimeReviews;
 window.onChangeNickname = onChangeNickname;
 window.onDeleteImg = onDeleteImg;
+
+window.saveComment = saveComment;
