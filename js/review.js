@@ -1,14 +1,50 @@
 import { dbService, authService, storageService } from './firebase.js';
-import {
-  doc,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  collection,
-  orderBy,
-  query,
-  getDocs,
-} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+
+export const receiveDataFromBoard = async (event, shoeData) => {
+  const poster = JSON.parse(decodeURI(shoeData));
+  const temp_html = `<div class="reviewHead">
+        <div class="reviewHeadProfile">
+          <div class="reviewProfileImg">
+            <a href="#"><img src="${poster.profileImg}" /></a>
+          </div>
+          <div class="reviewHeadProfileName">
+            <div class="reviewHeadProfileNameN">${poster.nickname}</div>
+            <div class="reviewHeadProfileNameD">${poster.createdAt}</div>
+          </div>
+        </div>
+
+        <div class="editButtons">
+          <i class="fa-regular fa-pen-to-square reviewEdit"></i>
+          <i class="fa-regular fa-trash-can reviewDelete" onclick="deleteReview(event)"></i>
+        </div>
+      </div>
+      <div class="reviewImgBox" role="img">
+        <img src="${poster.profileImg}" />
+      </div>
+      <p class="reviewComment">${poster.text}
+      </p>
+      <section>
+        <h1 class="blind">댓글</h1>
+        <div id="reviews" class="commentHead">
+          <input type="text" id="commentInput" class="commentBox" placeholder="이 신발은 어떠셨나요?" name="comment" />
+          <button class="commentButton" onclick="saveComment(event)">입력</button>
+        </div>
+        <div class="commentLineBox">
+          <div class="commentLine"></div>
+          <div class="commentLineTitle">댓글 126개</div>
+        </div>
+      </section>
+      <div id="commentList1"></div>`;
+  const div = document.createElement('div');
+  div.classList.add('review');
+  div.innerHTML = temp_html;
+
+  setTimeout(() => {
+    const box = document.querySelector('.box');
+    box.appendChild(div);
+  }, 100);
+};
 
 export const saveComment = async (event) => {
   event.preventDefault();
@@ -101,7 +137,7 @@ export const getCommentList = async () => {
     const isOwner = currentUid === cmtObj.creatorId;
     const temp_html = `<div class="reviewListComment">
     <div class="reviewListBox">
-      <img class="cardEmoticon" src="${cmtObj.profileImg ?? '/assets/blank-profile-picture.png'}" alt="" />
+      <img class="cardEmoticon" src="${cmtObj.profileImg}" ?? '/assets/blank-profile-picture.png'}" alt="" />
       <div class="reviewListBoxNameDate">
         <div class="reviewListBoxName">${cmtObj.nickname}</div>
         <div class="reviewListBoxDate">${new Date(cmtObj.createdAt).toLocaleString().slice(0, 25)}</div>
@@ -109,9 +145,7 @@ export const getCommentList = async () => {
     </div>
     <div class="commentAndDelEd">
     <p class="card-text">${cmtObj.text}</p>
-    <p id="${
-      cmtObj.id
-    }" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
+    <p id="${cmtObj.id}" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
     <div class="${isOwner ? 'updateBtns' : 'noDisplay'}">
     <button onclick="onEditing(event)" class="editBtn">수정</button>
     <button
@@ -123,7 +157,7 @@ export const getCommentList = async () => {
     </button>
   </div>
   </div>`;
-    console.log('commentList', commentList);
+    // console.log('commentList', commentList);
     const div = document.createElement('div');
     div.classList.add('mycards');
     div.innerHTML = temp_html;
