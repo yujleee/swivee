@@ -1,4 +1,4 @@
-#wrap{
+#wrap {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,7 +17,6 @@
   border-radius: 15px;
   padding: 30px;
   margin: 0 auto;
-  
 }
 
 .totalUserInfo {
@@ -28,10 +27,12 @@
   padding-bottom: 35px;
   width: 450px;
 }
-#profileView{
+#profileView {
   width: 80px;
   height: 80px;
   background-size: contain;
+  cursor: pointer;
+  border-radius: 15px;
 }
 
 .userInfo {
@@ -41,13 +42,12 @@
 .userName {
   margin-left: 20px;
   font-weight: bold;
- font-size: 1.3rem;
+  font-size: 1.3rem;
 }
 
 .btns {
   margin: 10px 0 0 20px;
 }
-
 
 .imgChangeBtn {
   background: #ffffff;
@@ -60,7 +60,7 @@
 .imgChangeBtn:hover {
   font-weight: bold;
   border: 1px solid#571DF7;
-  color: #571DF7;
+  color: #571df7;
 }
 
 .UserDeleteBtn {
@@ -74,9 +74,8 @@
 .UserDeleteBtn:hover {
   font-weight: bold;
   border: 1px solid#571DF7;
-  color: #571DF7;
+  color: #571df7;
 }
-
 
 h4 {
   margin-bottom: 20px;
@@ -96,7 +95,6 @@ h4 {
   font-weight: bold;
 }
 
-
 .nickNameInput:focus {
   outline: none;
 }
@@ -110,16 +108,15 @@ h4 {
   margin-left: 20px;
 }
 
-.nickNameChangeBtn:hover{
+.nickNameChangeBtn:hover {
   font-weight: bold;
-  border: 1px solid #571DF7;
-  color: #571DF7;
+  border: 1px solid #571df7;
+  color: #571df7;
 }
 
 #password > p {
   margin: 10px 0 6px 0;
   color: rgb(147, 147, 147);
-  
 }
 .passwordInput {
   width: 390px;
@@ -128,8 +125,6 @@ h4 {
   border-bottom: 1px solid #ddd;
   font-size: 1rem;
 }
-
-
 
 .passwordInput:focus {
   outline: none;
@@ -144,30 +139,28 @@ h4 {
   margin-left: 20px;
 }
 
-.passwordChangeBtn:hover{
+.passwordChangeBtn:hover {
   font-weight: bold;
-  border: 1px solid #571DF7;
-  color: #571DF7;
+  border: 1px solid #571df7;
+  color: #571df7;
 }
 
-
-#mypostList{
+#mypostList {
   font-size: 1.2rem;
   margin-top: 20px;
 }
 
 .line2 {
-  content: '';
+  content: "";
   width: 1024px;
   border-bottom: 1px solid rgb(230, 228, 228);
   display: block;
-  margin:10PX auto 40px auto;
+  margin: 10px auto 40px auto;
 }
 
-
-.boardReviews{
-  margin: 20px 0 30px 0
+.boardReviews {
+  margin: 20px 0 30px 0;
 }
-#imgInput{display: none;}
-
-#profileView{cursor: pointer;}
+#imgInput {
+  display: none;
+}

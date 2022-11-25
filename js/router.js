@@ -7,6 +7,7 @@ import {
 } from './pages/home.js';
 import { getUserReviewList } from './mypage.js';
 import { getCommentList } from './review.js';
+import { getReviewList, receiveDataFromMain } from './board.js';
 
 const routes = {
   '/': '/pages/main.html',
@@ -57,7 +58,7 @@ export const handleLocation = async () => {
     renderBrandList();
     changeShoesList();
     getRealtimeReviews();
-    // renderTopbrands();
+    // renderTopbrands
   }
 };
 
@@ -70,8 +71,10 @@ export const goToJoin = () => {
   window.location.hash = '#join';
 };
 
-export const goToBoard = () => {
+export const goToBoard = (shoesName) => {
   window.location.hash = '#board';
+  receiveDataFromMain(null, shoesName);
+  getReviewList(shoesName);
 };
 
 export const goToReview = () => {
