@@ -18,7 +18,7 @@ import {
   changeUserPassword,
   getUserReviewList,
 } from './mypage.js';
-import { saveComment, delete_comment, onEditing, update_comment } from './review.js';
+import { saveComment, delete_comment, onEditing, update_comment, deleteReview } from './review.js';
 
 const activeMenu = document.querySelector('.active');
 
@@ -95,4 +95,4 @@ window.delete_comment = delete_comment;
 window.onEditing = onEditing;
 window.update_comment = update_comment;
 // window.renderTopbrands = renderTopbrands;
-window.getUserReviewList = getUserReviewList;
+window.deleteReview = deleteReview;

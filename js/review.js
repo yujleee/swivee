@@ -49,8 +49,6 @@ export const onEditing = event => {
   udBtns.forEach(udBtns=>(udBtns.classList.add("noDisplay")))
 };
 
-
-
 export const update_comment = async event => {
   event.preventDefault();
   const newComment = event.target.parentNode.children[0].value;
@@ -86,35 +84,6 @@ export const delete_comment = async event => {
   }
 };
 
-// function save_comment() {
-//   const newWord = document.querySelector("#comment-input").value;
-//   let date = new Date();
-//   let year = date.getFullYear();
-//   let month = date.getMonth() + 1;
-//   let day = date.getDate();
-
-//   let time = new Date();
-//   let minutes = String(time.getMinutes()).padStart(2, "0");
-//   let hours = String(time.getHours()).padStart(2, "0");
-//   let seconds = String(time.getSeconds()).padStart(2, "0");
-
-//   let here = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-//   // let taewook = `${year}-${month}-${day}`
-
-//   let temp_html = `<div class="reviewListComment">
-//     <div class="reviewListBox">
-//       <img class="cardEmoticon" src="./assets/blank-profile-picture.png" alt="" />
-//       <div class="reviewListBoxNameDate">
-//         <div class="reviewListBoxName">이름</div>
-//         <div class="reviewListBoxDate">${here}</div>
-//       </div>
-//     </div>
-//     <p class="card-text">${newWord}</p>
-//   </div>`;
-
-//   $(".reviewList").append(temp_html);
-// }
-
 export const getCommentList = async () => {
   let cmtObjList = [];
   const q = query(
@@ -132,19 +101,15 @@ export const getCommentList = async () => {
   const commentList = document.getElementById('commentList1');
   const currentUid = authService.currentUser.uid;
   commentList.innerHTML = '';
-  cmtObjList.forEach(cmtObj => {
+  cmtObjList.forEach((cmtObj) => {
     const isOwner = currentUid === cmtObj.creatorId;
     const temp_html = `
     <div class="reviewListComment">
     <div class="reviewListBox">
-      <img class="cardEmoticon" src="${
-        cmtObj.profileImg ?? '/assets/blank-profile-picture.png'
-      }" alt="" />
+      <img class="cardEmoticon" src="${cmtObj.profileImg ?? '/assets/blank-profile-picture.png'}" alt="" />
       <div class="reviewListBoxNameDate">
         <div class="reviewListBoxName">${cmtObj.nickname}</div>
-        <div class="reviewListBoxDate">${new Date(cmtObj.createdAt)
-          .toLocaleString()
-          .slice(0, 25)}</div>
+        <div class="reviewListBoxDate">${new Date(cmtObj.createdAt).toLocaleString().slice(0, 25)}</div>
       </div>
     </div>
     <div class="commentAndDelEd">
@@ -168,4 +133,21 @@ export const getCommentList = async () => {
     div.innerHTML = temp_html;
     commentList.appendChild(div);
   });
+};
+
+// 리뷰 삭제
+export const deleteReview = async (event) => {
+  event.preventDefault();
+  console.log('on');
+  const id = event.target.id;
+  const confirm = window.confirm('해당 리뷰를 삭제하시겠어요?');
+  //   window.history.back(); // 뒤로가기
+
+  if (confirm) {
+    try {
+      await deleteDoc(doc(dbService, 'reviews', id));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };
