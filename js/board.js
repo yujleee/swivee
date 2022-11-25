@@ -1,15 +1,5 @@
 import { dbService, authService, storageService } from './firebase.js';
-import {
-  doc,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  collection,
-  orderBy,
-  query,
-  getDocs,
-  where,
-} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 import { ref, uploadString, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
 import { updateProfile } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
@@ -42,8 +32,6 @@ export const receiveDataFromMain = async (event) => {
   });
   // 실발 리뷰 개수
   const boardTop = document.querySelector('.boardTop');
-  // 신발에 리뷰 작성할때
-  // 리뷰숫자를 업데이트 +1
   boardTop.innerHTML = '';
   const temp = reviewObjList
     .map((shoes, idx) => {
@@ -180,22 +168,6 @@ export const saveReview = async (event) => {
   }
 };
 
-const cntReviews = async (shoeName) => {
-  console.log('shoeName', shoeName);
-  let reviewObjList = [];
-  const q = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName));
-  const querySnapShot = await getDocs(q);
-  querySnapShot.forEach((doc) => {
-    const reviewsObj = {
-      id: doc.id,
-      ...doc.data(),
-    };
-    reviewObjList.push(reviewsObj);
-  });
-  console.log('reviewObjList', reviewObjList.length);
-  return reviewObjList.length;
-};
-
 export const getReviewList = async (shoeName) => {
   let cmtObjList = [];
   const qq = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName));
@@ -206,13 +178,13 @@ export const getReviewList = async (shoeName) => {
       ...doc.data(),
     };
     cmtObjList.push(reviewsObj);
+    // console.log('cmtObjList', cmtObjList);
   });
-
   const reviewList = document.querySelector('.boardReviews');
   reviewList.innerHTML = '';
   cmtObjList.forEach((cmtObj) => {
     const temp_html = `
-        <a href="#review" 
+        <a href="#review" id="boardData"
         onclick="receiveDataFromBoard(event, '${encodeURI(JSON.stringify(cmtObj))}')">
         <div class="boardReviewersImg">
           <img class="reviewPostingImg" src="${cmtObj.profileImg}" alt="" />

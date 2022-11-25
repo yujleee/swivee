@@ -1,29 +1,14 @@
 import { dbService, authService, storageService } from './firebase.js';
-import {
-  ref,
-  uploadString,
-  getDownloadURL,
-} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
-import { updateProfile,updatePassword } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
+import { ref, uploadString, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
+import { updateProfile, updatePassword } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
-import {
-  collection,
-  addDoc,
-  doc,
-  getDocs,
-  query,
-  where
-} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import { collection, addDoc, doc, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 // import{pwRegex}from './utill.js';
 
-
-export const changeProfiles = async event => {
+export const changeProfiles = async (event) => {
   event.preventDefault();
   document.getElementById('profileBtn').disabled = true;
-  const imgRef = ref(
-    storageService,
-    `${authService.currentUser.uid}/${uuidv4()}`
-  );
+  const imgRef = ref(storageService, `${authService.currentUser.uid}/${uuidv4()}`);
   console.log(authService.currentUser);
 
   // const newNickname = document.getElementById("profileNickname").value;
@@ -41,11 +26,11 @@ export const changeProfiles = async event => {
       alert('프로필 수정 완료!');
       window.location.hash = '#mypage';
     })
-    .catch(error => {
+    .catch((error) => {
       alert('프로필 수정 실패!');
       console.log('error:', error);
     });
-  }
+};
 //   try {
 //     const docRef = await addDoc(collection(dbService, 'users'), {
 //       email: authService.currentUser.email,
@@ -57,7 +42,7 @@ export const changeProfiles = async event => {
 //   }
 // };
 
-export const onChangeNickname = async event => {
+export const onChangeNickname = async (event) => {
   event.preventDefault();
   document.getElementById('changeNickname').disabled = true;
   const storageRef = ref(storageService, 'some-child');
@@ -67,7 +52,7 @@ export const onChangeNickname = async event => {
       alert('닉네임 수정 완료');
       window.location.hash = '#mypage';
     })
-    .catch(error => {
+    .catch((error) => {
       alert('닉네임 수정 실패');
       console.log('error:', error);
     });
@@ -92,7 +77,7 @@ export const onChangeNickname = async event => {
 // };
 // "https://firebasestorage.googleapis.com/v0/b/swivee-ddd5a.appspot.com/o/n3KEkQvNjihCbpNqENAfrf6obZO2%2F625ed9da-ce34-486d-a5a0-27f5424e377b?alt=media&token=91ddb350-0cc6-4e2e-a478-950d8ccd1dd9"
 
-export const onDeleteImg = async event => {
+export const onDeleteImg = async (event) => {
   event.preventDefault();
   const defaultImage =
     'https://firebasestorage.googleapis.com/v0/b/swivee-ddd5a.appspot.com/o/n3KEkQvNjihCbpNqENAfrf6obZO2%2F625ed9da-ce34-486d-a5a0-27f5424e377b?alt=media&token=91ddb350-0cc6-4e2e-a478-950d8ccd1dd9';
@@ -106,39 +91,34 @@ export const onDeleteImg = async event => {
         deleteuserImg.src = authService.currentUser.photoURL;
         alert('이미지 삭제');
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('error:', error);
       });
   }
 };
 
+export const changeUserPassword = async (event) => {
+  const userInputPassword = document.getElementById('userPasswordInput');
+  const user = authService.currentUser;
+  const newPassword = userInputPassword.value;
 
+  // const passwordRegex=  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+  await updatePassword(user, newPassword)
+    .then(() => {
+      alert('비밀번호 변경 완료!');
+    })
+    .catch((error) => {
+      console.log('error:', error);
+      alert('비밀번호 변경 실패!');
+    });
+};
 
-
-
-export const changeUserPassword =  async event =>{
-const userInputPassword= document.getElementById('userPasswordInput')
-const user = authService.currentUser;
-const newPassword = userInputPassword.value
-
-// const passwordRegex=  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-await updatePassword(user,newPassword)
-  .then(() => {
-    alert('비밀번호 변경 완료!')
-  }).catch((error) => {
-    console.log('error:',error)
-    alert('비밀번호 변경 실패!')
-  });
-}
-
-
-
-export const onFileChange = event => {
+export const onFileChange = (event) => {
   console.log('event.target.files:', event.target.files);
   const theFile = event.target.files[0]; // file 객체
   const reader = new FileReader();
   reader.readAsDataURL(theFile); // file 객체를 브라우저가 읽을 수 있는 data URL로 읽음.
-  reader.onloadend = finishedEvent => {
+  reader.onloadend = (finishedEvent) => {
     // 파일리더가 파일객체를 data URL로 변환 작업을 끝났을 때
     const imgDataUrl = finishedEvent.currentTarget.result;
     localStorage.setItem('imgDataUrl', imgDataUrl);
@@ -150,10 +130,8 @@ export const onFileChange = event => {
 
 export const getUserReviewList = async () => {
   let cmtObjList = [];
-  const qq = query(
-    collection(dbService, 'reviews'),
-    where('creatorId', '==', authService.currentUser.uid)
-  );console.log()
+  const qq = query(collection(dbService, 'reviews'), where('creatorId', '==', authService.currentUser.uid));
+  console.log();
   const querySnapShot = await getDocs(qq);
   querySnapShot.forEach((doc) => {
     const reviewsObj = {
@@ -193,8 +171,3 @@ export const getUserReviewList = async () => {
     userReviewList.appendChild(div);
   });
 };
-
-
-
-
-
