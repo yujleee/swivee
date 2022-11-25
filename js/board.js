@@ -10,13 +10,10 @@ import {
   getDocs,
   where,
 } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
-import {
-  ref,
-  uploadString,
-  getDownloadURL,
-} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
+import { ref, uploadString, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
 import { updateProfile } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
+import { searchOnYoutube } from './utill.js';
 
 // home.html에서 신발 클릭시
 export const receiveDataFromMain = async (event) => {
@@ -24,23 +21,14 @@ export const receiveDataFromMain = async (event) => {
   let reviewObjList = [];
 
   // board 메인
-  const q = query(
-    collection(dbService, 'shoesList'),
-    where('shoesName', '==', currentTarget)
-  );
+  const q = query(collection(dbService, 'shoesList'), where('shoesName', '==', currentTarget));
   const querySnapShot = await getDocs(q);
   // 리뷰 개수
-  const q2 = query(
-    collection(dbService, 'reviews'),
-    where('shoeName', '==', currentTarget)
-  );
+  const q2 = query(collection(dbService, 'reviews'), where('shoeName', '==', currentTarget));
   const querySnapShot2 = await getDocs(q2);
   const reviewCount = querySnapShot2.docs.map((doc) => doc.data()).length;
   // 좋아요 개수
-  const q3 = query(
-    collection(dbService, 'shoesList'),
-    where('shoesName', '==', currentTarget)
-  );
+  const q3 = query(collection(dbService, 'shoesList'), where('shoesName', '==', currentTarget));
   const querySnapShot3 = await getDocs(q3);
   const likeCount = querySnapShot3.docs.map((doc) => doc.data().shoesLike);
   const brandLikeNumber = Number(likeCount.toString());
@@ -73,11 +61,15 @@ export const receiveDataFromMain = async (event) => {
           <div class="boardMesageAndHeart">
             <i class="fa-regular fa-comment"></i>
             <p id="reviewCount">${reviewCount}</p>
-            <button onclick="shoesBrandLike(${shoes.shoesLike})"><i class="fas fa-solid fa-heart"></i>${brandLikeNumber}</button>
+            <button onclick="shoesBrandLike(${
+              shoes.shoesLike
+            })"><i class="fas fa-solid fa-heart"></i>${brandLikeNumber}</button>
             
           </div>
           <div class="youTubeIcon">
-            <a href=""><pre> <i class="fa-brands fa-youtube"> 관련 영상</i></pre></a>
+            <a href="${searchOnYoutube(
+              shoes.shoesName
+            )}" target="_blank"><pre> <i class="fa-brands fa-youtube"> 관련 영상</i></pre></a>
           </div>
         </div>
         <!-- Right -->
@@ -137,8 +129,7 @@ export const imgFileUpload = (event) => {
 export const saveReview = async (event) => {
   event.preventDefault();
   // 현재 페이지의 신발이름
-  const shoeName =
-    document.getElementsByClassName('boardShoeTitle')[0].innerHTML;
+  const shoeName = document.getElementsByClassName('boardShoeTitle')[0].innerHTML;
   // 현재 페이지의 리뷰
   const comment = document.getElementById('reviewCheck');
   // Storage에 리뷰 사진 저장할 위치 (신발 이름별 리뷰 모음)
@@ -192,10 +183,7 @@ export const saveReview = async (event) => {
 const cntReviews = async (shoeName) => {
   console.log('shoeName', shoeName);
   let reviewObjList = [];
-  const q = query(
-    collection(dbService, 'reviews'),
-    where('shoeName', '==', shoeName)
-  );
+  const q = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName));
   const querySnapShot = await getDocs(q);
   querySnapShot.forEach((doc) => {
     const reviewsObj = {
@@ -210,10 +198,7 @@ const cntReviews = async (shoeName) => {
 
 export const getReviewList = async (shoeName) => {
   let cmtObjList = [];
-  const qq = query(
-    collection(dbService, 'reviews'),
-    where('shoeName', '==', shoeName)
-  );
+  const qq = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName));
   const querySnapShot = await getDocs(qq);
   querySnapShot.forEach((doc) => {
     const reviewsObj = {
@@ -228,9 +213,7 @@ export const getReviewList = async (shoeName) => {
   cmtObjList.forEach((cmtObj) => {
     const temp_html = `
         <a href="#review" 
-        onclick="receiveDataFromBoard(event, '${encodeURI(
-          JSON.stringify(cmtObj)
-        )}')">
+        onclick="receiveDataFromBoard(event, '${encodeURI(JSON.stringify(cmtObj))}')">
         <div class="boardReviewersImg">
           <img class="reviewPostingImg" src="${cmtObj.profileImg}" alt="" />
         </div>
