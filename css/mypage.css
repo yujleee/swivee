@@ -63,7 +63,7 @@
   color: #571DF7;
 }
 
-.deleteBtn {
+.UserDeleteBtn {
   background: #ffffff;
   border: 1px solid lightgray;
   padding: 7px;
@@ -71,7 +71,7 @@
   color: gray;
 }
 
-.deleteBtn:hover {
+.UserDeleteBtn:hover {
   font-weight: bold;
   border: 1px solid#571DF7;
   color: #571DF7;

@@ -18,23 +18,9 @@ import {
 import { updateProfile } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
-// async function cntRevew(shoe) {
-//   console.log('cntRevew', shoe);
-//   // 리뷰 개수
-//   const q2 = query(
-//     collection(dbService, 'reviews'),
-//     where('shoeName', '==', shoe)
-//   );
-//   const querySnapShot2 = await getDocs(q2);
-//   return querySnapShot2.docs.map((doc) => doc.data()).length;
-// }
-
 // home.html에서 신발 클릭시
 export const receiveDataFromMain = async (event) => {
-  // console.log(event);
-
   const currentTarget = event.target.parentNode.children[0].alt;
-
   let reviewObjList = [];
 
   // board 메인
@@ -223,9 +209,6 @@ const cntReviews = async (shoeName) => {
 };
 
 export const getReviewList = async (shoeName) => {
-  // await cntReviews(shoeName);
-  // console.log(cntReviews(shoeName));
-  console.log('shoeName', shoeName);
   let cmtObjList = [];
   const qq = query(
     collection(dbService, 'reviews'),
@@ -244,6 +227,10 @@ export const getReviewList = async (shoeName) => {
   reviewList.innerHTML = '';
   cmtObjList.forEach((cmtObj) => {
     const temp_html = `
+        <a href="#review" 
+        onclick="receiveDataFromBoard(event, '${encodeURI(
+          JSON.stringify(cmtObj)
+        )}')">
         <div class="boardReviewersImg">
           <img class="reviewPostingImg" src="${cmtObj.profileImg}" alt="" />
         </div>
@@ -262,6 +249,7 @@ export const getReviewList = async (shoeName) => {
           <i class="fa-regular fa-comment"></i>
           <p>3</p>
         </div>
+        </a>
       `;
 
     const div = document.createElement('div');

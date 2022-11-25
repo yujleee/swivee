@@ -81,7 +81,13 @@ export const handleAuth = (event) => {
         alert("회원가입이 완료되었습니다!");
         // const user = userCredentialdebugger.user;
         const user = userCredential.user;
-        goToLogin();
+          signOut(authService)
+            .then(() => {
+              // Sign-out successful.
+              localStorage.clear();
+              goToLogin();
+            })
+            
       })
       .catch((error) => {
         const errorMessage = error.message;

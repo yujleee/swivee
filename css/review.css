@@ -221,3 +221,20 @@
   color: #571df7;
   cursor: pointer;
 }
+
+.updateBtns {
+  display: flex;
+  justify-content: end;
+  margin-top: 5px;
+  gap: 5px;
+}
+
+.noDisplay {
+  display: none;
+}
+.updateBtn {
+  min-width: 70px;
+}
+.newCmtInput {
+  width: 100%;
+}

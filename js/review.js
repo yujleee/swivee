@@ -30,7 +30,8 @@ export const saveComment = async (event) => {
   }
 };
 
-//
+//수정, 삭제 부분
+
 export const onEditing = (event) => {
   // 수정버튼 클릭
   event.preventDefault();
@@ -82,35 +83,6 @@ export const delete_comment = async (event) => {
   }
 };
 
-// function save_comment() {
-//   const newWord = document.querySelector("#comment-input").value;
-//   let date = new Date();
-//   let year = date.getFullYear();
-//   let month = date.getMonth() + 1;
-//   let day = date.getDate();
-
-//   let time = new Date();
-//   let minutes = String(time.getMinutes()).padStart(2, "0");
-//   let hours = String(time.getHours()).padStart(2, "0");
-//   let seconds = String(time.getSeconds()).padStart(2, "0");
-
-//   let here = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-//   // let taewook = `${year}-${month}-${day}`
-
-//   let temp_html = `<div class="reviewListComment">
-//     <div class="reviewListBox">
-//       <img class="cardEmoticon" src="./assets/blank-profile-picture.png" alt="" />
-//       <div class="reviewListBoxNameDate">
-//         <div class="reviewListBoxName">이름</div>
-//         <div class="reviewListBoxDate">${here}</div>
-//       </div>
-//     </div>
-//     <p class="card-text">${newWord}</p>
-//   </div>`;
-
-//   $(".reviewList").append(temp_html);
-// }
-
 export const getCommentList = async () => {
   let cmtObjList = [];
   const q = query(collection(dbService, 'comments'), orderBy('createdAt', 'desc'));
@@ -137,6 +109,8 @@ export const getCommentList = async () => {
     </div>
     <div class="commentAndDelEd">
     <p class="card-text">${cmtObj.text}</p>
+    <p id="${cmtObj.id}" class="noDisplay">
+    <input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
     <div class="${isOwner ? 'updateBtns' : 'noDisplay'}">
     <button onclick="onEditing(event)" class="editBtn">수정</button>
     <button

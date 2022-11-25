@@ -187,7 +187,6 @@ export const getUserReviewList = async () => {
           <p>3</p>
         </div>
       `;
-    console.log(temp_html)
     const div = document.createElement('div');
     div.classList.add('boardReview');
     div.innerHTML = temp_html;
