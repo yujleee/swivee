@@ -232,9 +232,23 @@
 .noDisplay {
   display: none;
 }
+
 .updateBtn {
   min-width: 70px;
+  border-radius: 15px;
+  color: white;
+  background-color: #571df7;
+  width: 75px;
+  height: 40px;
+  float: right;
+  margin-left: 5px;
+  margin-top: 10px;
 }
 .newCmtInput {
-  width: 100%;
+  width: 90%;
+  margin-top: 10px;
+  margin-left: 50px;
+  background-color: #F4F5F7;
+  border-radius: 15px;
+  padding: 10px;
 }
