@@ -11,7 +11,8 @@ import {
   //   renderTopbrands,
 } from './pages/home.js';
 import { onFileChange, changeProfiles, onChangeNickname, onDeleteImg, changeUserPassword, getUserReviewList } from './mypage.js';
-import { saveComment, delete_comment, onEditing, update_comment, receiveDataFromBoard } from './review.js';
+import { saveComment, delete_comment, onEditing, update_comment, deleteReview, receiveDataFromBoard } from './review.js';
+
 
 const activeMenu = document.querySelector('.active');
 
@@ -89,4 +90,4 @@ window.onEditing = onEditing;
 window.update_comment = update_comment;
 window.receiveDataFromBoard = receiveDataFromBoard;
 // window.renderTopbrands = renderTopbrands;
-window.getUserReviewList = getUserReviewList;
+window.deleteReview = deleteReview;

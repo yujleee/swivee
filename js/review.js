@@ -46,7 +46,7 @@ export const receiveDataFromBoard = async (event, shoeData) => {
   }, 100);
 };
 
-export const saveComment = async (event) => {
+export const saveComment = async event => {
   event.preventDefault();
   const comment = document.getElementById('commentInput');
   const { uid, photoURL, displayName } = authService.currentUser;
@@ -67,31 +67,32 @@ export const saveComment = async (event) => {
 };
 
 //수정, 삭제 부분
-
-export const onEditing = (event) => {
+export const onEditing = event => {
   // 수정버튼 클릭
   event.preventDefault();
   const udBtns = document.querySelectorAll('.editBtn, .deleteBtn');
-  udBtns.forEach((udBtn) => (udBtn.disabled = 'true'));
-
-  const cardBody = event.target.parentNode.parentNode;
-  const commentText = cardBody.children[0].children[0];
-  const commentInputP = cardBody.children[0].children[1];
-
+  udBtns.forEach(udBtn => (udBtn.disabled = 'true'));
+  console.log(udBtns)
+  const cardBody = event.target.parentNode.parentNode; //cardbody = 수정 버튼
+  console.log(cardBody);
+  const commentText = cardBody.children[0];
+  const commentInputP = cardBody.children[1];
   commentText.classList.add('noDisplay');
-  commentInputP.classList.add('d-flex');
+  // commentInputP.classList.add('d-flex');
   commentInputP.classList.remove('noDisplay');
-  commentInputP.children[0].focus();
+  console.log(commentInputP);
+  commentInputP.focus();
+  udBtns.forEach(udBtns=>(udBtns.classList.add("noDisplay")))
 };
 
-export const update_comment = async (event) => {
+export const update_comment = async event => {
   event.preventDefault();
   const newComment = event.target.parentNode.children[0].value;
   const id = event.target.parentNode.id;
 
   const parentNode = event.target.parentNode.parentNode;
   const commentText = parentNode.children[0];
-  commentText.classList.remove('noDisplay');
+  commentText.classList.remove('noDisplay'); //수정input display:none
   const commentInputP = parentNode.children[1];
   commentInputP.classList.remove('d-flex');
   commentInputP.classList.add('noDisplay');
@@ -105,7 +106,7 @@ export const update_comment = async (event) => {
   }
 };
 
-export const delete_comment = async (event) => {
+export const delete_comment = async event => {
   event.preventDefault();
   const id = event.target.name;
   const ok = window.confirm('해당 응원글을 정말 삭제하시겠습니까?');
@@ -121,9 +122,12 @@ export const delete_comment = async (event) => {
 
 export const getCommentList = async () => {
   let cmtObjList = [];
-  const q = query(collection(dbService, 'comments'), orderBy('createdAt', 'desc'));
+  const q = query(
+    collection(dbService, 'comments'),
+    orderBy('createdAt', 'desc')
+  );
   const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
+  querySnapshot.forEach(doc => {
     const commentObj = {
       id: doc.id,
       ...doc.data(),
@@ -135,7 +139,8 @@ export const getCommentList = async () => {
   commentList.innerHTML = '';
   cmtObjList.forEach((cmtObj) => {
     const isOwner = currentUid === cmtObj.creatorId;
-    const temp_html = `<div class="reviewListComment">
+    const temp_html = `
+    <div class="reviewListComment">
     <div class="reviewListBox">
       <img class="cardEmoticon" src="${cmtObj.profileImg}" ?? '/assets/blank-profile-picture.png'}" alt="" />
       <div class="reviewListBoxNameDate">
@@ -151,8 +156,7 @@ export const getCommentList = async () => {
     <button
       name="${cmtObj.id}"
       onclick="delete_comment(event)"
-      class="deleteBtn"
-    >
+      class="deleteBtn">
       삭제
     </button>
   </div>
@@ -163,4 +167,21 @@ export const getCommentList = async () => {
     div.innerHTML = temp_html;
     commentList.appendChild(div);
   });
+};
+
+// 리뷰 삭제
+export const deleteReview = async (event) => {
+  event.preventDefault();
+  console.log('on');
+  const id = event.target.id;
+  const confirm = window.confirm('해당 리뷰를 삭제하시겠어요?');
+  //   window.history.back(); // 뒤로가기
+
+  if (confirm) {
+    try {
+      await deleteDoc(doc(dbService, 'reviews', id));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };

@@ -3,6 +3,7 @@ import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs,
 import { ref, uploadString, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
 import { updateProfile } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
+import { searchOnYoutube } from './utill.js';
 
 // home.html에서 신발 클릭시
 export const receiveDataFromMain = async (event) => {
@@ -48,11 +49,15 @@ export const receiveDataFromMain = async (event) => {
           <div class="boardMesageAndHeart">
             <i class="fa-regular fa-comment"></i>
             <p id="reviewCount">${reviewCount}</p>
-            <button onclick="shoesBrandLike(${shoes.shoesLike})"><i class="fas fa-solid fa-heart"></i>${brandLikeNumber}</button>
+            <button onclick="shoesBrandLike(${
+              shoes.shoesLike
+            })"><i class="fas fa-solid fa-heart"></i>${brandLikeNumber}</button>
             
           </div>
           <div class="youTubeIcon">
-            <a href=""><pre> <i class="fa-brands fa-youtube"> 관련 영상</i></pre></a>
+            <a href="${searchOnYoutube(
+              shoes.shoesName
+            )}" target="_blank"><pre> <i class="fa-brands fa-youtube"> 관련 영상</i></pre></a>
           </div>
         </div>
         <!-- Right -->
