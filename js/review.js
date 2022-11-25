@@ -161,16 +161,18 @@ export const getCommentList = async () => {
     <p class="card-text">${cmtObj.text}</p>
     <p id="${
       cmtObj.id
-    }" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
-    <div class="${isOwner ? "updateBtns" : "noDisplay"}">
-    <button onclick="onEditing(event)" class="editBtn">수정</button>
-    <button
-      name="${cmtObj.id}"
-      onclick="delete_comment(event)"
-      class="deleteBtn">
-      삭제
-    </button>
-  </div>
+    }" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><img
+    src="../assets/circle-check-regular.svg"
+    class="updateBtn"
+    onclick="update_comment(event)"
+  /></p>
+    <p class="${isOwner ? "updateBtns" : "noDisplay"}"/>
+    <img src="../assets/pen-to-square-regular.svg" class="editBtn" onclick="onEditing(event)"/>
+    <img src="../assets/trash-can-regular.svg"
+    name="${cmtObj.id}"
+    onclick="delete_comment(event)"
+    class="deleteBtn"/>
+  </p>
   </div>`;
     // console.log('commentList', commentList);
     const div = document.createElement("div");
