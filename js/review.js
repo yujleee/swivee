@@ -72,12 +72,14 @@ export const receiveDataFromBoard = async (event, shoeData) => {
   }, 100);
 };
 
-export const saveComment = async event => {
+export const saveComment = async (event) => {
   event.preventDefault();
+  const reviewId = localStorage.getItem('id');
   const comment = document.getElementById('commentInput');
   const { uid, photoURL, displayName } = authService.currentUser;
   try {
     await addDoc(collection(dbService, 'comments'), {
+      reviewId: reviewId,
       text: comment.value,
       createdAt: Date.now(),
       creatorId: uid,
@@ -93,7 +95,7 @@ export const saveComment = async event => {
 };
 
 //수정, 삭제 부분
-export const onEditing = event => {
+export const onEditing = (event) => {
   // 수정버튼 클릭
   event.preventDefault();
   const udBtns = document.querySelectorAll('.editBtn, .deleteBtn');
@@ -111,7 +113,7 @@ export const onEditing = event => {
   udBtns.forEach((udBtns) => udBtns.classList.add('noDisplay'));
 };
 
-export const update_comment = async event => {
+export const update_comment = async (event) => {
   event.preventDefault();
   const newComment = event.target.parentNode.children[0].value;
   const id = event.target.parentNode.id;
@@ -132,7 +134,7 @@ export const update_comment = async event => {
   }
 };
 
-export const delete_comment = async event => {
+export const delete_comment = async (event) => {
   event.preventDefault();
   const id = event.target.name;
   const ok = window.confirm('해당 응원글을 정말 삭제하시겠습니까?');
@@ -150,7 +152,7 @@ export const getCommentList = async () => {
   let cmtObjList = [];
   const q = query(collection(dbService, 'comments'), orderBy('createdAt', 'desc'));
   const querySnapshot = await getDocs(q);
-  querySnapshot.forEach(doc => {
+  querySnapshot.forEach((doc) => {
     const commentObj = {
       id: doc.id,
       ...doc.data(),
@@ -177,13 +179,8 @@ export const getCommentList = async () => {
       cmtObj.id
     }" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
     <div class="${isOwner ? 'updateBtns' : 'noDisplay'}">
-    <button onclick="onEditing(event)" class="editBtn">수정</button>
-    <button
-      name="${cmtObj.id}"
-      onclick="delete_comment(event)"
-      class="deleteBtn">
-      삭제
-    </button>
+    <img src="../assets/pen-to-square-regular.svg" class="editBtn" onclick="onEditing(event)"/>
+    <img src="../assets/trash-can-regular.svg" name="${cmtObj.id}" onclick="delete_comment(event)" class="deleteBtn"/>
   </div>
   </div>`;
     // console.log('commentList', commentList);
@@ -195,7 +192,7 @@ export const getCommentList = async () => {
 };
 
 // 리뷰 삭제
-export const deleteReview = async event => {
+export const deleteReview = async (event) => {
   event.preventDefault();
 
   const id = localStorage.getItem('id');
@@ -214,7 +211,7 @@ export const deleteReview = async event => {
   }
 };
 
-export const reviseReview = async event => {
+export const reviseReview = async (event) => {
   // 수정버튼 클릭
   event.preventDefault();
   const udBtns = document.querySelectorAll('.editButtons');
@@ -226,15 +223,15 @@ export const reviseReview = async event => {
   console.log(commentText);
   const commentInputP = document.querySelector('#fixSave'); //fixSave : 수정 후 아이콘
   commentText.classList.remove('noDisplay');
-  commentInputP.classList.add("noDisplay");
+  commentInputP.classList.add('noDisplay');
   console.log(commentInputP);
   commentInputP.focus();
 };
 
-export const updateReviews = async event => {
+export const updateReviews = async (event) => {
   event.preventDefault();
-  const newComment = event.target.value
-  console.log(newComment)
+  const newComment = event.target.value;
+  console.log(newComment);
   const id = event.target.parentNode.id;
 
   const parentNode = event.target.parentNode.parentNode;
