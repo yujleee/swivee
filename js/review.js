@@ -1,15 +1,6 @@
 import { dbService, authService, storageService } from './firebase.js';
-import {
-  doc,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  collection,
-  orderBy,
-  query,
-  getDocs,
-} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
-import { goToBoard } from './router.js';
+import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+
 
 export const receiveDataFromBoard = async (event, shoeData) => {
   const poster = JSON.parse(decodeURI(shoeData));
@@ -21,6 +12,19 @@ export const receiveDataFromBoard = async (event, shoeData) => {
   const creatorId = localStorage.getItem('creatorId');
   const currentUid = authService.currentUser.uid;
   const isOwner = currentUid === creatorId;
+
+  let cmtObjList = [];
+  const q = query(collection(dbService, 'comments'), orderBy('createdAt', 'desc'));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    const commentObj = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    cmtObjList.push(commentObj);
+    console.log('cmtObjList', cmtObjList);
+  });
+  const reviewCount = cmtObjList.length;
 
   const temp_html = `<div class="reviewHead">
         <div class="reviewHeadProfile">
@@ -58,18 +62,18 @@ export const receiveDataFromBoard = async (event, shoeData) => {
         </div>
         <div class="commentLineBox">
           <div class="commentLine"></div>
-          <div class="commentLineTitle">댓글 126개</div>
+          <div class="commentLineTitle">댓글 ${reviewCount}개</div>
         </div>
       </section>
       <div id="commentList1"></div>`;
-  const div = document.createElement('div');
-  div.classList.add('review');
-  div.innerHTML = temp_html;
 
-  setTimeout(() => {
-    const box = document.querySelector('.box');
-    box.appendChild(div);
-  }, 100);
+  const reviewDiv = document.querySelector('.review');
+  // div.classList.add("review");
+  reviewDiv.innerHTML = temp_html;
+  // await getCommentList();
+  // const box = document.querySelector(".");
+  // reviewDiv.appendChild(div);
+  getCommentList();
 };
 
 export const saveComment = async (event) => {
@@ -159,8 +163,10 @@ export const getCommentList = async () => {
     };
     cmtObjList.push(commentObj);
   });
-  const commentList = document.getElementById('commentList1');
+
   const currentUid = authService.currentUser.uid;
+  const commentList = document.getElementById('commentList1');
+
   commentList.innerHTML = '';
   cmtObjList.forEach((cmtObj) => {
     const isOwner = currentUid === cmtObj.creatorId;
@@ -188,7 +194,10 @@ export const getCommentList = async () => {
     div.classList.add('mycards');
     div.innerHTML = temp_html;
     commentList.appendChild(div);
+    // commentList1.appendChild(div);
   });
+  // commentList = document.getElementById("commentList1");
+  // commentList.innerHTML = "";
 };
 
 // 리뷰 삭제
