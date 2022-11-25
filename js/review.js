@@ -9,9 +9,19 @@ import {
   query,
   getDocs,
 } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import { goToBoard } from './router.js';
 
 export const receiveDataFromBoard = async (event, shoeData) => {
   const poster = JSON.parse(decodeURI(shoeData));
+  console.log(poster);
+  localStorage.setItem('id', poster.id);
+  localStorage.setItem('shoeName', poster.shoeName);
+  localStorage.setItem('creatorId', poster.creatorId);
+
+  const creatorId = localStorage.getItem('creatorId');
+  const currentUid = authService.currentUser.uid;
+  const isOwner = currentUid === creatorId;
+
   const temp_html = `<div class="reviewHead">
         <div class="reviewHeadProfile">
           <div class="reviewProfileImg">
@@ -19,19 +29,21 @@ export const receiveDataFromBoard = async (event, shoeData) => {
           </div>
           <div class="reviewHeadProfileName">
             <div class="reviewHeadProfileNameN">${poster.nickname}</div>
-            <div class="reviewHeadProfileNameD">${new Date(poster.createdAt)
-              .toLocaleString()
-              .slice(0, 25)}</div>
+            <div class="reviewHeadProfileNameD">${new Date(poster.createdAt).toLocaleString().slice(0, 25)}</div>
           </div>
         </div>
 
-        <div class="editButtons">
-          <i id="fix" class="fa-regular fa-pen-to-square reviewEdit" onclick="reviseReview(event)"></i>
+        ${
+          isOwner
+            ? `<div class="editButtons">
+            <i id="fix" class="fa-regular fa-pen-to-square reviewEdit" onclick="reviseReview(event)"></i>
           <i class="fa-regular fa-trash-can reviewDelete" onclick="deleteReview(event)"></i>
-        </div>
+        </div>`
+            : ''
+        }
       </div>
       <div class="reviewImgBox" role="img">
-        <img src="${poster.profileImg}" />
+        <img src="${poster.reviewImg}" />
       </div>
       <p class="reviewComment">${poster.text}
       <section>
@@ -49,8 +61,7 @@ export const receiveDataFromBoard = async (event, shoeData) => {
           <div class="commentLineTitle">댓글 126개</div>
         </div>
       </section>
-      <div id="commentList1"></div>
-      `;
+      <div id="commentList1"></div>`;
   const div = document.createElement('div');
   div.classList.add('review');
   div.innerHTML = temp_html;
@@ -86,7 +97,7 @@ export const onEditing = event => {
   // 수정버튼 클릭
   event.preventDefault();
   const udBtns = document.querySelectorAll('.editBtn, .deleteBtn');
-  udBtns.forEach(udBtn => (udBtn.disabled = 'true'));
+  udBtns.forEach((udBtn) => (udBtn.disabled = 'true'));
   console.log(udBtns);
   const cardBody = event.target.parentNode.parentNode; //cardbody = 수정 버튼
   console.log(cardBody);
@@ -97,7 +108,7 @@ export const onEditing = event => {
   commentInputP.classList.remove('noDisplay');
   console.log(commentInputP);
   commentInputP.focus();
-  udBtns.forEach(udBtns => udBtns.classList.add('noDisplay'));
+  udBtns.forEach((udBtns) => udBtns.classList.add('noDisplay'));
 };
 
 export const update_comment = async event => {
@@ -107,9 +118,8 @@ export const update_comment = async event => {
 
   const parentNode = event.target.parentNode.parentNode;
   const commentText = parentNode.children[0];
-  commentText.classList.remove('noDisplay');
+  commentText.classList.remove('noDisplay'); //수정input display:none
   const commentInputP = parentNode.children[1];
-  console.log(commentInputP);
   commentInputP.classList.remove('d-flex');
   commentInputP.classList.add('noDisplay');
 
@@ -138,10 +148,7 @@ export const delete_comment = async event => {
 
 export const getCommentList = async () => {
   let cmtObjList = [];
-  const q = query(
-    collection(dbService, 'comments'),
-    orderBy('createdAt', 'desc')
-  );
+  const q = query(collection(dbService, 'comments'), orderBy('createdAt', 'desc'));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach(doc => {
     const commentObj = {
@@ -153,19 +160,15 @@ export const getCommentList = async () => {
   const commentList = document.getElementById('commentList1');
   const currentUid = authService.currentUser.uid;
   commentList.innerHTML = '';
-  cmtObjList.forEach(cmtObj => {
+  cmtObjList.forEach((cmtObj) => {
     const isOwner = currentUid === cmtObj.creatorId;
     const temp_html = `
     <div class="reviewListComment">
     <div class="reviewListBox">
-      <img class="cardEmoticon" src="${
-        cmtObj.profileImg
-      }" ?? '/assets/blank-profile-picture.png'}" alt="" />
+      <img class="cardEmoticon" src="${cmtObj.profileImg}" ?? '/assets/blank-profile-picture.png'}" alt="" />
       <div class="reviewListBoxNameDate">
         <div class="reviewListBoxName">${cmtObj.nickname}</div>
-        <div class="reviewListBoxDate">${new Date(cmtObj.createdAt)
-          .toLocaleString()
-          .slice(0, 25)}</div>
+        <div class="reviewListBoxDate">${new Date(cmtObj.createdAt).toLocaleString().slice(0, 25)}</div>
       </div>
     </div>
     <div class="commentAndDelEd">
@@ -194,14 +197,17 @@ export const getCommentList = async () => {
 // 리뷰 삭제
 export const deleteReview = async event => {
   event.preventDefault();
-  console.log('on');
-  const id = event.target.id;
+
+  const id = localStorage.getItem('id');
+  const shoesName = localStorage.getItem('shoeName');
   const confirm = window.confirm('해당 리뷰를 삭제하시겠어요?');
-  //   window.history.back(); // 뒤로가기
 
   if (confirm) {
     try {
       await deleteDoc(doc(dbService, 'reviews', id));
+      localStorage.removeItem('id');
+      localStorage.removeItem('creatorId');
+      goToBoard(shoesName);
     } catch (error) {
       console.log(error);
     }
