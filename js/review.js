@@ -36,7 +36,7 @@ export const receiveDataFromBoard = async (event, shoeData) => {
         ${
           isOwner
             ? `<div class="editButtons">
-          <i class="fa-regular fa-pen-to-square reviewEdit"></i>
+            <i id="fix" class="fa-regular fa-pen-to-square reviewEdit" onclick="reviseReview(event)"></i>
           <i class="fa-regular fa-trash-can reviewDelete" onclick="deleteReview(event)"></i>
         </div>`
             : ''
@@ -46,11 +46,14 @@ export const receiveDataFromBoard = async (event, shoeData) => {
         <img src="${poster.reviewImg}" />
       </div>
       <p class="reviewComment">${poster.text}
-      </p>
       <section>
         <h1 class="blind">댓글</h1>
         <div id="reviews" class="commentHead">
-          <input type="text" id="commentInput" class="commentBox" placeholder="이 신발은 어떠셨나요?" name="comment" />
+        <textarea
+        id="reviewCheck" class="noDisplay">${poster.text}</textarea>
+        <i id="fixSave" class="fa-sharp fa-solid fa-pen-to-square"></i>
+        </div>
+          <input type="text" id="commentInput" placeholder="이 신발은 어떠셨나요?" name="comment"/>
           <button class="commentButton" onclick="saveComment(event)">입력</button>
         </div>
         <div class="commentLineBox">
@@ -69,7 +72,7 @@ export const receiveDataFromBoard = async (event, shoeData) => {
   }, 100);
 };
 
-export const saveComment = async (event) => {
+export const saveComment = async event => {
   event.preventDefault();
   const comment = document.getElementById('commentInput');
   const { uid, photoURL, displayName } = authService.currentUser;
@@ -90,7 +93,7 @@ export const saveComment = async (event) => {
 };
 
 //수정, 삭제 부분
-export const onEditing = (event) => {
+export const onEditing = event => {
   // 수정버튼 클릭
   event.preventDefault();
   const udBtns = document.querySelectorAll('.editBtn, .deleteBtn');
@@ -108,7 +111,7 @@ export const onEditing = (event) => {
   udBtns.forEach((udBtns) => udBtns.classList.add('noDisplay'));
 };
 
-export const update_comment = async (event) => {
+export const update_comment = async event => {
   event.preventDefault();
   const newComment = event.target.parentNode.children[0].value;
   const id = event.target.parentNode.id;
@@ -129,7 +132,7 @@ export const update_comment = async (event) => {
   }
 };
 
-export const delete_comment = async (event) => {
+export const delete_comment = async event => {
   event.preventDefault();
   const id = event.target.name;
   const ok = window.confirm('해당 응원글을 정말 삭제하시겠습니까?');
@@ -147,7 +150,7 @@ export const getCommentList = async () => {
   let cmtObjList = [];
   const q = query(collection(dbService, 'comments'), orderBy('createdAt', 'desc'));
   const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
+  querySnapshot.forEach(doc => {
     const commentObj = {
       id: doc.id,
       ...doc.data(),
@@ -192,7 +195,7 @@ export const getCommentList = async () => {
 };
 
 // 리뷰 삭제
-export const deleteReview = async (event) => {
+export const deleteReview = async event => {
   event.preventDefault();
 
   const id = localStorage.getItem('id');
@@ -208,5 +211,44 @@ export const deleteReview = async (event) => {
     } catch (error) {
       console.log(error);
     }
+  }
+};
+
+export const reviseReview = async event => {
+  // 수정버튼 클릭
+  event.preventDefault();
+  const udBtns = document.querySelectorAll('.editButtons');
+  // udBtns.forEach((udBtn) => (udBtn.disabled = "true"));
+  const reviewBody = event.target; //수정 아이콘
+  console.log(reviewBody);
+  const commentText = document.querySelector('#reviewCheck');
+  //commentText : board에서 들고 온 textarea
+  console.log(commentText);
+  const commentInputP = document.querySelector('#fixSave'); //fixSave : 수정 후 아이콘
+  commentText.classList.remove('noDisplay');
+  commentInputP.classList.add("noDisplay");
+  console.log(commentInputP);
+  commentInputP.focus();
+};
+
+export const updateReviews = async event => {
+  event.preventDefault();
+  const newComment = event.target.value
+  console.log(newComment)
+  const id = event.target.parentNode.id;
+
+  const parentNode = event.target.parentNode.parentNode;
+  const commentText = parentNode.children[0];
+  commentText.classList.remove('noDisplay');
+  const commentInputP = parentNode.children[1];
+  commentInputP.classList.remove('d-flex');
+  commentInputP.classList.add('noDisplay');
+
+  const commentRef = doc(dbService, 'comments', id);
+  try {
+    await updateDoc(commentRef, { text: newComment });
+    getCommentList();
+  } catch (error) {
+    alert(error);
   }
 };
