@@ -40,11 +40,18 @@ export const handleLocation = async () => {
   }
 
   if (path === 'mypage') {
-    // 프로필 관리 화면 일 때 현재 프로필 사진과 닉네임 할당
-    document.getElementById('profileView').src =
-      authService.currentUser.photoURL ?? '/assets/blank-profile-picture.png';
-    document.getElementById('profileNickname').value = authService.currentUser.displayName ?? '닉네임없나';
-    getUserReviewList();
+    authService.onAuthStateChanged((user) => {
+      if (!user) {
+        alert('마이페이지는 로그인 후 이용하실 수 있어요.');
+        goToLogin();
+      } else {
+        // 프로필 관리 화면 일 때 현재 프로필 사진과 닉네임 할당
+        document.getElementById('profileView').src =
+          authService.currentUser.photoURL ?? '/assets/blank-profile-picture.png';
+        document.getElementById('profileNickname').value = authService.currentUser.displayName ?? '닉네임없나';
+        getUserReviewList();
+      }
+    });
   }
 
   if (path === '/') {

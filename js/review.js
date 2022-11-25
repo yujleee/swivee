@@ -109,9 +109,8 @@ export const getCommentList = async () => {
     </div>
     <div class="commentAndDelEd">
     <p class="card-text">${cmtObj.text}</p>
-    <p id="${
-      cmtObj.id
-    }" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
+    <p id="${cmtObj.id}" class="noDisplay">
+    <input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
     <div class="${isOwner ? 'updateBtns' : 'noDisplay'}">
     <button onclick="onEditing(event)" class="editBtn">수정</button>
     <button
@@ -129,4 +128,21 @@ export const getCommentList = async () => {
     div.innerHTML = temp_html;
     commentList.appendChild(div);
   });
+};
+
+// 리뷰 삭제
+export const deleteReview = async (event) => {
+  event.preventDefault();
+  console.log('on');
+  const id = event.target.id;
+  const confirm = window.confirm('해당 리뷰를 삭제하시겠어요?');
+  //   window.history.back(); // 뒤로가기
+
+  if (confirm) {
+    try {
+      await deleteDoc(doc(dbService, 'reviews', id));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };
