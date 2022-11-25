@@ -118,33 +118,12 @@ export const saveReview = async (event) => {
   const comment = document.getElementById('reviewCheck');
   // Storage에 리뷰 사진 저장할 위치 (신발 이름별 리뷰 모음)
   const imgRef = ref(storageService, `${shoeName}/${uuidv4()}`);
-  console.log('imgRef', imgRef);
   const reviewImgDataUrl = localStorage.getItem('reviewImgDataUrl');
-  // console.log('reviewImgDataUrl', reviewImgDataUrl);
   let downloadUrl;
   if (reviewImgDataUrl) {
     const response = await uploadString(imgRef, reviewImgDataUrl, 'data_url');
     downloadUrl = await getDownloadURL(response.ref);
   }
-  console.log('downloadUrl', downloadUrl);
-  // await updateProfile(authService.currentUser, {
-  //   userReview: comment ? comment : null,
-  // });
-  // .then(() => {
-  //   alert('리뷰 업로드 완료');
-  //   // 리뷰 개수 1 더해주기
-  //   const countReview = document.getElementById('reviewCount');
-  //   countReview.innerText = Number(countReview.innerText) + 1;
-  //   window.location.hash = '#board';
-  // })
-  // .catch((error) => {
-  //   alert('리뷰 업로드 실패');
-  //   console.log('error:', error);
-  // });
-
-  // db의 shoeList에서 showName이 같은것을 찾아서
-  // 거기에 사진과 리뷰를 쓴 리뷰글이 저장되야 한다.
-  // 프로필 이미지 dataUrl을 Storage에 업로드 후 다운로드 링크를 받아서 photoURL에 저장.
 
   const { uid, photoURL, displayName } = authService.currentUser;
   console.log('photoURL', photoURL);
@@ -167,7 +146,7 @@ export const saveReview = async (event) => {
         window.location.hash = '#board';
       })
       .catch((error) => {
-        alert('리뷰 업로드 실패');
+        alert('리뷰를 남기려면 로그인을 해주세요.');
         console.log('error:', error);
       });
     comment.value = '';
@@ -180,7 +159,7 @@ export const saveReview = async (event) => {
 
 export const getReviewList = async (shoeName) => {
   let cmtObjList = [];
-  const qq = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName));
+  const qq = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName), orderBy('createdAt', 'desc'));
   const querySnapShot = await getDocs(qq);
   querySnapShot.forEach((doc) => {
     const reviewsObj = {
@@ -194,8 +173,8 @@ export const getReviewList = async (shoeName) => {
   reviewList.innerHTML = '';
   cmtObjList.forEach((cmtObj) => {
     const temp_html = `
-        <a href="#review" id="boardData"
-        onclick="receiveDataFromBoard(event, '${encodeURI(JSON.stringify(cmtObj))}')">
+        <a id="boardData"
+        onclick="window.location.hash = '#review'; handleLocation();receiveDataFromBoard(event, '${encodeURI(JSON.stringify(cmtObj))}')">
         <div class="boardReviewersImg">
           <img class="reviewPostingImg" src="${cmtObj.reviewImg}" alt="" />
         </div>
