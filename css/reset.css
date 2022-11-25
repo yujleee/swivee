@@ -1,4 +1,4 @@
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
 
 html {
   line-height: 1.15;
@@ -38,8 +38,8 @@ textarea {
   line-height: 18px;
   color: #333;
 
-  font-family: Pretendard, -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', helvetica,
-    'Apple SD Gothic Neo', sans-serif;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Malgun Gothic",
+    "맑은 고딕", helvetica, "Apple SD Gothic Neo", sans-serif;
 }
 h1,
 h2,
