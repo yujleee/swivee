@@ -43,7 +43,7 @@ export const receiveDataFromBoard = async (event, shoeData) => {
         }
       </div>
       <div class="reviewImgBox" role="img">
-        <img src="${poster.profileImg}" />
+        <img src="${poster.reviewImg}" />
       </div>
       <p class="reviewComment">${poster.text}
       </p>
