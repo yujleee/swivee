@@ -19,19 +19,16 @@ export const receiveDataFromBoard = async (event, shoeData) => {
           </div>
           <div class="reviewHeadProfileName">
             <div class="reviewHeadProfileNameN">${poster.nickname}</div>
-            <div class="reviewHeadProfileNameD">${new Date(poster.createdAt)
-              .toLocaleString()
-              .slice(0, 25)}</div>
+            <div class="reviewHeadProfileNameD">${new Date(poster.createdAt).toLocaleString().slice(0, 25)}</div>
           </div>
         </div>
-
         <div class="editButtons">
           <i class="fa-regular fa-pen-to-square reviewEdit"></i>
           <i class="fa-regular fa-trash-can reviewDelete" onclick="deleteReview(event)"></i>
         </div>
       </div>
       <div class="reviewImgBox" role="img">
-        <img src="${poster.profileImg}" />
+        <img src="${poster.reviewImg}" />
       </div>
       <p class="reviewComment">${poster.text}
       </p>
@@ -81,8 +78,8 @@ export const saveComment = async (event) => {
 export const onEditing = (event) => {
   // 수정버튼 클릭
   event.preventDefault();
-  const udBtns = document.querySelectorAll(".editBtn, .deleteBtn");
-  udBtns.forEach((udBtn) => (udBtn.disabled = "true"));
+  const udBtns = document.querySelectorAll('.editBtn, .deleteBtn');
+  udBtns.forEach((udBtn) => (udBtn.disabled = 'true'));
   console.log(udBtns);
   const cardBody = event.target.parentNode.parentNode; //cardbody = 수정 버튼
   console.log(cardBody);
@@ -93,7 +90,7 @@ export const onEditing = (event) => {
   commentInputP.classList.remove("noDisplay");
   console.log(commentInputP);
   commentInputP.focus();
-  udBtns.forEach((udBtns) => udBtns.classList.add("noDisplay"));
+  udBtns.forEach((udBtns) => udBtns.classList.add('noDisplay'));
 };
 
 export const update_comment = async (event) => {
@@ -133,10 +130,7 @@ export const delete_comment = async (event) => {
 
 export const getCommentList = async () => {
   let cmtObjList = [];
-  const q = query(
-    collection(dbService, "comments"),
-    orderBy("createdAt", "desc")
-  );
+  const q = query(collection(dbService, 'comments'), orderBy('createdAt', 'desc'));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     const commentObj = {
