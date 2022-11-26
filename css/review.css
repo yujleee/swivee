@@ -1,176 +1,274 @@
-.box{
-    padding: 20px 140px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.box {
+  padding: 20px 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.review{
-    display: flex;
-    flex-direction: column;
-    max-width: 700px;
-    margin-top: 30px;
+.review {
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+  margin-top: 30px;
 }
-.reviewHead{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+.reviewHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
-.reviewHeadProfile{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: gray;
+.reviewHeadProfile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: gray;
 }
-.reviewHeadProfileNameN{
-    color: black;
+.reviewHeadProfileName {
+  color: #333;
+  margin-left: 8px;
 }
-.reviewHeadProfile img{
-    width: 40px;
-    border: 1px solid rgba(34,34,34,.1);
-    border-radius: 20px;
+
+.reviewHeadProfileName > div {
+  font-size: 14px;
+  cursor: default;
 }
-.reviewComment{
-    margin-top: 20px;
-    padding: 10px;
-    margin-bottom: 70px;
-    line-height: 1.5;
+
+.reviewHeadProfileName .reviewHeadProfileNameD {
+  color: #999;
 }
-.reviewHeadProfileEmoticon{
-    margin-top: 5px;
+
+.reviewHeadProfile .reviewProfileImg {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  overflow: hidden;
 }
-.reviewHeadProfileEmoticon:hover{ 
-    background-color: #571df8;
-    border-radius: 25px;
+
+.reviewHeadProfile .reviewProfileImg > img {
+  border-radius: 50%;
 }
-.box{
-    padding: 20px 140px;
-    display: flex;
-    justify-content: center;
+
+.reviewHead .editButtons > i {
+  font-size: 20px;
+  color: #777;
 }
-.reviewVideo{
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
+
+.reviewHead .editButtons > i:hover {
+  color: #571df8;
+}
+
+.reviewHead .editButtons .reviewEdit {
+  margin-right: 10px;
+}
+
+.reviewComment {
+  margin-top: 20px;
+  padding: 10px;
+  margin-bottom: 70px;
+  line-height: 1.7;
+}
+
+.reviewImgBox {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.box {
+  padding: 20px 140px;
+  display: flex;
+  justify-content: center;
+}
+.reviewVideo {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 }
 .reviewVideoImg {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.reviewVideo img{
-    width: 200px;
-    margin-left: 20px;
+.reviewVideo img {
+  width: 200px;
+  margin-left: 20px;
 }
-.commentHead{
-    display: flex;
-    margin-top: 20px;
+.commentHead {
+  display: flex;
+  margin-top: 20px;
+}
+.commentEmoticon {
+  padding-top: 10px;
+  width: 30px;
+}
+.commentBox {
+  width: 90%;
+  padding-left: 20px;
+  border-radius: 16px;
+  border: none;
+  background-color: #f4f5f7;
+  max-height: 500px;
+  resize: none;
+  outline: none;
+}
 
+.commentButton {
+  background-color: #571df8;
+  border-radius: 15px;
+  color: white;
+  width: 100px;
+  height: 50px;
+  margin-left: 5px;
 }
-.commentEmoticon{
-    padding-top: 10px;
-    width: 30px;
+.commentButton:hover {
+  box-shadow: 1px 2px 10px #c6b4f6;
 }
-.commentBox{
-    width: 90%;
-    padding-left: 10px;
-    border-radius: 16px;
-    border: none;
-    background-color: #f4f5f7;
-    max-height: 500px;
-    resize: none;
-    outline: none;
-    margin-bottom: 10px;
+
+.editBtn {
+  width: 20px;
+  height: 20px;
+  margin-left: 20px;
 }
-.commentButton{
-    background-color: #571df8;
-    border-radius: 15px;
-    color: white;
-    width: 100px;
-    height: 50px;
-    margin-left: 5px;
-}
-.commedButton:hover{
-    color: black;
+
+.deleteBtn {
+  width: 17px;
+  height: 21px;
+  margin-left: 20px;
 }
 
 .commentLineBox {
-    width: 100%;
-    display:flex;
-    justify-content: center;
-    position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin: 20px 0;
 }
 
 .commentLine {
-    position: absolute;
-    top: 10px;
-    border-bottom: 1px solid gray;
-    width: 100%;
-    margin-bottom: 10px;
+  position: absolute;
+  top: 10px;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  margin-bottom: 10px;
 }
 .commentLineTitle {
-    display: flex;
-    justify-content: center;
-    color: gray;
-    z-index: 10;
-    background-color: white;
-    width: 100px;
-    border: 1px solid gray;
-    border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  color: #999;
+  z-index: 10;
+  background-color: white;
+  width: 100px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: default;
 }
-.reviewList{
-    /* background-color: #f4f5f7; */
-    background-color: transparent;
-    height: 500px;
-    border-radius: 15px;
-    margin: 10px;
+.reviewList {
+  /* background-color: #f4f5f7; */
+  background-color: transparent;
+  height: 500px;
+  border-radius: 15px;
+  margin: 10px;
 }
-.card{
-    border: 1px solid red;
-    width: 700px;
-    margin: 15px auto;
-    border-radius: 15px;
-    background-color: #f5f5f7;
-  }
-.card-body{
-    border: 1PX solid forestgreen;
-    display: flex;
-    align-items: center;
+.card {
+  border: 1px solid red;
+  width: 700px;
+  margin: 15px auto;
+  border-radius: 15px;
+  background-color: #f5f5f7;
 }
-#cardHeader{
-    border: 1px blue solid ;
-    color: #38393d;
-  }
-  .cardEmoticon{
-    display: block;
-    width: 40px;
-    border: 1px solid #571df8;
-    border-radius: 20px;
-  }
-  .card-text{
-    margin-top: 10px;
-    margin-left: 50px;
-    background-color: #f4f5f7;
-    border-radius: 15px;
-    padding: 10px;;
-  }
-  .reviewListComment{
-    margin-bottom: 20px;
-  }
-  .reviewListBox{
-    display: flex;
-    align-items: center;
-  }
-  .reviewListBoxNameDate{
-    padding-left: 10px;
-  }
-  .reviewListBoxDate{
-    font-size: 13px;
-    color: #aeb4b7;
-  }
-  .fa-regular:hover{
-    color: #571DF7;
-    cursor: pointer;
-  }
+.card-body {
+  border: 1px solid forestgreen;
+  display: flex;
+  align-items: center;
+}
+#cardHeader {
+  border: 1px blue solid;
+  color: #38393d;
+}
+.cardEmoticon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 20px;
+  object-fit: cover;
+}
+.card-text {
+  margin-top: 10px;
+  margin-left: 50px;
+  background-color: #f4f5f7;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 10px;
+  width: 90%;
+}
+.reviewListComment {
+  margin-bottom: 20px;
+}
+.reviewListBox {
+  display: flex;
+  align-items: center;
+  width: 90%;
+}
+.reviewListBoxNameDate {
+  padding-left: 10px;
+}
+.reviewListBoxDate {
+  font-size: 13px;
+  color: #aeb4b7;
+  margin-top: 4px;
+}
+.fa-regular:hover {
+  color: #571df7;
+  cursor: pointer;
+}
+
+.updateBtns {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 5px;
+}
+
+.noDisplay {
+  display: none;
+}
+
+.updateBtn {
+  width: 25px;
+  height: 25px;
+  margin-left: 20px;
+  float: right;
+  margin-left: 55px;
+  margin-top: 20px;
+}
+.newCmtInput {
+  width: 538px;
+  margin-top: 10px;
+  margin-left: 50px;
+  background-color: #f4f5f7;
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.commentAndDelEd {
+  display: flex;
+}
+
+.mycards .empty {
+  padding: 120px 0;
+  text-align: center;
+  color: #999;
+}
+
+.mycards .empty > i {
+  width: 100px;
+  display: inline-block;
+  font-size: 100px;
+  color: #ddd;
+  margin-bottom: 30px;
+}

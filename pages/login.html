@@ -1,4 +1,4 @@
-<form onsubmit="handleAuth(event)">
+<form onsubmit="handleAuth(event)" novalidate>
   <div class="login">
     <div class="loginContent">
       <div class="loginArea">
@@ -10,7 +10,7 @@
         <div class="inputBox">
           <h3 class="inputTitle">이메일 주소</h3>
           <div class="inputItem">
-            <input id="email" type="email" placeholder="예) swivee@swivee.co.kr" autocomplete="off" class="inputTxt"
+            <input id="email" type="email" placeholder="swivee@swivee.co.kr" autocomplete="off" class="inputTxt"
               required />
             <div class="underline"></div>
           </div>
@@ -30,21 +30,14 @@
             <li class="joinList">
               <a href="#join" class="joinLink">이메일 가입</a>
             </li>
-            <li>
-              <a href="#join" class="joinLPw">비밀번호 찾기</a>
-            </li>
           </div>
         </ul>
         <div class="sociaLogin">
           <div class="google">
-            <button onclick="socialLogin('google')">
-              <i class="fa-brands fa-google"></i>구글로 로그인
-            </button>
+            <button onclick="socialLogin('google')"><i class="fa-brands fa-google loginIcon"></i>구글로 로그인</button>
           </div>
           <div class="github">
-            <button onclick="socialLogin('github')">
-              <i class="fa-brands fa-github"></i> Github로 로그인
-            </button>
+            <button onclick="socialLogin('github')"><i class="fa-brands fa-github loginIcon"></i> Github로 로그인</button>
           </div>
         </div>
       </div>

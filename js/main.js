@@ -2,9 +2,31 @@ import { handleLocation, goToLogin, goToJoin, goToBoard, goToReview, goToMypage 
 import { handleAuth, socialLogin, logout } from './pages/auth.js';
 import { authService } from './firebase.js';
 import { imgFileUpload, saveReview, receiveDataFromMain, shoesBrandLike } from './board.js';
-import { toggleMoreBrand, changeShoesList, showMoreShoes, getBrandList, getRealtimeReviews } from './pages/home.js';
-import { onFileChange, changeProfiles, onChangeNickname, onDeleteImg, changeUserPassword } from './mypage.js';
-import { saveComment } from './review.js';
+import {
+  toggleMoreBrand,
+  changeShoesList,
+  showMoreShoes,
+  renderBrandList,
+  getRealtimeReviews,
+  //   renderTopbrands,
+} from './pages/home.js';
+import {
+  onFileChange,
+  changeProfiles,
+  onChangeNickname,
+  onDeleteImg,
+  changeUserPassword,
+  getUserReviewList,
+} from './mypage.js';
+import {
+  saveComment,
+  updateComment,
+  deleteComment,
+  onEditing,
+  deleteReview,
+  receiveDataFromBoard,
+  reviseReview,
+} from './review.js';
 
 const activeMenu = document.querySelector('.active');
 
@@ -13,9 +35,10 @@ window.addEventListener('hashchange', handleLocation);
 
 // 첫 랜딩 또는 새로고침 시 handleLocation 실행하여 화면 변경
 document.addEventListener('DOMContentLoaded', function () {
-  getBrandList();
+  renderBrandList();
   changeShoesList();
   getRealtimeReviews();
+  //   renderTopbrands();
 
   // 인증 관련 수정 추가 필요!
   // Firebase 연결상태를 감시
@@ -67,10 +90,20 @@ window.shoesBrandLike = shoesBrandLike;
 window.receiveDataFromMain = receiveDataFromMain;
 window.changeProfiles = changeProfiles;
 window.logout = logout;
-window.getBrandList = getBrandList;
+window.renderBrandList = renderBrandList;
 window.getRealtimeReviews = getRealtimeReviews;
 window.onChangeNickname = onChangeNickname;
 window.onDeleteImg = onDeleteImg;
 
 window.changeUserPassword = changeUserPassword;
 window.saveComment = saveComment;
+
+window.getUserReviewList = getUserReviewList;
+window.deleteComment = deleteComment;
+window.onEditing = onEditing;
+window.updateComment = updateComment;
+window.receiveDataFromBoard = receiveDataFromBoard;
+// window.renderTopbrands = renderTopbrands;
+window.deleteReview = deleteReview;
+window.handleLocation = handleLocation;
+window.reviseReview = reviseReview;
