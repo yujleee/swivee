@@ -68,6 +68,8 @@
   line-height: 1.7;
 }
 
+
+
 .reviewImgBox {
   width: 100%;
   height: auto;
@@ -255,4 +257,31 @@
 
 .commentAndDelEd {
   display: flex;
+}
+
+.seonga{
+  display: flex;
+  margin: 10px;
+  border-radius: 15px;
+}
+#reviseComment{
+  background-color: rgb(247, 247, 247);
+  height: 45px;
+  flex-basis:600px;
+  border-radius: 10px;
+}
+
+.saveReviseComment{
+  background-color: #571df8;
+  border-radius: 15px;
+  color: white;
+  width: 100px;
+  height: 50px;
+  margin-left: 5px;
+}
+/* #reviews{
+  width: 700px;
+} */
+#commentInput{
+  width: 600px;
 }
