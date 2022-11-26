@@ -192,8 +192,10 @@
 .cardEmoticon {
   display: block;
   width: 40px;
-  border: 1px solid #571df8;
+  height: 40px;
+  border: 1px solid rgb(221, 221, 221);
   border-radius: 20px;
+  object-fit: cover;
 }
 .card-text {
   margin-top: 10px;
@@ -242,7 +244,7 @@
   margin-left: 20px;
   float: right;
   margin-left: 55px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 .newCmtInput {
   width: 538px;
@@ -255,18 +257,4 @@
 
 .commentAndDelEd {
   display: flex;
-}
-
-.mycards .empty {
-  padding: 120px 0;
-  text-align: center;
-  color: #999;
-}
-
-.mycards .empty > i {
-  width: 100px;
-  display: inline-block;
-  font-size: 100px;
-  color: #ddd;
-  margin-bottom: 30px;
 }
