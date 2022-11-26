@@ -88,9 +88,9 @@ export const receiveDataFromBoard = async (event, shoeData) => {
 export const saveComment = async (event) => {
   event.preventDefault();
 
+  const comment = document.getElementById('commentInput');
   const commentVal = comment.value;
   const reviewId = localStorage.getItem('id');
-  const comment = document.getElementById('commentInput');
 
   const { uid, photoURL, displayName } = authService.currentUser;
 
