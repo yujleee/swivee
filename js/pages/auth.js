@@ -14,6 +14,7 @@ import {
 // 로그인 성공 시 화면으로 이동
 export const handleAuth = (event) => {
   event.preventDefault();
+
   const buttonText = event.target.value
   const email = document.getElementById("email");
   const emailVal = email.value;
@@ -42,11 +43,13 @@ export const handleAuth = (event) => {
   if (matchedEmail === null) {
     alert("이메일 형식에 맞게 입력해 주세요");
     email.focus();
+    email.value = "";
     return;
   }
   if (matchedPw === null) {
     alert("비밀번호는 8자리 이상 영문자, 숫자, 특수문자 조합이어야 합니다.");
     pw.focus();
+    pw.value = "";
     return;
   }
   // 유효성 검사 통과 후 로그인 또는 회원가입 API 요청

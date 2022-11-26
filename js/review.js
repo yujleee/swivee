@@ -87,9 +87,19 @@ export const receiveDataFromBoard = async (event, shoeData) => {
 
 export const saveComment = async (event) => {
   event.preventDefault();
+
+  const commentVal = comment.value;
   const reviewId = localStorage.getItem('id');
   const comment = document.getElementById('commentInput');
+
   const { uid, photoURL, displayName } = authService.currentUser;
+
+  if (!commentVal) {
+    alert('댓글을 입력해 주세요');
+    comment.focus();
+    return;
+  }
+
   try {
     await addDoc(collection(dbService, 'comments'), {
       reviewId: reviewId,
@@ -130,7 +140,7 @@ export const update_comment = async (event) => {
   event.preventDefault();
   const newComment = event.target.parentNode.children[0].value;
   const id = event.target.parentNode.id;
-
+  console.log(newComment);
   const parentNode = event.target.parentNode.parentNode;
   const commentText = parentNode.children[0];
   commentText.classList.remove('noDisplay'); //수정input display:none
