@@ -1,5 +1,16 @@
 import { dbService, authService, storageService } from './firebase.js';
-import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import {
+  doc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  orderBy,
+  query,
+  getDocs,
+  where,
+} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import { emailRegex } from './utill.js';
 
 export const receiveDataFromBoard = async (event, shoeData) => {
   const poster = JSON.parse(decodeURI(shoeData));
@@ -77,9 +88,19 @@ export const receiveDataFromBoard = async (event, shoeData) => {
 
 export const saveComment = async (event) => {
   event.preventDefault();
+
+  const commentVal = comment.value;
   const reviewId = localStorage.getItem('id');
   const comment = document.getElementById('commentInput');
+
   const { uid, photoURL, displayName } = authService.currentUser;
+
+  if (!commentVal) {
+    alert('댓글을 입력해 주세요');
+    comment.focus();
+    return;
+  }
+
   try {
     await addDoc(collection(dbService, 'comments'), {
       reviewId: reviewId,
@@ -120,7 +141,7 @@ export const update_comment = async (event) => {
   event.preventDefault();
   const newComment = event.target.parentNode.children[0].value;
   const id = event.target.parentNode.id;
-
+  console.log(newComment);
   const parentNode = event.target.parentNode.parentNode;
   const commentText = parentNode.children[0];
   commentText.classList.remove('noDisplay'); //수정input display:none
@@ -180,7 +201,9 @@ export const getCommentList = async () => {
     </div>
     <div class="commentAndDelEd">
     <p class="card-text">${cmtObj.text}</p>
-    <p id="${cmtObj.id}" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
+    <p id="${
+      cmtObj.id
+    }" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
     <div class="${isOwner ? 'updateBtns' : 'noDisplay'}">
     <img src="../assets/pen-to-square-regular.svg" class="editBtn" onclick="onEditing(event)"/>
     <img src="../assets/trash-can-regular.svg" name="${cmtObj.id}" onclick="delete_comment(event)" class="deleteBtn"/>
