@@ -9,6 +9,7 @@ import {
   query,
   getDocs,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
+import { emailRegex } from "./utill.js";
 
 export const receiveDataFromBoard = async (event, shoeData) => {
   const poster = JSON.parse(decodeURI(shoeData));
@@ -19,7 +20,9 @@ export const receiveDataFromBoard = async (event, shoeData) => {
           </div>
           <div class="reviewHeadProfileName">
             <div class="reviewHeadProfileNameN">${poster.nickname}</div>
-            <div class="reviewHeadProfileNameD">${new Date(poster.createdAt).toLocaleString().slice(0, 25)}</div>
+            <div class="reviewHeadProfileNameD">${new Date(poster.createdAt)
+              .toLocaleString()
+              .slice(0, 25)}</div>
           </div>
         </div>
         <div class="editButtons">
@@ -57,7 +60,13 @@ export const receiveDataFromBoard = async (event, shoeData) => {
 export const saveComment = async (event) => {
   event.preventDefault();
   const comment = document.getElementById("commentInput");
+  const commentVal = comment.value;
   const { uid, photoURL, displayName } = authService.currentUser;
+  if (!commentVal) {
+    alert("댓글을 입력해 주세요");
+    comment.focus();
+    return;
+  }
   try {
     await addDoc(collection(dbService, "comments"), {
       text: comment.value,
@@ -78,8 +87,8 @@ export const saveComment = async (event) => {
 export const onEditing = (event) => {
   // 수정버튼 클릭
   event.preventDefault();
-  const udBtns = document.querySelectorAll('.editBtn, .deleteBtn');
-  udBtns.forEach((udBtn) => (udBtn.disabled = 'true'));
+  const udBtns = document.querySelectorAll(".editBtn, .deleteBtn");
+  udBtns.forEach((udBtn) => (udBtn.disabled = "true"));
   console.log(udBtns);
   const cardBody = event.target.parentNode.parentNode; //cardbody = 수정 버튼
   console.log(cardBody);
@@ -90,14 +99,14 @@ export const onEditing = (event) => {
   commentInputP.classList.remove("noDisplay");
   console.log(commentInputP);
   commentInputP.focus();
-  udBtns.forEach((udBtns) => udBtns.classList.add('noDisplay'));
+  udBtns.forEach((udBtns) => udBtns.classList.add("noDisplay"));
 };
 
 export const update_comment = async (event) => {
   event.preventDefault();
   const newComment = event.target.parentNode.children[0].value;
   const id = event.target.parentNode.id;
-
+  console.log(newComment);
   const parentNode = event.target.parentNode.parentNode;
   const commentText = parentNode.children[0];
   commentText.classList.remove("noDisplay"); //수정input display:none
@@ -130,7 +139,10 @@ export const delete_comment = async (event) => {
 
 export const getCommentList = async () => {
   let cmtObjList = [];
-  const q = query(collection(dbService, 'comments'), orderBy('createdAt', 'desc'));
+  const q = query(
+    collection(dbService, "comments"),
+    orderBy("createdAt", "desc")
+  );
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     const commentObj = {
