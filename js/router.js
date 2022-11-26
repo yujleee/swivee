@@ -36,8 +36,8 @@ export const handleLocation = async () => {
 
   // 특정 화면 렌더링 되자마자 DOM 조작 처리
   if (path === 'review') {
-    console.log('getCommentList');
-    getCommentList();
+    console.log(html);
+    // await getCommentList();
   }
 
   if (path === 'mypage') {
@@ -47,8 +47,7 @@ export const handleLocation = async () => {
         goToLogin();
       } else {
         // 프로필 관리 화면 일 때 현재 프로필 사진과 닉네임 할당
-        document.getElementById('profileView').src =
-          authService.currentUser.photoURL ?? '/assets/blank-profile-picture.png';
+        document.getElementById('profileView').src = authService.currentUser.photoURL ?? '/assets/blank-profile-picture.png';
         document.getElementById('profileNickname').value = authService.currentUser.displayName ?? '닉네임없나';
         getUserReviewList();
       }

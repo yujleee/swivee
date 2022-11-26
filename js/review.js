@@ -8,8 +8,9 @@ import {
   orderBy,
   query,
   getDocs,
+  where,
 } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
-import { goToBoard } from './router.js';
+import { emailRegex } from './utill.js';
 
 export const receiveDataFromBoard = async (event, shoeData) => {
   const poster = JSON.parse(decodeURI(shoeData));
@@ -21,6 +22,19 @@ export const receiveDataFromBoard = async (event, shoeData) => {
   const creatorId = localStorage.getItem('creatorId');
   const currentUid = authService.currentUser.uid;
   const isOwner = currentUid === creatorId;
+
+  let cmtObjList = [];
+  const q = query(collection(dbService, 'comments'), orderBy('createdAt', 'desc'));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    const commentObj = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    cmtObjList.push(commentObj);
+    console.log('cmtObjList', cmtObjList);
+  });
+  const reviewCount = cmtObjList.length;
 
   const temp_html = `<div class="reviewHead">
         <div class="reviewHeadProfile">
@@ -36,7 +50,7 @@ export const receiveDataFromBoard = async (event, shoeData) => {
         ${
           isOwner
             ? `<div class="editButtons">
-          <i class="fa-regular fa-pen-to-square reviewEdit"></i>
+            <i id="fix" class="fa-regular fa-pen-to-square reviewEdit" onclick="reviseReview(event)"></i>
           <i class="fa-regular fa-trash-can reviewDelete" onclick="deleteReview(event)"></i>
         </div>`
             : ''
@@ -46,35 +60,50 @@ export const receiveDataFromBoard = async (event, shoeData) => {
         <img src="${poster.reviewImg}" />
       </div>
       <p class="reviewComment">${poster.text}
-      </p>
       <section>
         <h1 class="blind">댓글</h1>
         <div id="reviews" class="commentHead">
-          <input type="text" id="commentInput" class="commentBox" placeholder="이 신발은 어떠셨나요?" name="comment" />
+        <textarea
+        id="reviewCheck" class="noDisplay">${poster.text}</textarea>
+        <i id="fixSave" class="fa-sharp fa-solid fa-pen-to-square"></i>
+        </div>
+          <input type="text" id="commentInput" placeholder="이 신발은 어떠셨나요?" name="comment"/>
           <button class="commentButton" onclick="saveComment(event)">입력</button>
         </div>
         <div class="commentLineBox">
           <div class="commentLine"></div>
-          <div class="commentLineTitle">댓글 126개</div>
+          <div class="commentLineTitle">댓글 ${reviewCount}개</div>
         </div>
       </section>
       <div id="commentList1"></div>`;
-  const div = document.createElement('div');
-  div.classList.add('review');
-  div.innerHTML = temp_html;
 
-  setTimeout(() => {
-    const box = document.querySelector('.box');
-    box.appendChild(div);
-  }, 100);
+  const reviewDiv = document.querySelector('.review');
+  // div.classList.add("review");
+  reviewDiv.innerHTML = temp_html;
+  // await getCommentList();
+  // const box = document.querySelector(".");
+  // reviewDiv.appendChild(div);
+  getCommentList();
 };
 
 export const saveComment = async (event) => {
   event.preventDefault();
+
+  const commentVal = comment.value;
+  const reviewId = localStorage.getItem('id');
   const comment = document.getElementById('commentInput');
+
   const { uid, photoURL, displayName } = authService.currentUser;
+
+  if (!commentVal) {
+    alert('댓글을 입력해 주세요');
+    comment.focus();
+    return;
+  }
+
   try {
     await addDoc(collection(dbService, 'comments'), {
+      reviewId: reviewId,
       text: comment.value,
       createdAt: Date.now(),
       creatorId: uid,
@@ -112,7 +141,7 @@ export const update_comment = async (event) => {
   event.preventDefault();
   const newComment = event.target.parentNode.children[0].value;
   const id = event.target.parentNode.id;
-
+  console.log(newComment);
   const parentNode = event.target.parentNode.parentNode;
   const commentText = parentNode.children[0];
   commentText.classList.remove('noDisplay'); //수정input display:none
@@ -154,8 +183,10 @@ export const getCommentList = async () => {
     };
     cmtObjList.push(commentObj);
   });
-  const commentList = document.getElementById('commentList1');
+
   const currentUid = authService.currentUser.uid;
+  const commentList = document.getElementById('commentList1');
+
   commentList.innerHTML = '';
   cmtObjList.forEach((cmtObj) => {
     const isOwner = currentUid === cmtObj.creatorId;
@@ -174,13 +205,8 @@ export const getCommentList = async () => {
       cmtObj.id
     }" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
     <div class="${isOwner ? 'updateBtns' : 'noDisplay'}">
-    <button onclick="onEditing(event)" class="editBtn">수정</button>
-    <button
-      name="${cmtObj.id}"
-      onclick="delete_comment(event)"
-      class="deleteBtn">
-      삭제
-    </button>
+    <img src="../assets/pen-to-square-regular.svg" class="editBtn" onclick="onEditing(event)"/>
+    <img src="../assets/trash-can-regular.svg" name="${cmtObj.id}" onclick="delete_comment(event)" class="deleteBtn"/>
   </div>
   </div>`;
     // console.log('commentList', commentList);
@@ -188,7 +214,10 @@ export const getCommentList = async () => {
     div.classList.add('mycards');
     div.innerHTML = temp_html;
     commentList.appendChild(div);
+    // commentList1.appendChild(div);
   });
+  // commentList = document.getElementById("commentList1");
+  // commentList.innerHTML = "";
 };
 
 // 리뷰 삭제
@@ -208,5 +237,44 @@ export const deleteReview = async (event) => {
     } catch (error) {
       console.log(error);
     }
+  }
+};
+
+export const reviseReview = async (event) => {
+  // 수정버튼 클릭
+  event.preventDefault();
+  const udBtns = document.querySelectorAll('.editButtons');
+  // udBtns.forEach((udBtn) => (udBtn.disabled = "true"));
+  const reviewBody = event.target; //수정 아이콘
+  console.log(reviewBody);
+  const commentText = document.querySelector('#reviewCheck');
+  //commentText : board에서 들고 온 textarea
+  console.log(commentText);
+  const commentInputP = document.querySelector('#fixSave'); //fixSave : 수정 후 아이콘
+  commentText.classList.remove('noDisplay');
+  commentInputP.classList.add('noDisplay');
+  console.log(commentInputP);
+  commentInputP.focus();
+};
+
+export const updateReviews = async (event) => {
+  event.preventDefault();
+  const newComment = event.target.value;
+  console.log(newComment);
+  const id = event.target.parentNode.id;
+
+  const parentNode = event.target.parentNode.parentNode;
+  const commentText = parentNode.children[0];
+  commentText.classList.remove('noDisplay');
+  const commentInputP = parentNode.children[1];
+  commentInputP.classList.remove('d-flex');
+  commentInputP.classList.add('noDisplay');
+
+  const commentRef = doc(dbService, 'comments', id);
+  try {
+    await updateDoc(commentRef, { text: newComment });
+    getCommentList();
+  } catch (error) {
+    alert(error);
   }
 };
