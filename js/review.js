@@ -1,5 +1,15 @@
 import { dbService, authService, storageService } from './firebase.js';
-import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import {
+  doc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  orderBy,
+  query,
+  getDocs,
+  where,
+} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 
 export const receiveDataFromBoard = async (event, shoeData) => {
   const poster = JSON.parse(decodeURI(shoeData));
@@ -153,7 +163,8 @@ export const delete_comment = async (event) => {
 
 export const getCommentList = async () => {
   let cmtObjList = [];
-  const q = query(collection(dbService, 'comments'), orderBy('createdAt', 'desc'));
+  const reviewId = localStorage.getItem('id');
+  const q = query(collection(dbService, 'comments'), where('reviewId', '==', reviewId), orderBy('createdAt', 'desc'));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     const commentObj = {
@@ -164,12 +175,29 @@ export const getCommentList = async () => {
   });
 
   const currentUid = authService.currentUser.uid;
-  const commentList = document.getElementById('commentList1');
 
+  const commentTitle = document.querySelector('.commentLineTitle');
+  commentTitle.innerHTML = `댓글 ${cmtObjList.length}개`;
+
+  const commentList = document.getElementById('commentList1');
   commentList.innerHTML = '';
+
+  let temp_html = '';
+
+  if (cmtObjList.length === 0) {
+    temp_html = ` <div class="empty">
+    <i class="fa-regular fa-face-sad-tear"></i>
+    <p class="emptyMessage">등록된 댓글이 없어요!</p>
+</div>`;
+    const div = document.createElement('div');
+    div.classList.add('mycards');
+    div.innerHTML = temp_html;
+    commentList.appendChild(div);
+  }
+
   cmtObjList.forEach((cmtObj) => {
     const isOwner = currentUid === cmtObj.creatorId;
-    const temp_html = `
+    temp_html = `
     <div class="reviewListComment">
     <div class="reviewListBox">
       <img class="cardEmoticon" src="${cmtObj.profileImg}" ?? '/assets/blank-profile-picture.png'}" alt="" />
@@ -180,7 +208,9 @@ export const getCommentList = async () => {
     </div>
     <div class="commentAndDelEd">
     <p class="card-text">${cmtObj.text}</p>
-    <p id="${cmtObj.id}" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
+    <p id="${
+      cmtObj.id
+    }" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
     <div class="${isOwner ? 'updateBtns' : 'noDisplay'}">
     <img src="../assets/pen-to-square-regular.svg" class="editBtn" onclick="onEditing(event)"/>
     <img src="../assets/trash-can-regular.svg" name="${cmtObj.id}" onclick="delete_comment(event)" class="deleteBtn"/>
