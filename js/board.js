@@ -1,15 +1,5 @@
 import { dbService, authService, storageService } from './firebase.js';
-import {
-  doc,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  collection,
-  orderBy,
-  query,
-  getDocs,
-  where,
-} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 import { ref, uploadString, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
 import { updateProfile } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
@@ -32,6 +22,7 @@ export const receiveDataFromMain = async (event, shoesName) => {
   const querySnapShot3 = await getDocs(q3);
   const likeCount = querySnapShot3.docs.map((doc) => doc.data().shoesLike);
   const brandLikeNumber = Number(likeCount.toString());
+  console.log('brandLikeNumber', brandLikeNumber);
 
   querySnapShot.forEach((doc) => {
     const reviewsObj = {
@@ -59,7 +50,7 @@ export const receiveDataFromMain = async (event, shoesName) => {
           <div class="boardMesageAndHeart">
             <i class="fa-regular fa-comment"></i>
             <p id="reviewCount">${reviewCount}</p>
-            <button onclick="shoesBrandLike(${shoes.shoesLike})"><i class="fas fa-solid fa-heart"></i>${brandLikeNumber}</button>
+            <i class="fas fa-solid fa-heart"> <button id="shoeLikeBtn" onclick="shoesBrandLike('${encodeURI(JSON.stringify(shoes))}')"> ${shoes.shoesLike}</button></i>
             
           </div>
           <div class="youTubeIcon">
@@ -83,7 +74,7 @@ export const receiveDataFromMain = async (event, shoesName) => {
           <div class="boardWriteReview">
             <textarea
               id="reviewCheck"
-              placeholder=" 리뷰를 남겨주세요..."
+              placeholder="리뷰를 남겨주세요..."
             ></textarea>
           </div>
           <div class="boardReviewButton">
@@ -96,7 +87,7 @@ export const receiveDataFromMain = async (event, shoesName) => {
       </form>`;
     })
     .join('');
-
+  console.log('temp');
   boardTop.innerHTML = temp;
   await getReviewList(currentTarget);
 };
@@ -116,6 +107,7 @@ export const imgFileUpload = (event) => {
     localStorage.setItem('reviewImgDataUrl', reviewImgDataUrl);
     // + 사진을 파일명으로 변경
     btnName.innerText = theFile.name;
+    console.log('btnName.innerText', btnName.innerText);
   };
 };
 
@@ -124,6 +116,8 @@ export const saveReview = async (event) => {
   event.preventDefault();
   // 현재 페이지의 신발이름
   const shoeName = document.getElementsByClassName('boardShoeTitle')[0].innerHTML;
+  // 사진 올리기 버튼
+  let imgUploadButton = document.getElementsByClassName('boardNewImage')[0];
   // 현재 페이지의 리뷰
   const comment = document.getElementById('reviewCheck');
   // Storage에 리뷰 사진 저장할 위치 (신발 이름별 리뷰 모음)
@@ -136,7 +130,6 @@ export const saveReview = async (event) => {
   }
 
   const { uid, photoURL, displayName } = authService.currentUser;
-  console.log('photoURL', photoURL);
   try {
     // reviews 파일을 만든후, 아래 내용들이 저장된다.
     await addDoc(collection(dbService, 'reviews'), {
@@ -160,6 +153,7 @@ export const saveReview = async (event) => {
         console.log('error:', error);
       });
     comment.value = '';
+    imgUploadButton.innerHTML = '+ 사진 올리기';
     getReviewList(shoeName);
   } catch (error) {
     alert(error);
@@ -198,8 +192,6 @@ export const getReviewList = async (shoeName) => {
         </div>
         <div class="boardReviewersRow boardReviewText">${cmtObj.text}</div>
         <div class="boardReviewersRow boardReviewersSmileAndComment">
-          <i class="fa-regular fa-face-grin-squint"></i>
-          <p>23</p>
           <i class="fa-regular fa-comment"></i>
           <p>3</p>
         </div>
@@ -213,8 +205,23 @@ export const getReviewList = async (shoeName) => {
   });
 };
 
-export const shoesBrandLike = async (event) => {
-  console.log(event++);
+export const shoesBrandLike = async (data) => {
+  // 데이터에 좋아요 수 +1 해준 뒤 저장
+  const currentData = JSON.parse(decodeURI(data));
+  const updateLikeNumber = currentData.shoesLike + 1;
+  const likeRef = doc(dbService, 'shoesList', currentData.id);
+  try {
+    await updateDoc(likeRef, { shoesLike: updateLikeNumber });
+  } catch (error) {
+    alert(error);
+  }
+  // 웹에 하트 1 더해주기
+  const currentLike = document.getElementById('shoeLikeBtn');
+  console.log('currentLike', currentLike);
+  // const heartIcon = `<i class="fas fa-solid fa-heart">`;
+  currentLike.innerText = updateLikeNumber;
+  // console.log(event++);
+
   // 아이콘이 클릭이 되어서 여기로 오면
   // 디비에 있는 데이터를 가져와서
   // 디비의 값에서 바로 1이 더해지나?
