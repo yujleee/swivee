@@ -178,7 +178,7 @@ body {
   margin-top: 40px;
 }
 
-i {
+.loginIcon {
   display: block;
   padding-right: 12px;
   width: 16px;

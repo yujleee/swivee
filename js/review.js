@@ -1,7 +1,6 @@
 import { dbService, authService, storageService } from './firebase.js';
 import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 
-
 export const receiveDataFromBoard = async (event, shoeData) => {
   const poster = JSON.parse(decodeURI(shoeData));
   console.log(poster);
@@ -181,9 +180,7 @@ export const getCommentList = async () => {
     </div>
     <div class="commentAndDelEd">
     <p class="card-text">${cmtObj.text}</p>
-    <p id="${
-      cmtObj.id
-    }" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
+    <p id="${cmtObj.id}" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
     <div class="${isOwner ? 'updateBtns' : 'noDisplay'}">
     <img src="../assets/pen-to-square-regular.svg" class="editBtn" onclick="onEditing(event)"/>
     <img src="../assets/trash-can-regular.svg" name="${cmtObj.id}" onclick="delete_comment(event)" class="deleteBtn"/>
