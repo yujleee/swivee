@@ -22,7 +22,7 @@ export const receiveDataFromMain = async (event, shoesName) => {
   const querySnapShot3 = await getDocs(q3);
   const likeCount = querySnapShot3.docs.map((doc) => doc.data().shoesLike);
   const brandLikeNumber = Number(likeCount.toString());
-  console.log('brandLikeNumber', brandLikeNumber);
+  // console.log('brandLikeNumber', brandLikeNumber);
 
   querySnapShot.forEach((doc) => {
     const reviewsObj = {
@@ -87,7 +87,6 @@ export const receiveDataFromMain = async (event, shoesName) => {
       </form>`;
     })
     .join('');
-  console.log('temp');
   boardTop.innerHTML = temp;
   await getReviewList(currentTarget);
 };
@@ -98,7 +97,6 @@ export const imgFileUpload = (event) => {
   const btnName = event.target.parentNode;
 
   const theFile = event.target.files[0]; // file 객체
-  console.log('theFile', theFile);
   const reader = new FileReader();
   reader.readAsDataURL(theFile); // file 객체를 브라우저가 읽을 수 있는 data URL로 읽음.
   reader.onloadend = (finishedEvent) => {
@@ -163,8 +161,9 @@ export const saveReview = async (event) => {
 
 export const getReviewList = async (shoeName) => {
   let cmtObjList = [];
-  const qq = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName), orderBy('createdAt', 'desc'));
-  const querySnapShot = await getDocs(qq);
+  // 데이에서 리뷰 가져오기
+  const q = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName), orderBy('createdAt', 'desc'));
+  const querySnapShot = await getDocs(q);
   querySnapShot.forEach((doc) => {
     const reviewsObj = {
       id: doc.id,
@@ -175,6 +174,22 @@ export const getReviewList = async (shoeName) => {
   });
   const reviewList = document.querySelector('.boardReviews');
   reviewList.innerHTML = '';
+
+  // 리뷰 개수 가져오기
+  let cmtObjList2 = [];
+  const q2 = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName), orderBy('createdAt', 'desc'));
+  const querySnapShot2 = await getDocs(q2);
+  querySnapShot2.forEach((doc) => {
+    const reviewsObj = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    cmtObjList2.push(reviewsObj);
+    // console.log('cmtObjList', cmtObjList);
+  });
+  const countReview = cmtObjList2.length;
+  console.log('countReview', countReview);
+
   cmtObjList.forEach((cmtObj) => {
     const temp_html = `
         <a id="boardData"
@@ -193,11 +208,11 @@ export const getReviewList = async (shoeName) => {
         <div class="boardReviewersRow boardReviewText">${cmtObj.text}</div>
         <div class="boardReviewersRow boardReviewersSmileAndComment">
           <i class="fa-regular fa-comment"></i>
-          <p>3</p>
+          <p>${countReview}</p>
         </div>
         </a>
       `;
-
+    // console.log('cmtobj', cmtObj);
     const div = document.createElement('div');
     div.classList.add('boardReview');
     div.innerHTML = temp_html;
