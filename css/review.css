@@ -256,3 +256,17 @@
 .commentAndDelEd {
   display: flex;
 }
+
+.mycards .empty {
+  padding: 120px 0;
+  text-align: center;
+  color: #999;
+}
+
+.mycards .empty > i {
+  width: 100px;
+  display: inline-block;
+  font-size: 100px;
+  color: #ddd;
+  margin-bottom: 30px;
+}

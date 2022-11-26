@@ -10,7 +10,6 @@ import {
   getDocs,
   where,
 } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
-import { emailRegex } from './utill.js';
 
 export const receiveDataFromBoard = async (event, shoeData) => {
   const poster = JSON.parse(decodeURI(shoeData));
@@ -174,7 +173,8 @@ export const delete_comment = async (event) => {
 
 export const getCommentList = async () => {
   let cmtObjList = [];
-  const q = query(collection(dbService, 'comments'), orderBy('createdAt', 'desc'));
+  const reviewId = localStorage.getItem('id');
+  const q = query(collection(dbService, 'comments'), where('reviewId', '==', reviewId), orderBy('createdAt', 'desc'));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     const commentObj = {
@@ -185,12 +185,29 @@ export const getCommentList = async () => {
   });
 
   const currentUid = authService.currentUser.uid;
-  const commentList = document.getElementById('commentList1');
 
+  const commentTitle = document.querySelector('.commentLineTitle');
+  commentTitle.innerHTML = `댓글 ${cmtObjList.length}개`;
+
+  const commentList = document.getElementById('commentList1');
   commentList.innerHTML = '';
+
+  let temp_html = '';
+
+  if (cmtObjList.length === 0) {
+    temp_html = ` <div class="empty">
+    <i class="fa-regular fa-face-sad-tear"></i>
+    <p class="emptyMessage">등록된 댓글이 없어요!</p>
+</div>`;
+    const div = document.createElement('div');
+    div.classList.add('mycards');
+    div.innerHTML = temp_html;
+    commentList.appendChild(div);
+  }
+
   cmtObjList.forEach((cmtObj) => {
     const isOwner = currentUid === cmtObj.creatorId;
-    const temp_html = `
+    temp_html = `
     <div class="reviewListComment">
     <div class="reviewListBox">
       <img class="cardEmoticon" src="${cmtObj.profileImg}" ?? '/assets/blank-profile-picture.png'}" alt="" />
