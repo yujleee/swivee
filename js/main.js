@@ -20,9 +20,9 @@ import {
 } from './mypage.js';
 import {
   saveComment,
-  delete_comment,
+  updateComment,
+  deleteComment,
   onEditing,
-  update_comment,
   deleteReview,
   receiveDataFromBoard,
   reviseReview,
@@ -99,9 +99,9 @@ window.changeUserPassword = changeUserPassword;
 window.saveComment = saveComment;
 
 window.getUserReviewList = getUserReviewList;
-window.delete_comment = delete_comment;
+window.deleteComment = deleteComment;
 window.onEditing = onEditing;
-window.update_comment = update_comment;
+window.updateComment = updateComment;
 window.receiveDataFromBoard = receiveDataFromBoard;
 // window.renderTopbrands = renderTopbrands;
 window.deleteReview = deleteReview;

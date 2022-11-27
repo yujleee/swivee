@@ -1,5 +1,15 @@
 import { dbService, authService, storageService } from './firebase.js';
-import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import {
+  doc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  orderBy,
+  query,
+  getDocs,
+  where,
+} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 import { ref, uploadString, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
 import { updateProfile } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
@@ -50,11 +60,15 @@ export const receiveDataFromMain = async (event, shoesName) => {
           <div class="boardMesageAndHeart">
             <i class="fa-regular fa-comment"></i>
             <p id="reviewCount">${reviewCount}</p>
-            <i class="fas fa-solid fa-heart"> <button id="shoeLikeBtn" onclick="shoesBrandLike('${encodeURI(JSON.stringify(shoes))}')"> ${shoes.shoesLike}</button></i>
+            <i class="fas fa-solid fa-heart"> <button id="shoeLikeBtn" onclick="shoesBrandLike('${encodeURI(
+              JSON.stringify(shoes)
+            )}')"> ${shoes.shoesLike}</button></i>
             
           </div>
           <div class="youTubeIcon">
-            <a href="${searchOnYoutube(shoes.shoesName)}" target="_blank"><pre> <i class="fa-brands fa-youtube"> 관련 영상</i></pre></a>
+            <a href="${searchOnYoutube(
+              shoes.shoesName
+            )}" target="_blank"><pre> <i class="fa-brands fa-youtube"> 관련 영상</i></pre></a>
           </div>
         </div>
         <!-- Right -->
@@ -176,48 +190,63 @@ export const getReviewList = async (shoeName) => {
   reviewList.innerHTML = '';
 
   // 리뷰 개수 가져오기
-  let cmtObjList2 = [];
-  const q2 = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName), orderBy('createdAt', 'desc'));
-  const querySnapShot2 = await getDocs(q2);
-  querySnapShot2.forEach((doc) => {
-    const reviewsObj = {
-      id: doc.id,
-      ...doc.data(),
-    };
-    cmtObjList2.push(reviewsObj);
-    // console.log('cmtObjList', cmtObjList);
-  });
-  const countReview = cmtObjList2.length;
+  //   let cmtObjList2 = [];
+  //   const q2 = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName), orderBy('createdAt', 'desc'));
+  //   const querySnapShot2 = await getDocs(q2);
+  //   querySnapShot2.forEach((doc) => {
+  //     const reviewsObj = {
+  //       id: doc.id,
+  //       ...doc.data(),
+  //     };
+  //     cmtObjList2.push(reviewsObj);
+  //     // console.log('cmtObjList', cmtObjList);
+  //   });
+  const countReview = cmtObjList.length;
   console.log('countReview', countReview);
 
-  cmtObjList.forEach((cmtObj) => {
-    const temp_html = `
-        <a id="boardData"
-        onclick="window.location.hash = '#review'; handleLocation();receiveDataFromBoard(event, '${encodeURI(JSON.stringify(cmtObj))}')">
-        <div class="boardReviewersImg">
-          <img class="reviewPostingImg" src="${cmtObj.reviewImg}" alt="" />
-        </div>
-        <div class="boardReviewersRow boardProfileImageAndNickName">
-          <img
-            class="boardReviewersProfile"
-            src="${cmtObj.profileImg}"
-            alt=""
-          />
-          <div class="boardReviewersNickname">${cmtObj.nickname}</div>
-        </div>
-        <div class="boardReviewersRow boardReviewText">${cmtObj.text}</div>
-        <div class="boardReviewersRow boardReviewersSmileAndComment">
-          <i class="fa-regular fa-comment"></i>
-          <p>${countReview}</p>
-        </div>
-        </a>
-      `;
-    // console.log('cmtobj', cmtObj);
+  let temp_html = '';
+
+  if (countReview === 0) {
+    temp_html = `
+            <i class="fa-regular fa-face-sad-tear"></i>
+            <p class="emptyMessage">등록된 리뷰가 없어요!</p>
+        `;
     const div = document.createElement('div');
-    div.classList.add('boardReview');
+    div.classList.add('empty');
     div.innerHTML = temp_html;
     reviewList.appendChild(div);
-  });
+  } else {
+    cmtObjList.forEach((cmtObj) => {
+      temp_html = `
+           <a id="boardData"
+           onclick="window.location.hash = '#review'; handleLocation();receiveDataFromBoard(event, '${encodeURI(
+             JSON.stringify(cmtObj)
+           )}')">
+           <div class="boardReviewersImg">
+             <img class="reviewPostingImg" src="${cmtObj.reviewImg}" alt="" />
+           </div>
+           <div class="boardReviewersRow boardProfileImageAndNickName">
+             <img
+               class="boardReviewersProfile"
+               src="${cmtObj.profileImg}"
+               alt=""
+             />
+             <div class="boardReviewersNickname">${cmtObj.nickname}</div>
+           </div>
+           <div class="boardReviewersRow boardReviewText">${cmtObj.text}</div>
+           <div class="boardReviewersRow boardReviewersSmileAndComment">
+             <i class="fa-regular fa-comment"></i>
+             <p>${countReview}</p>
+           </div>
+           </a>
+         `;
+      // console.log('cmtobj', cmtObj);
+      const div = document.createElement('div');
+      div.classList.add('boardReview');
+      div.innerHTML = temp_html;
+      reviewList.appendChild(div);
+    });
+  }
 };
 
 export const shoesBrandLike = async (data) => {

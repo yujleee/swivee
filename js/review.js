@@ -1,15 +1,32 @@
 import { dbService, authService, storageService } from './firebase.js';
-import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import {
+  doc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  orderBy,
+  query,
+  getDocs,
+  where,
+} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 
 export const receiveDataFromBoard = async (event, shoeData) => {
+  if (!authService.currentUser) {
+    alert('로그인이 필요합니다.');
+    goToLogin();
+    return;
+  }
+
   const poster = JSON.parse(decodeURI(shoeData));
-  console.log(poster);
+
   localStorage.setItem('id', poster.id);
   localStorage.setItem('shoeName', poster.shoeName);
   localStorage.setItem('creatorId', poster.creatorId);
 
   const creatorId = localStorage.getItem('creatorId');
   const currentUid = authService.currentUser.uid;
+
   const isOwner = currentUid === creatorId;
 
   let cmtObjList = [];
@@ -77,9 +94,19 @@ export const receiveDataFromBoard = async (event, shoeData) => {
 
 export const saveComment = async (event) => {
   event.preventDefault();
-  const reviewId = localStorage.getItem('id');
+
   const comment = document.getElementById('commentInput');
+  const commentVal = comment.value;
+  const reviewId = localStorage.getItem('id');
+
   const { uid, photoURL, displayName } = authService.currentUser;
+
+  if (!commentVal) {
+    alert('댓글을 입력해 주세요');
+    comment.focus();
+    return;
+  }
+
   try {
     await addDoc(collection(dbService, 'comments'), {
       reviewId: reviewId,
@@ -116,11 +143,11 @@ export const onEditing = (event) => {
   udBtns.forEach((udBtns) => udBtns.classList.add('noDisplay'));
 };
 
-export const update_comment = async (event) => {
+export const updateComment = async (event) => {
   event.preventDefault();
   const newComment = event.target.parentNode.children[0].value;
   const id = event.target.parentNode.id;
-
+  console.log(newComment);
   const parentNode = event.target.parentNode.parentNode;
   const commentText = parentNode.children[0];
   commentText.classList.remove('noDisplay'); //수정input display:none
@@ -137,7 +164,7 @@ export const update_comment = async (event) => {
   }
 };
 
-export const delete_comment = async (event) => {
+export const deleteComment = async (event) => {
   event.preventDefault();
   const id = event.target.name;
   const ok = window.confirm('해당 응원글을 정말 삭제하시겠습니까?');
@@ -153,7 +180,8 @@ export const delete_comment = async (event) => {
 
 export const getCommentList = async () => {
   let cmtObjList = [];
-  const q = query(collection(dbService, 'comments'), orderBy('createdAt', 'desc'));
+  const reviewId = localStorage.getItem('id');
+  const q = query(collection(dbService, 'comments'), where('reviewId', '==', reviewId), orderBy('createdAt', 'desc'));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     const commentObj = {
@@ -164,12 +192,29 @@ export const getCommentList = async () => {
   });
 
   const currentUid = authService.currentUser.uid;
-  const commentList = document.getElementById('commentList1');
 
+  const commentTitle = document.querySelector('.commentLineTitle');
+  commentTitle.innerHTML = `댓글 ${cmtObjList.length}개`;
+
+  const commentList = document.getElementById('commentList1');
   commentList.innerHTML = '';
+
+  let temp_html = '';
+
+  if (cmtObjList.length === 0) {
+    temp_html = ` <div class="empty">
+    <i class="fa-regular fa-face-sad-tear"></i>
+    <p class="emptyMessage">등록된 댓글이 없어요!</p>
+</div>`;
+    const div = document.createElement('div');
+    div.classList.add('mycards');
+    div.innerHTML = temp_html;
+    commentList.appendChild(div);
+  }
+
   cmtObjList.forEach((cmtObj) => {
     const isOwner = currentUid === cmtObj.creatorId;
-    const temp_html = `
+    temp_html = `
     <div class="reviewListComment">
     <div class="reviewListBox">
       <img class="cardEmoticon" src="${cmtObj.profileImg}" ?? '/assets/blank-profile-picture.png'}" alt="" />
@@ -180,10 +225,12 @@ export const getCommentList = async () => {
     </div>
     <div class="commentAndDelEd">
     <p class="card-text">${cmtObj.text}</p>
-    <p id="${cmtObj.id}" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="update_comment(event)">완료</button></p>
+    <p id="${
+      cmtObj.id
+    }" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="updateComment(event)">완료</button></p>
     <div class="${isOwner ? 'updateBtns' : 'noDisplay'}">
     <img src="../assets/pen-to-square-regular.svg" class="editBtn" onclick="onEditing(event)"/>
-    <img src="../assets/trash-can-regular.svg" name="${cmtObj.id}" onclick="delete_comment(event)" class="deleteBtn"/>
+    <img src="../assets/trash-can-regular.svg" name="${cmtObj.id}" onclick="deleteComment(event)" class="deleteBtn"/>
   </div>
   </div>`;
     // console.log('commentList', commentList);
