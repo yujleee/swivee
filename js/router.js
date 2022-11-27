@@ -1,5 +1,5 @@
 import { authService } from './firebase.js';
-import { renderBrandList, changeShoesList, getRealtimeReviews } from './pages/home.js';
+import { renderBrandList, changeShoesList, getRealtimeReviews, renderTopbrands } from './pages/home.js';
 import { getUserReviewList } from './mypage.js';
 import { getReviewList, receiveDataFromMain } from './board.js';
 
@@ -33,7 +33,8 @@ export const handleLocation = async () => {
         alert('마이페이지는 로그인 후 이용하실 수 있어요.');
         goToLogin();
       } else {
-        document.getElementById('profileView').src = authService.currentUser.photoURL ?? '/assets/blank-profile-picture.png';
+        document.getElementById('profileView').src =
+          authService.currentUser.photoURL ?? '/assets/blank-profile-picture.png';
         document.getElementById('profileNickname').value = authService.currentUser.displayName ?? '닉네임없나';
         getUserReviewList();
       }
@@ -43,6 +44,7 @@ export const handleLocation = async () => {
     renderBrandList();
     changeShoesList();
     getRealtimeReviews();
+    renderTopbrands();
   }
 };
 

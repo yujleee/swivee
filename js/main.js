@@ -2,9 +2,31 @@ import { handleLocation, goToLogin, goToJoin, goToBoard, goToReview, goToMypage 
 import { handleAuth, socialLogin, logout } from './pages/auth.js';
 import { authService } from './firebase.js';
 import { imgFileUpload, saveReview, receiveDataFromMain, shoesBrandLike } from './board.js';
-import { toggleMoreBrand, changeShoesList, showMoreShoes, renderBrandList, getRealtimeReviews } from './pages/home.js';
-import { onFileChange, changeProfiles, onChangeNickname, onDeleteImg, changeUserPassword, getUserReviewList } from './mypage.js';
-import { saveComment, updateComment, deleteComment, onEditing, deleteReview, receiveDataFromBoard, reviseReview } from './review.js';
+import {
+  toggleMoreBrand,
+  changeShoesList,
+  showMoreShoes,
+  renderBrandList,
+  getRealtimeReviews,
+  renderTopbrands,
+} from './pages/home.js';
+import {
+  onFileChange,
+  changeProfiles,
+  onChangeNickname,
+  onDeleteImg,
+  changeUserPassword,
+  getUserReviewList,
+} from './mypage.js';
+import {
+  saveComment,
+  updateComment,
+  deleteComment,
+  onEditing,
+  deleteReview,
+  receiveDataFromBoard,
+  reviseReview,
+} from './review.js';
 
 const activeMenu = document.querySelector('.active');
 window.addEventListener('hashchange', handleLocation);
@@ -56,8 +78,12 @@ window.goToJoin = goToJoin;
 window.goToBoard = goToBoard;
 window.goToReview = goToReview;
 window.goToMypage = goToMypage;
-window.onFileChange = onFileChange;
 window.toggleMoreBrand = toggleMoreBrand;
+window.renderTopbrands = renderTopbrands;
+window.renderBrandList = renderBrandList;
+window.changeShoesList = changeShoesList;
+window.getRealtimeReviews = getRealtimeReviews;
+window.showMoreShoes = showMoreShoes;
 // 로그인 & 회원가입
 window.handleAuth = handleAuth;
 window.socialLogin = socialLogin;
@@ -65,8 +91,6 @@ window.changeUserPassword = changeUserPassword;
 window.logout = logout;
 // 신발 리뷰
 window.receiveDataFromMain = receiveDataFromMain;
-window.changeShoesList = changeShoesList;
-window.showMoreShoes = showMoreShoes;
 window.imgFileUpload = imgFileUpload;
 window.saveReview = saveReview;
 window.shoesBrandLike = shoesBrandLike;
@@ -82,7 +106,6 @@ window.deleteReview = deleteReview;
 window.reviseReview = reviseReview;
 // 마이 페이지
 window.changeProfiles = changeProfiles;
-window.renderBrandList = renderBrandList;
-window.getRealtimeReviews = getRealtimeReviews;
+window.onFileChange = onFileChange;
 window.onChangeNickname = onChangeNickname;
 window.onDeleteImg = onDeleteImg;
