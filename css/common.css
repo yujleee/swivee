@@ -19,12 +19,14 @@ img {
 /* 렌더링 공통부분 */
 #main {
   display: block;
+  display: flex;
+  justify-content: center;
 }
 
 .container {
-  width: 100%;
+  /* width: 100%;
   max-width: 1024px;
-  margin: 0 auto;
+  margin: 0 auto; */
 }
 
 .toTop {

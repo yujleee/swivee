@@ -221,6 +221,7 @@ export const getReviewList = async (shoeName) => {
 };
 
 export const shoesBrandLike = async (data) => {
+  event.preventDefault();
   // 데이터에 좋아요 수 +1 해준 뒤 저장
   const currentData = JSON.parse(decodeURI(data));
   const updateLikeNumber = currentData.shoesLike + 1;

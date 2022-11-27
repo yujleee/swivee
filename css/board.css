@@ -1,10 +1,3 @@
-/* body {
-  width: 100%;
-  height: 100%;
-  max-width: 1024px;
-  margin: 0 auto;
-} */
-
 /* 전체 margin */
 .writeReview {
   margin: 20px;
@@ -26,9 +19,9 @@
   max-width: 400px;
 }
 
+ /* 아래 사진이 말려올라오는것을 막아준다 */
 .clear {
   clear: both;
-  /* 아래 사진이 말려올라오는것을 막아준다 */
 }
 
 .boardWriteReviews p {
@@ -67,10 +60,6 @@
   font-weight: 500;
   line-height: 17px;
 } 
-
-#shoeLikeBtn i {
-  /* width: 20px; */
-}
 
 .youTubeIcon {
   width: 100px;
@@ -159,6 +148,11 @@
   display: none;
 }
 
+.reviewList {
+  display: flex;
+  justify-content: center;
+}
+
 .boardReviews {
   display: flex;
   justify-content: center;
@@ -214,7 +208,6 @@
   width: 234px;
   height: 234px;
   object-fit: cover;
-  /* object-fit: contain; */
   overflow: hidden;
   border-radius: 15px;
 }
@@ -273,3 +266,11 @@
     margin-top: 24px;
   }
 }
+/* 
+@media only screen and (max-width: 810px) {
+
+  .boardImgLeft img {
+    max-width: 900px;
+    width: 100%;
+  }
+} */
