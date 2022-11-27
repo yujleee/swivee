@@ -2,7 +2,14 @@ import { dbService, authService, storageService } from './firebase.js';
 import { ref, uploadString, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
 import { updateProfile, updatePassword } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
-import { collection, addDoc, doc, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import {
+  collection,
+  addDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 
 export const changeProfiles = async (event) => {
   event.preventDefault();
@@ -121,30 +128,43 @@ export const getUserReviewList = async () => {
 
   const userReviewList = document.querySelector('.boardReviews');
   userReviewList.innerHTML = '';
-  cmtObjList.forEach((cmtObj) => {
+  for (let i = 0; i < cmtObjList.length; i++) {
+    const reviewId = cmtObjList[i].id;
+
+    let userReviewsCmtList = [];
+    const q = query(collection(dbService, 'comments'), where('reviewId', '==', reviewId));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      const commentObj = {
+        id: doc.id,
+        ...doc.data(),
+      };
+      userReviewsCmtList.push(commentObj);
+    });
+
     const temp_html = `
         <div class="boardReviewersImg">
-          <img class="reviewPostingImg" src="${cmtObj.profileImg}" alt="" />
+          <img class="reviewPostingImg" src="${
+            cmtObjList[i].profileImg ?? '/assets/blank-profile-picture.png'
+          }" alt="" />
         </div>
         <div class="boardReviewersRow boardProfileImageAndNickName">
           <img
             class="boardReviewersProfile"
-            src="${cmtObj.profileImg}"
+            src="${cmtObjList[i].profileImg ?? '/assets/blank-profile-picture.png'}"
             alt=""
           />
-          <div class="boardReviewersNickname">${cmtObj.nickname}</div>
+          <div class="boardReviewersNickname">${cmtObjList[i].nickname}</div>
         </div>
-        <div class="boardReviewersRow boardReviewText">${cmtObj.text}</div>
+        <div class="boardReviewersRow boardReviewText">${cmtObjList[i].text}</div>
         <div class="boardReviewersRow boardReviewersSmileAndComment">
-          <i class="fa-regular fa-face-grin-squint"></i>
-          <p>23</p>
           <i class="fa-regular fa-comment"></i>
-          <p>3</p>
+          <p>${userReviewsCmtList.length}</p>
         </div>
       `;
     const div = document.createElement('div');
     div.classList.add('boardReview');
     div.innerHTML = temp_html;
     userReviewList.appendChild(div);
-  });
+  }
 };
