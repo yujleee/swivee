@@ -1,6 +1,7 @@
 import { dbService, authService, storageService } from './firebase.js';
-import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 import { getReviewList } from './board.js';
+
 export const receiveDataFromBoard = async (event, shoeData) => {
   const poster = JSON.parse(decodeURI(shoeData));
   console.log(poster);
@@ -261,15 +262,15 @@ export const updateReviews = async (event) => {
   savebtn.classList.add('noDisplay');
   try {
     await updateDoc(commentRef, { text: commentInputP });
-    getReviseComment();
+    getReviseComment(creatorId); 
   } catch (error) {
     alert(error);
   }
 
 };
 
-export const getReviseComment = async (event, shoeData) => {
-  const poster = JSON.parse(decodeURI(shoeData));
+export const getReviseComment = async (creatorfolder) => {
+  const poster = JSON.parse(decodeURI(creatorfolder));
   console.log(poster);
   localStorage.setItem('id', poster.id);
   localStorage.setItem('shoeName', poster.shoeName);
@@ -280,8 +281,8 @@ export const getReviseComment = async (event, shoeData) => {
   const isOwner = currentUid === creatorId;
 
   let cmtObjList = [];
-  const q = query(collection(dbService, 'comments'), orderBy('createdAt', 'desc'));
-  const querySnapshot = await getDocs(q);
+  const qq = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName), orderBy('createdAt', 'desc'));
+  const querySnapshot = await getDocs(qq);
   querySnapshot.forEach((doc) => {
     const commentObj = {
       id: doc.id,
