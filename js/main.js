@@ -1,7 +1,7 @@
 import { handleLocation, goToLogin, goToJoin, goToBoard, goToReview, goToMypage } from './router.js';
 import { handleAuth, socialLogin, logout } from './pages/auth.js';
 import { authService } from './firebase.js';
-import { imgFileUpload, saveReview, receiveDataFromMain, shoesBrandLike } from './board.js';
+import { imgFileUpload, saveReview, receiveDataFromMain, shoesBrandLike, checkReviewBtn } from './board.js';
 import { toggleMoreBrand, changeShoesList, showMoreShoes, renderBrandList, getRealtimeReviews } from './pages/home.js';
 import { onFileChange, changeProfiles, onChangeNickname, onDeleteImg, changeUserPassword, getUserReviewList } from './mypage.js';
 import { saveComment, updateComment, deleteComment, onEditing, deleteReview, receiveDataFromBoard, reviseReview } from './review.js';
@@ -70,6 +70,7 @@ window.showMoreShoes = showMoreShoes;
 window.imgFileUpload = imgFileUpload;
 window.saveReview = saveReview;
 window.shoesBrandLike = shoesBrandLike;
+window.checkReviewBtn = checkReviewBtn;
 // 리뷰 보기
 window.receiveDataFromBoard = receiveDataFromBoard;
 window.handleLocation = handleLocation;

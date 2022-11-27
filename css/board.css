@@ -144,6 +144,17 @@
   box-shadow: 1px 2px 10px #c6b4f6;
 }
 
+#uploadReview[disabled] {
+   background-color: #ffffff;
+  border: 2px solid #a589f3;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #a589f3;
+  box-shadow: none;
+}
+
 #imgInput {
   display: none;
 }
@@ -262,6 +273,9 @@
 .boardShoeImg > img {
   border-radius: 15px;
   overflow: hidden;
+}
+
+.reviewBtnActive {
 }
 
 @media only screen and (max-width: 810px) {

@@ -11,7 +11,7 @@ export const changeProfiles = async (event) => {
   const imgDataUrl = localStorage.getItem('imgDataUrl');
   let downloadUrl;
   if (imgDataUrl) {
-    const response = await uploadString(imgRef, imgDataUrl, 'data_url'); //imgRef:이미지저장 위치
+    const response = await uploadString(imgRef, imgDataUrl, 'data_url');
     downloadUrl = await getDownloadURL(response.ref);
   }
   await updateProfile(authService.currentUser, {
