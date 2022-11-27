@@ -27,7 +27,6 @@ import {
   receiveDataFromBoard,
   reviseReview,
   updateReviews,
-  getReviseComment
 } from './review.js';
 
 const activeMenu = document.querySelector('.active');
@@ -110,4 +109,3 @@ window.deleteReview = deleteReview;
 window.handleLocation = handleLocation;
 window.reviseReview = reviseReview;
 window.updateReviews =updateReviews;
-window.getReviseComment=getReviseComment;
