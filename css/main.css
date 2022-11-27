@@ -29,7 +29,6 @@ html {
   border-radius: 10px;
   display: flex;
   justify-content: center;
-  /* margin: 0 7.5px; */
   margin-bottom: 20px;
 }
 
@@ -149,11 +148,6 @@ html {
 }
 
 .shoesListWrap .empty {
-  /* background-color: aquamarine; */
-  /* padding: 80%; */
-  /* width: 100%; */
-  /* display: flex; */
-  /* width: 100%; */
   width:700px;
   padding: 120px 20px 50px 30px;
   text-align: center;
@@ -161,7 +155,6 @@ html {
 
 .shoesListWrap .empty > i {
   width: 100px;
-  /* display: inline-block; */
   font-size: 100px;
   color: #ddd;
 }
@@ -283,7 +276,6 @@ html {
 }
 
 .realTimeReviewList .reviewBox .comment {
-  /* background-color: aquamarine; */
   margin-top: 8px;
   color: #444;
   overflow: hidden;

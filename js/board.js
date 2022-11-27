@@ -1,21 +1,9 @@
 import { dbService, authService, storageService } from './firebase.js';
-import {
-  doc,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  collection,
-  orderBy,
-  query,
-  getDocs,
-  where,
-} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 import { ref, uploadString, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
-import { updateProfile } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 import { searchOnYoutube } from './utill.js';
 
-// home.html에서 신발 클릭시
 export const receiveDataFromMain = async (event, shoesName) => {
   const currentTarget = !event ? shoesName : event.target.parentNode.children[0].alt;
   let reviewObjList = [];
@@ -32,7 +20,6 @@ export const receiveDataFromMain = async (event, shoesName) => {
   const querySnapShot3 = await getDocs(q3);
   const likeCount = querySnapShot3.docs.map((doc) => doc.data().shoesLike);
   const brandLikeNumber = Number(likeCount.toString());
-  // console.log('brandLikeNumber', brandLikeNumber);
 
   querySnapShot.forEach((doc) => {
     const reviewsObj = {
@@ -41,12 +28,11 @@ export const receiveDataFromMain = async (event, shoesName) => {
     };
     reviewObjList.push(reviewsObj);
   });
-  // 실발 리뷰 개수
   const boardTop = document.querySelector('.boardTop');
   boardTop.innerHTML = '';
   const temp = reviewObjList
     .map((shoes, idx) => {
-      return `<!-- Left -->
+      return `
       <div class="boardShoeImg boardImgLeft">
         <img
           src="${shoes.image}"
@@ -60,15 +46,10 @@ export const receiveDataFromMain = async (event, shoesName) => {
           <div class="boardMesageAndHeart">
             <i class="fa-regular fa-comment"></i>
             <p id="reviewCount">${reviewCount}</p>
-            <i class="fas fa-solid fa-heart"> <button id="shoeLikeBtn" onclick="shoesBrandLike('${encodeURI(
-              JSON.stringify(shoes)
-            )}')"> ${shoes.shoesLike}</button></i>
-            
+            <i class="fas fa-solid fa-heart"> <button id="shoeLikeBtn" onclick="shoesBrandLike('${encodeURI(JSON.stringify(shoes))}')"> ${shoes.shoesLike}</button></i>
           </div>
           <div class="youTubeIcon">
-            <a href="${searchOnYoutube(
-              shoes.shoesName
-            )}" target="_blank"><pre> <i class="fa-brands fa-youtube"> 관련 영상</i></pre></a>
+            <a href="${searchOnYoutube(shoes.shoesName)}" target="_blank"><pre> <i class="fa-brands fa-youtube"> 관련 영상</i></pre></a>
           </div>
         </div>
         <!-- Right -->
@@ -105,34 +86,23 @@ export const receiveDataFromMain = async (event, shoesName) => {
   await getReviewList(currentTarget);
 };
 
-// 디비에 사진 업로드 하기
 export const imgFileUpload = (event) => {
-  // boardNewImage 태그를 가져온다
   const btnName = event.target.parentNode;
-
-  const theFile = event.target.files[0]; // file 객체
+  const theFile = event.target.files[0];
   const reader = new FileReader();
-  reader.readAsDataURL(theFile); // file 객체를 브라우저가 읽을 수 있는 data URL로 읽음.
+  reader.readAsDataURL(theFile);
   reader.onloadend = (finishedEvent) => {
-    // 파일리더가 파일객체를 data URL로 변환 작업을 끝났을 때
     const reviewImgDataUrl = finishedEvent.currentTarget.result;
     localStorage.setItem('reviewImgDataUrl', reviewImgDataUrl);
-    // + 사진을 파일명으로 변경
     btnName.innerText = theFile.name;
-    console.log('btnName.innerText', btnName.innerText);
   };
 };
 
-// 리뷰 DB에 저장
 export const saveReview = async (event) => {
   event.preventDefault();
-  // 현재 페이지의 신발이름
   const shoeName = document.getElementsByClassName('boardShoeTitle')[0].innerHTML;
-  // 사진 올리기 버튼
   let imgUploadButton = document.getElementsByClassName('boardNewImage')[0];
-  // 현재 페이지의 리뷰
   const comment = document.getElementById('reviewCheck');
-  // Storage에 리뷰 사진 저장할 위치 (신발 이름별 리뷰 모음)
   const imgRef = ref(storageService, `${shoeName}/${uuidv4()}`);
   const reviewImgDataUrl = localStorage.getItem('reviewImgDataUrl');
   let downloadUrl;
@@ -143,7 +113,6 @@ export const saveReview = async (event) => {
 
   const { uid, photoURL, displayName } = authService.currentUser;
   try {
-    // reviews 파일을 만든후, 아래 내용들이 저장된다.
     await addDoc(collection(dbService, 'reviews'), {
       text: comment.value,
       createdAt: Date.now(),
@@ -155,7 +124,6 @@ export const saveReview = async (event) => {
     })
       .then(() => {
         alert('리뷰 업로드 완료');
-        // 리뷰 개수 1 더해주기
         const countReview = document.getElementById('reviewCount');
         countReview.innerText = Number(countReview.innerText) + 1;
         window.location.hash = '#board';
@@ -175,7 +143,6 @@ export const saveReview = async (event) => {
 
 export const getReviewList = async (shoeName) => {
   let cmtObjList = [];
-  // 데이에서 리뷰 가져오기
   const q = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName), orderBy('createdAt', 'desc'));
   const querySnapShot = await getDocs(q);
   querySnapShot.forEach((doc) => {
@@ -184,28 +151,11 @@ export const getReviewList = async (shoeName) => {
       ...doc.data(),
     };
     cmtObjList.push(reviewsObj);
-    // console.log('cmtObjList', cmtObjList);
   });
   const reviewList = document.querySelector('.boardReviews');
   reviewList.innerHTML = '';
-
-  // 리뷰 개수 가져오기
-  //   let cmtObjList2 = [];
-  //   const q2 = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName), orderBy('createdAt', 'desc'));
-  //   const querySnapShot2 = await getDocs(q2);
-  //   querySnapShot2.forEach((doc) => {
-  //     const reviewsObj = {
-  //       id: doc.id,
-  //       ...doc.data(),
-  //     };
-  //     cmtObjList2.push(reviewsObj);
-  //     // console.log('cmtObjList', cmtObjList);
-  //   });
   const countReview = cmtObjList.length;
-  console.log('countReview', countReview);
-
   let temp_html = '';
-
   if (countReview === 0) {
     temp_html = `
             <i class="fa-regular fa-face-sad-tear"></i>
@@ -219,9 +169,7 @@ export const getReviewList = async (shoeName) => {
     cmtObjList.forEach((cmtObj) => {
       temp_html = `
            <a id="boardData"
-           onclick="window.location.hash = '#review'; handleLocation();receiveDataFromBoard(event, '${encodeURI(
-             JSON.stringify(cmtObj)
-           )}')">
+           onclick="window.location.hash = '#review'; handleLocation();receiveDataFromBoard(event, '${encodeURI(JSON.stringify(cmtObj))}')">
            <div class="boardReviewersImg">
              <img class="reviewPostingImg" src="${cmtObj.reviewImg}" alt="" />
            </div>
@@ -240,7 +188,6 @@ export const getReviewList = async (shoeName) => {
            </div>
            </a>
          `;
-      // console.log('cmtobj', cmtObj);
       const div = document.createElement('div');
       div.classList.add('boardReview');
       div.innerHTML = temp_html;
@@ -250,8 +197,7 @@ export const getReviewList = async (shoeName) => {
 };
 
 export const shoesBrandLike = async (data) => {
-  event.preventDefault();
-  // 데이터에 좋아요 수 +1 해준 뒤 저장
+  data.preventDefault();
   const currentData = JSON.parse(decodeURI(data));
   const updateLikeNumber = currentData.shoesLike + 1;
   const likeRef = doc(dbService, 'shoesList', currentData.id);
@@ -260,15 +206,6 @@ export const shoesBrandLike = async (data) => {
   } catch (error) {
     alert(error);
   }
-  // 웹에 하트 1 더해주기
   const currentLike = document.getElementById('shoeLikeBtn');
-  console.log('currentLike', currentLike);
-  // const heartIcon = `<i class="fas fa-solid fa-heart">`;
   currentLike.innerText = updateLikeNumber;
-  // console.log(event++);
-
-  // 아이콘이 클릭이 되어서 여기로 오면
-  // 디비에 있는 데이터를 가져와서
-  // 디비의 값에서 바로 1이 더해지나?
-  // html에 업데이트 해주기
 };

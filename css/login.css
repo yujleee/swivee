@@ -1,11 +1,3 @@
-/* html,
-body {
-  display: grid;
-  height: 100vh;
-  width: 100%;
-  place-items: center;
-} */
-
 .loginArea {
   margin: 0 auto;
   padding: 60px 0 160px;
@@ -76,6 +68,7 @@ body {
   padding-right: 12px;
   font-size: 16px;
 }
+
 .google button {
   height: 52px;
   box-sizing: border-box;
@@ -88,6 +81,7 @@ body {
   align-items: center;
   justify-content: center;
 }
+
 .google button:hover {
   height: 52px;
 
@@ -101,6 +95,7 @@ body {
   align-items: center;
   justify-content: center;
 }
+
 .github button {
   height: 52px;
   box-sizing: border-box;
@@ -191,6 +186,7 @@ body {
 button {
   text-decoration: none;
 }
+
 .joinlistBox{
   display: flex;
   justify-content: space-around;
