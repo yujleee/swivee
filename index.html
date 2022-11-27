@@ -3,6 +3,7 @@
   <head>
     <title>swivee</title>
     <meta charset="UTF-8" />
+    <!-- css 리셋 -->
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/common.css" />
     <!-- 페이지별 css -->
@@ -25,22 +26,20 @@
           <h1 class="logo">
             <a href="#"><img class="statusBarImg" src="screen/sweeve.png" alt="swivee" /></a>
           </h1>
-          <!-- 임시로 페이지 이동을 위해 설정해두었습니다. -->
           <nav class="nav">
             <span><a href="#">Home</a></span>
-            <span onclick="goToBoard()">Board</span>
-            <span onclick="goToReview()">Review</span>
             <span onclick="goToMypage()">Mypage</span>
             <span class="active" onclick="goToLogin()">Login</span>
           </nav>
         </div>
       </header>
-
       <!-- 각 페이지가 렌더링 되는 부분 -->
       <main id="main"></main>
     </div>
-
+    <!-- 위로 가기 버튼 -->
+    <a href="#" class="toTop">
+      <i class="fa-sharp fa-solid fa-chevron-up"></i>
+    </a>
     <script src="js/main.js" type="module"></script>
-    <!-- <script defer src="js/review.js"></script> -->
   </body>
 </html>

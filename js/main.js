@@ -8,7 +8,7 @@ import {
   showMoreShoes,
   renderBrandList,
   getRealtimeReviews,
-  //   renderTopbrands,
+  renderTopbrands,
 } from './pages/home.js';
 import {
   onFileChange,
@@ -20,9 +20,9 @@ import {
 } from './mypage.js';
 import {
   saveComment,
-  delete_comment,
+  updateComment,
+  deleteComment,
   onEditing,
-  update_comment,
   deleteReview,
   receiveDataFromBoard,
   reviseReview,
@@ -30,82 +30,84 @@ import {
 } from './review.js';
 
 const activeMenu = document.querySelector('.active');
-
-// url 바뀌면 handleLocation 실행하여 화면 변경
 window.addEventListener('hashchange', handleLocation);
 
-// 첫 랜딩 또는 새로고침 시 handleLocation 실행하여 화면 변경
 document.addEventListener('DOMContentLoaded', function () {
   renderBrandList();
   changeShoesList();
   getRealtimeReviews();
-  //   renderTopbrands();
-
-  // 인증 관련 수정 추가 필요!
-  // Firebase 연결상태를 감시
   authService.onAuthStateChanged((user) => {
-    // Firebase 연결되면 화면 표시
     handleLocation();
     const hash = window.location.hash;
     if (user) {
-      // 로그인 상태이므로 항상 팬명록 화면으로 이동
-      console.log(user);
-
       activeMenu.textContent = 'Logout';
       activeMenu.setAttribute('onclick', 'logout()');
-
       if (hash === '') {
-        // 로그인 상태에서는 로그인 화면으로 되돌아갈 수 없게 설정
         window.location.replace('#');
       }
     } else {
-      // 로그아웃 상태이므로 로그인 화면으로 강제 이동
       if (hash !== '') {
         window.location.replace('');
       }
-
       activeMenu.textContent = 'Login';
       activeMenu.setAttribute('onclick', 'goToLogin()');
     }
   });
 });
 
-// onclick, onchange, onsubmit 이벤트 핸들러 리스트
-// 페이지 이동 핸들러 리스트들
+const toTop = document.querySelector('.toTop');
+window.addEventListener('scroll', checkHeight);
+function checkHeight() {
+  if (window.scrollY > 10) {
+    toTop.classList.add('active');
+  } else {
+    toTop.classList.remove('active');
+  }
+}
+toTop.addEventListener('click', () => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+});
+
+// 메인 페이지
 window.goToLogin = goToLogin;
 window.goToJoin = goToJoin;
 window.goToBoard = goToBoard;
 window.goToReview = goToReview;
 window.goToMypage = goToMypage;
-window.onFileChange = onFileChange;
 window.toggleMoreBrand = toggleMoreBrand;
-
+window.renderTopbrands = renderTopbrands;
+window.renderBrandList = renderBrandList;
+window.changeShoesList = changeShoesList;
+window.getRealtimeReviews = getRealtimeReviews;
+window.showMoreShoes = showMoreShoes;
+// 로그인 & 회원가입
 window.handleAuth = handleAuth;
 window.socialLogin = socialLogin;
-window.changeShoesList = changeShoesList;
-window.showMoreShoes = showMoreShoes;
+window.changeUserPassword = changeUserPassword;
+window.logout = logout;
+// 신발 리뷰
+window.receiveDataFromMain = receiveDataFromMain;
 window.imgFileUpload = imgFileUpload;
 window.saveReview = saveReview;
-
 window.shoesBrandLike = shoesBrandLike;
-window.receiveDataFromMain = receiveDataFromMain;
+// 리뷰 보기
+window.receiveDataFromBoard = receiveDataFromBoard;
+window.handleLocation = handleLocation;
+window.getUserReviewList = getUserReviewList;
+window.saveComment = saveComment;
+window.deleteComment = deleteComment;
+window.onEditing = onEditing;
+window.updateComment = updateComment;
+window.deleteReview = deleteReview;
+window.reviseReview = reviseReview;
+window.updateReviews = updateReviews;
+// 마이 페이지
 window.changeProfiles = changeProfiles;
-window.logout = logout;
-window.renderBrandList = renderBrandList;
-window.getRealtimeReviews = getRealtimeReviews;
+window.onFileChange = onFileChange;
 window.onChangeNickname = onChangeNickname;
 window.onDeleteImg = onDeleteImg;
-
-window.changeUserPassword = changeUserPassword;
-window.saveComment = saveComment;
-
-window.getUserReviewList = getUserReviewList;
-window.delete_comment = delete_comment;
-window.onEditing = onEditing;
-window.update_comment = update_comment;
-window.receiveDataFromBoard = receiveDataFromBoard;
-// window.renderTopbrands = renderTopbrands;
-window.deleteReview = deleteReview;
-window.handleLocation = handleLocation;
-window.reviseReview = reviseReview;
-window.updateReviews =updateReviews;
