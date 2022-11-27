@@ -221,7 +221,6 @@ export const getReviewList = async (shoeName) => {
 };
 
 export const shoesBrandLike = async (data) => {
-  data.preventDefault();
   const currentData = JSON.parse(decodeURI(data));
   const updateLikeNumber = currentData.shoesLike + 1;
   const likeRef = doc(dbService, 'shoesList', currentData.id);
