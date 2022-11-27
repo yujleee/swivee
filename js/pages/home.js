@@ -1,13 +1,4 @@
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  orderBy,
-  onSnapshot,
-  limit,
-  getCountFromServer,
-} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import { collection, query, where, getDocs, orderBy, onSnapshot, limit, getCountFromServer } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 import { dbService } from '../firebase.js';
 
 // 브랜드 더보기
@@ -137,9 +128,7 @@ export const renderBrandList = async () => {
   const temp = brandObjList
     .map(
       (brand, idx) => `
-            <li class="brandItem ${idx < 5 ? 'show' : 'hide'}" onclick="changeShoesList(event)" data-brand="${
-        brand.brand
-      }">
+            <li class="brandItem ${idx < 5 ? 'show' : 'hide'}" onclick="changeShoesList(event)" data-brand="${brand.brand}">
                 <div class="imgBox">
                     <img src="${brand.logo}" alt="${brand.brandName}" />
                 </div>
@@ -186,9 +175,7 @@ const renderRealtimeReviews = (reviews) => {
                     <span class="rank">${idx + 1}</span>
                     <div class="reviewBox">
                       <div class="boardReviewersRow boardProfileImageAndNickName">
-                        <img class="boardReviewersProfile" src="${
-                          review.profileImg ?? '/assets/blank-profile-picture.png'
-                        }" alt="프로필" />
+                        <img class="boardReviewersProfile" src="${review.profileImg ?? '/assets/blank-profile-picture.png'}" alt="프로필" />
                         <p class="boardReviewersNickname ellipsis">${review.nickname}</p>
                       </div>
                       <p class="comment">${review.text}</p>

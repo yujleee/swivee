@@ -1,15 +1,10 @@
-* {
-  margin: 0px;
-  padding: 0px;
-}
-
-html,
+/* html,
 body {
   display: grid;
   height: 100vh;
   width: 100%;
   place-items: center;
-}
+} */
 
 .loginArea {
   margin: 0 auto;

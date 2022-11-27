@@ -1,22 +1,42 @@
+
 .header {
-  height: 100px;
-  width: 100%;
-  padding: 30px 0;
+  /* background-color: bisque; */
+  /* height: 100px; */
+  /* max-width: 1024px; */
+  /* width: 100%; */
+  /* display: flex; */
+  /* justify-content: space-between; */
+  margin-bottom: 30px;
+}
+
+.headerBox {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
 }
 
 .nav {
+  /* background-color:aquamarine; */
+  max-width: 230px;
+  width: 100%;
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
+  /* margin-left: 30px; */
+    justify-content: space-between;
+
 }
 
 .nav > span {
   width: 60px;
-  margin: 0.5rem 0;
-  margin-right: 30px;
+  /* margin: 0.5rem 0; */
+  /* margin-left: 30px; */
   cursor: pointer;
   color: #222;
+  
+  align-items: center;
+  text-align: center;
 }
 
 .nav > span:hover,
@@ -27,13 +47,19 @@
 .statusBarImg {
   width: 230px;
 }
-.headerBox {
-  display: flex;
-  width: 1024px;
-  margin: auto;
-  justify-content: space-between;
-}
+
 .logo {
-  margin-right: auto;
-  width: 240px;
+  /* margin-right: auto; */
+  /* width: 240px; */
+}
+
+@media only screen and (max-width: 610px) {
+.logo {
+  margin-bottom: 30px;
+}
+.headerBox {
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: space-between; */
+}
 }
