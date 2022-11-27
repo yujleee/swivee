@@ -1,5 +1,15 @@
 import { dbService, authService, storageService } from './firebase.js';
-import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import {
+  doc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  orderBy,
+  query,
+  getDocs,
+  where,
+} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 import { ref, uploadString, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 import { searchOnYoutube } from './utill.js';
@@ -40,16 +50,20 @@ export const receiveDataFromMain = async (event, shoesName) => {
         />
       </div>
       <form class="boardWriteReviews">
-        <p>${shoes.brandName}</p>
+        <p class="boardShoeBrand">${shoes.brandName}</p>
         <h1 class="boardShoeTitle">${shoes.shoesName}</h1>
         <div class="boardRow">
           <div class="boardMesageAndHeart">
             <i class="fa-regular fa-comment"></i>
             <p id="reviewCount">${reviewCount}</p>
-            <i class="fas fa-solid fa-heart"> <button id="shoeLikeBtn" onclick="shoesBrandLike('${encodeURI(JSON.stringify(shoes))}')"> ${shoes.shoesLike}</button></i>
+            <i class="fas fa-solid fa-heart"> <button id="shoeLikeBtn" onclick="shoesBrandLike('${encodeURI(
+              JSON.stringify(shoes)
+            )}')"> ${shoes.shoesLike}</button></i>
           </div>
           <div class="youTubeIcon">
-            <a href="${searchOnYoutube(shoes.shoesName)}" target="_blank"><pre> <i class="fa-brands fa-youtube"> 관련 영상</i></pre></a>
+            <a href="${searchOnYoutube(
+              shoes.shoesName
+            )}" target="_blank"><pre> <i class="fa-brands fa-youtube"> 관련 영상</i></pre></a>
           </div>
         </div>
         <!-- Right -->
@@ -100,7 +114,14 @@ export const imgFileUpload = (event) => {
 
 export const saveReview = async (event) => {
   event.preventDefault();
+
+  if (!authService.currentUser) {
+    alert('로그인이 필요합니다.');
+    goToLogin();
+  }
+
   const shoeName = document.getElementsByClassName('boardShoeTitle')[0].innerHTML;
+  const shoeBrand = document.getElementsByClassName('boardShoeBrand')[0].innerHTML;
   let imgUploadButton = document.getElementsByClassName('boardNewImage')[0];
   const comment = document.getElementById('reviewCheck');
   const imgRef = ref(storageService, `${shoeName}/${uuidv4()}`);
@@ -118,6 +139,7 @@ export const saveReview = async (event) => {
       createdAt: Date.now(),
       creatorId: uid,
       profileImg: photoURL,
+      brandName: shoeBrand,
       nickname: displayName,
       shoeName: shoeName,
       reviewImg: downloadUrl,
@@ -169,7 +191,9 @@ export const getReviewList = async (shoeName) => {
     cmtObjList.forEach((cmtObj) => {
       temp_html = `
            <a id="boardData"
-           onclick="window.location.hash = '#review'; handleLocation();receiveDataFromBoard(event, '${encodeURI(JSON.stringify(cmtObj))}')">
+           onclick="window.location.hash = '#review'; handleLocation();receiveDataFromBoard(event, '${encodeURI(
+             JSON.stringify(cmtObj)
+           )}')">
            <div class="boardReviewersImg">
              <img class="reviewPostingImg" src="${cmtObj.reviewImg}" alt="" />
            </div>
