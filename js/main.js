@@ -26,6 +26,7 @@ import {
   deleteReview,
   receiveDataFromBoard,
   reviseReview,
+  updateReviews,
 } from './review.js';
 
 const activeMenu = document.querySelector('.active');
@@ -104,6 +105,7 @@ window.onEditing = onEditing;
 window.updateComment = updateComment;
 window.deleteReview = deleteReview;
 window.reviseReview = reviseReview;
+window.updateReviews = updateReviews;
 // 마이 페이지
 window.changeProfiles = changeProfiles;
 window.onFileChange = onFileChange;

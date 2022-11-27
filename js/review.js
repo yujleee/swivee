@@ -1,5 +1,14 @@
 import { dbService, authService, storageService } from './firebase.js';
-import { doc, addDoc, updateDoc, deleteDoc, collection, orderBy, query, getDocs, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import {
+  doc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  orderBy,
+  query,
+  getDocs,
+} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 
 export const receiveDataFromBoard = async (event, shoeData) => {
   if (!authService.currentUser) {
@@ -49,14 +58,19 @@ export const receiveDataFromBoard = async (event, shoeData) => {
       <div class="reviewImgBox" role="img">
         <img class="reviewImg" src="${poster.reviewImg}" />
       </div>
-      <p class="reviewComment">${poster.text}
+      <div class="reviewBody">
+      <textarea
+        id="reviseComment" class="noDisplay reviseInputArea">${poster.text}</textarea> 
+        <button onclick="updateReviews(event)" class="saveReviseComment noDisplay">저장</button>
+        </div>
+        
+        <p class="reviewComment">${poster.text}
+       
       <section>
         <h1 class="blind">댓글</h1>
         <div id="reviews" class="commentHead">
-        <textarea
-        id="reviewCheck" class="noDisplay">${poster.text}</textarea>
-        <i id="fixSave" class="fa-sharp fa-solid fa-pen-to-square"></i>
-        </div>
+      
+        
           <input type="text" id="commentInput" placeholder="이 신발은 어떠셨나요?" name="comment"/>
           <button class="commentButton" onclick="saveComment(event)">입력</button>
         </div>
@@ -191,7 +205,9 @@ export const getCommentList = async () => {
     </div>
     <div class="commentAndDelEd">
     <p class="card-text">${cmtObj.text}</p>
-    <p id="${cmtObj.id}" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="updateComment(event)">완료</button></p>
+    <p id="${
+      cmtObj.id
+    }" class="noDisplay"><input class="newCmtInput" type="text" maxlength="30" /><button class="updateBtn" onclick="updateComment(event)">완료</button></p>
     <div class="${isOwner ? 'updateBtns' : 'noDisplay'}">
     <img src="../assets/pen-to-square-regular.svg" class="editBtn" onclick="onEditing(event)"/>
     <img src="../assets/trash-can-regular.svg" name="${cmtObj.id}" onclick="deleteComment(event)" class="deleteBtn"/>
@@ -224,27 +240,50 @@ export const deleteReview = async (event) => {
 
 export const reviseReview = async (event) => {
   event.preventDefault();
-  const commentText = document.querySelector('#reviewCheck');
-  const commentInputP = document.querySelector('#fixSave');
+
+  const udBtns = document.querySelectorAll('.editButtons');
+  udBtns.forEach((udBtn) => udBtn.classList.add('noDisplay'));
+  const reviewBody = event.target; //수정 아이콘
+  console.log(reviewBody);
+  const commentText = document.querySelector('#reviseComment');
+  //commentText : board에서 들고 온 textarea
+  console.log(commentText);
+  const userOriginText = document.querySelector('.reviewComment');
+  const reviseBtn = document.querySelector('.saveReviseComment'); //수정완료버튼
   commentText.classList.remove('noDisplay');
-  commentInputP.classList.add('noDisplay');
-  commentInputP.focus();
+  userOriginText.classList.add('noDisplay');
+  reviseBtn.classList.remove('noDisplay');
+  console.log(userOriginText);
 };
 
 export const updateReviews = async (event) => {
-  event.preventDefault();
-  const newComment = event.target.value;
-  const id = event.target.parentNode.id;
-  const parentNode = event.target.parentNode.parentNode;
+  // event.preventDefault();
+  const parentNode = event.target.parentNode;
+  console.log(parentNode);
   const commentText = parentNode.children[0];
-  commentText.classList.remove('noDisplay');
-  const commentInputP = parentNode.children[1];
-  commentInputP.classList.remove('d-flex');
-  commentInputP.classList.add('noDisplay');
-  const commentRef = doc(dbService, 'comments', id);
+  console.log(commentText); //수정연습중 input확인
+  // commentText.classList.remove('noDisplay');
+  const commentInputP = commentText.value;
+  console.log(commentInputP);
+  // commentInputP.classList.remove('d-flex');
+  // commentInputP.classList.add('noDisplay');
+  // const id = event.target.parentNode.id;
+
+  //######## 수정 부분 #############
+  const creatorId = localStorage.getItem('id');
+  const commentRef = doc(dbService, 'reviews', creatorId);
+  const savebtn = document.querySelector('.saveReviseComment');
+  savebtn.classList.add('noDisplay');
+
   try {
-    await updateDoc(commentRef, { text: newComment });
-    getCommentList();
+    await updateDoc(commentRef, { text: commentInputP });
+    // getReviseComment(commentInputP);
+    const changeComment = document.querySelector('#reviseComment');
+    changeComment.value = commentInputP;
+    const changeDiv = document.querySelector('.reviewBody');
+    $('changeDiv').empty();
+    const p = `<p class="reviewComment">${commentInputP}`;
+    changeDiv.innerHTML = p;
   } catch (error) {
     alert(error);
   }

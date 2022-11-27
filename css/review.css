@@ -72,10 +72,6 @@
   line-height: 1.7;
 }
 
-.reviewImg{
-  
-}
-
 .reviewImgBox {
   max-width: 700px;
   width: 100%;
@@ -286,6 +282,31 @@
   display: flex;
 }
 
+.reviewBody {
+  display: flex;
+  margin: 10px;
+  border-radius: 15px;
+}
+#reviseComment {
+  background-color: rgb(247, 247, 247);
+  height: 45px;
+  flex-basis: 600px;
+  border-radius: 10px;
+}
+
+.saveReviseComment {
+  background-color: #571df8;
+  border-radius: 15px;
+  color: white;
+  width: 100px;
+  height: 50px;
+  margin-left: 5px;
+}
+
+#commentInput {
+  width: 600px;
+}
+
 .mycards .empty {
   padding: 120px 0;
   text-align: center;
@@ -302,7 +323,6 @@
 
 @media only screen and (max-width: 750px) {
   .review {
-      width: 600px;
-
+    width: 600px;
   }
 }
