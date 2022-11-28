@@ -1,9 +1,7 @@
-/* 전체 margin */
 .writeReview {
   margin: 20px;
 }
 
-/* 리뷰 윗부분 */
 .boardTop {
   display: flex;
   flex-direction: row;
@@ -19,7 +17,6 @@
   max-width: 400px;
 }
 
- /* 아래 사진이 말려올라오는것을 막아준다 */
 .clear {
   clear: both;
 }

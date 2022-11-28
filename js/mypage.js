@@ -2,14 +2,7 @@ import { dbService, authService, storageService } from './firebase.js';
 import { ref, uploadString, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
 import { updateProfile, updatePassword } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
-import {
-  collection,
-  addDoc,
-  doc,
-  getDocs,
-  query,
-  where,
-} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import { collection, addDoc, doc, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 
 export const changeProfiles = async (event) => {
   event.preventDefault();
@@ -53,7 +46,6 @@ export const onChangeNickname = async (event) => {
   });
 };
 
-
 export const onDeleteImg = async (event) => {
   event.preventDefault();
   const defaultImage =
@@ -77,7 +69,6 @@ export const changeUserPassword = async (event) => {
   const userInputPassword = document.getElementById('userPasswordInput');
   const user = authService.currentUser;
   const newPassword = userInputPassword.value;
-
   await updatePassword(user, newPassword)
     .then(() => {
       alert('비밀번호 변경 완료!');
@@ -115,7 +106,6 @@ export const getUserReviewList = async () => {
   userReviewList.innerHTML = '';
   for (let i = 0; i < cmtObjList.length; i++) {
     const reviewId = cmtObjList[i].id;
-
     let userReviewsCmtList = [];
     const q = query(collection(dbService, 'comments'), where('reviewId', '==', reviewId));
     const querySnapshot = await getDocs(q);
@@ -126,12 +116,9 @@ export const getUserReviewList = async () => {
       };
       userReviewsCmtList.push(commentObj);
     });
-
     const temp_html = `
         <div class="boardReviewersImg">
-          <img class="reviewPostingImg" src="${
-            cmtObjList[i].profileImg ?? '/assets/blank-profile-picture.png'
-          }" alt="" />
+          <img class="reviewPostingImg" src="${cmtObjList[i].profileImg ?? '/assets/blank-profile-picture.png'}" alt="" />
         </div>
         <div class="boardReviewersRow boardProfileImageAndNickName">
           <img
