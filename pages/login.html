@@ -4,14 +4,20 @@
       <div class="loginArea">
         <div class="titleLogo">
           <button href="https://google.com">
-            <img class="loginLogo" src="../screen/sweeve.png" />
+            <img class="loginLogo" src="../assets/sweeve.png" />
           </button>
         </div>
         <div class="inputBox">
           <h3 class="inputTitle">이메일 주소</h3>
           <div class="inputItem">
-            <input id="email" type="email" placeholder="swivee@swivee.co.kr" autocomplete="off" class="inputTxt"
-              required />
+            <input
+              id="email"
+              type="email"
+              placeholder="swivee@swivee.co.kr"
+              autocomplete="off"
+              class="inputTxt"
+              required
+            />
             <div class="underline"></div>
           </div>
         </div>
@@ -34,10 +40,14 @@
         </ul>
         <div class="sociaLogin">
           <div class="google">
-            <button onclick="socialLogin('google')"><i class="fa-brands fa-google loginIcon"></i>구글로 로그인</button>
+            <button type="button" onclick="socialLogin('google')">
+              <i class="fa-brands fa-google loginIcon"></i>구글로 로그인
+            </button>
           </div>
           <div class="github">
-            <button onclick="socialLogin('github')"><i class="fa-brands fa-github loginIcon"></i> Github로 로그인</button>
+            <button type="button" onclick="socialLogin('github')">
+              <i class="fa-brands fa-github loginIcon"></i> Github로 로그인
+            </button>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 html {
   scroll-behavior: smooth;
+  margin: 50px;
 }
 
 .home .contentTitle {
@@ -8,30 +9,26 @@ html {
 }
 
 .brandList {
-  width: 100%;
   padding: 30px 0;
-  margin-bottom: 50px;
 }
 
 .allBrandList {
-  max-width: 600px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  max-width: 1000px;
+  width: 100%;
   flex-wrap: wrap;
   margin: 0 auto 10px;
 }
 
 .allBrandList .brandItem {
-  min-width: 80px;
-  max-width: 80px;
-  text-align: center;
-  margin-right: 30px;
+  width: calc(22% - 2rem);
   cursor: pointer;
-  flex: 1 auto;
-}
-
-.brandItem.show {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
@@ -39,15 +36,8 @@ html {
   display: none;
 }
 
-/* .allBrandList .brandItem:nth-child(5n) {
-      margin-right: 0;
-    } */
-
 .allBrandList .brandItem > .imgBox {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 1px solid #ddd;
+  width: 80px;
   overflow: hidden;
 }
 
@@ -73,14 +63,26 @@ html {
   padding: 4px;
 }
 
-/* 하단 영역 */
 .contentWrap {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 100px;
+  flex-direction: row;
+  max-width: 1000px;
+  width: 100%;
+  justify-content: center;
+  margin: 0 auto;
 }
 
-/* 브랜드 리스트 */
+.topBrand {
+  margin: 0 auto;
+}
+
+.topBrandList .imgBox {
+  width: 24px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
 .topBrand,
 .realTimeReview {
   width: 230px;
@@ -91,6 +93,90 @@ html {
   padding: 20px 10px 20px 20px;
   background-color: #f9f9f9;
   border-radius: 15px;
+}
+
+.shoesList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.shoesList .shoesItem {
+  width: 210px;
+  margin: 0px 20px 30px;
+}
+
+.shoesList .shoesItem.hide {
+  display: none;
+}
+
+.shoesList .shoesItem:hover .imgBox > img {
+  transform: scale(1.05);
+}
+
+.shoesList .shoesItem:hover .shoesName {
+  filter: drop-shadow(4px 4px 3px rgba(0, 0, 0, 0.25));
+}
+
+.shoesList .imgBox {
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.shoesList .imgBox > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 300ms ease-in-out;
+}
+
+.shoesList .brandName {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 6px;
+}
+
+.shoesList .shoesName {
+  font-size: 18px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shoesListWrap .empty {
+  width:700px;
+  padding: 120px 20px 50px 30px;
+  text-align: center;
+}
+
+.shoesListWrap .empty > i {
+  width: 100px;
+  font-size: 100px;
+  color: #ddd;
+}
+
+.shoesListWrap .empty .emptyMessage {
+  margin-top: 32px;
+  color: #999;
+}
+
+.shoesListWrap .btnMoreWrap .btnMoreShoes {
+  width: 200px;
+  padding: 12px 0;
+  background-color: #571df7;
+  border-radius: 15px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.shoesListWrap .hide {
+  display: none;
+}
+
+.shoesListWrap .hide {
+  display: none;
 }
 
 .topBrandList .topBrandItem {
@@ -123,6 +209,7 @@ html {
 }
 
 .topBrandList .topBrandItem:first-child .imgBox {
+  background-color: aquamarine;
   margin-left: 12px;
 }
 
@@ -130,7 +217,6 @@ html {
   padding-top: 4px;
 }
 
-/* 실시간 리뷰 */
 .realTimeReviewList {
   padding: 20px;
   background-color: #f9f9f9;
@@ -196,150 +282,56 @@ html {
   -webkit-box-orient: vertical;
 }
 
-/* 브랜드 신발 리스트 */
+@media only screen and (max-width: 534px) {
+  .shoesListWrap .empty {
+    width:400px;
+    padding: 20px 0px;
+  }
 
-.shoesListWrap {
-  width: 780px;
+  .shoesListWrap .empty > i {
+    font-size: 60px;
+  }
 }
 
-.shoesList {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin: 0 0 30px 60px;
-}
-
-.shoesList .shoesItem {
-  width: 210px;
-  margin-right: 30px;
-  margin-bottom: 30px;
-}
-
-.shoesList .shoesItem.hide {
-  display: none;
-}
-
-.shoesList .shoesItem:hover .imgBox > img {
-  transform: scale(1.05);
-}
-
-.shoesList .shoesItem:hover .shoesName {
-  filter: drop-shadow(4px 4px 3px rgba(0, 0, 0, 0.25));
-}
-
-.shoesList .imgBox {
-  max-width: 210px;
-  height: 210px;
-  border-radius: 15px;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
-
-.shoesList .imgBox > img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 300ms ease-in-out;
-}
-
-.shoesList .brandName {
-  font-size: 14px;
-  color: #999;
-  margin-bottom: 6px;
-}
-
-.shoesList .shoesName {
-  font-size: 18px;
-  font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.shoesListWrap .empty {
-  width: 100%;
-  padding: 100px 0;
-  text-align: center;
-}
-
-.shoesListWrap .empty > i {
-  width: 100px;
-  display: inline-block;
-  font-size: 100px;
-  color: #ddd;
-}
-
-.shoesListWrap .empty .emptyMessage {
-  margin-top: 32px;
-  color: #999;
-}
-
-.shoesListWrap .btnMoreWrap .btnMoreShoes {
-  width: 200px;
-  padding: 12px 0;
-  background-color: #571df7;
-  border-radius: 15px;
-  color: #fff;
-  font-weight: 500;
-}
-
-.shoesListWrap .hide {
-  display: none;
-}
-
-@media only screen and (max-width: 810px) {
-  .home {
-    padding: 30px;
+@media only screen and (max-width: 710px) {
+  .allBrandList .brandItem > .imgBox {
+    width: 100px;
   }
 
   .allBrandList .brandItem {
-    min-width: 80px;
-    max-width: 100px;
-    width: 100%;
-    height: 100%;
-    margin-right: 1rem;
+    width: calc(25% - 33px);
+    border-radius: 50%;
+    border: 1px solid #ddd;
+          overflow: hidden;
   }
 
-  .brandItem.show {
-    margin-bottom: 0;
+    .shoesList .shoesItem {
+    max-width: 600px;
+    width: 100%;
   }
 
   .contentWrap {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 
-  /* 브랜드 */
+  .home .contentTitle {
+    text-align: center;
+  }
+
+  .topBrand {
+    margin-top: 30px;
+  }
+
   .topBrand,
   .realTimeReview {
     width: 100%;
-    margin-bottom: 50px;
   }
 
-  .shoesList {
-    width: 100%;
-    margin: 0;
-    justify-items: center;
-  }
-
-  .shoesList .imgBox {
-    min-width: 230px;
-    width: 100%;
-  }
-
-  .shoesList .shoesItem {
-    min-width: 230px;
-    width: calc(50% - 2rem);
-    margin-right: 2rem;
-    margin-bottom: 40px;
-  }
-
-  .shoesList .shoesItem:nth-child(2n) {
-    margin-right: 0;
-  }
-
-  .shoesList .shoesItem:nth-child(9) {
-    display: none;
+  .topBrandList {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px 20px 20px;
+    background-color: #f9f9f9;
+    border-radius: 15px;
   }
 }
