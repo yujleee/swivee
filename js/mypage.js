@@ -53,21 +53,6 @@ export const onChangeNickname = async (event) => {
   });
 };
 
-// 삭제버튼 기능 구현 중
-// export const onDeleteImg = async (event) => {
-//   console.log('삭제함수')
-//   await updateProfile(authService.currentUser, {
-//     displayName: null,
-//     photoURL: null,
-//   }).then(()=>{
-//   console.log(authService.currentUser);
-//   }).catch(error=>{
-//     console.log('error:', error)
-//   })
-//   ;
-
-// };
-// "https://firebasestorage.googleapis.com/v0/b/swivee-ddd5a.appspot.com/o/n3KEkQvNjihCbpNqENAfrf6obZO2%2F625ed9da-ce34-486d-a5a0-27f5424e377b?alt=media&token=91ddb350-0cc6-4e2e-a478-950d8ccd1dd9"
 
 export const onDeleteImg = async (event) => {
   event.preventDefault();
