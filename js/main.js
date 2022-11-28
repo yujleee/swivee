@@ -1,7 +1,7 @@
 import { handleLocation, goToLogin, goToJoin, goToBoard, goToReview, goToMypage } from './router.js';
 import { handleAuth, socialLogin, logout } from './pages/auth.js';
 import { authService } from './firebase.js';
-import { imgFileUpload, saveReview, receiveDataFromMain, shoesBrandLike } from './board.js';
+import { imgFileUpload, saveReview, receiveDataFromMain, shoesBrandLike, checkReviewBtn } from './board.js';
 import {
   toggleMoreBrand,
   changeShoesList,
@@ -95,6 +95,7 @@ window.receiveDataFromMain = receiveDataFromMain;
 window.imgFileUpload = imgFileUpload;
 window.saveReview = saveReview;
 window.shoesBrandLike = shoesBrandLike;
+window.checkReviewBtn = checkReviewBtn;
 // 리뷰 보기
 window.receiveDataFromBoard = receiveDataFromBoard;
 window.handleLocation = handleLocation;

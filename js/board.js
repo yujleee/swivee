@@ -84,10 +84,11 @@ export const receiveDataFromMain = async (event, shoesName) => {
             <textarea
               id="reviewCheck"
               placeholder="리뷰를 남겨주세요..."
+              oninput="checkReviewBtn()";
             ></textarea>
           </div>
           <div class="boardReviewButton">
-            <button id="uploadReview" onclick="saveReview(event)" type="button">
+            <button disabled id="uploadReview" onclick="saveReview(event)" type="button">
               리뷰 작성
             </button>
           </div>
@@ -100,6 +101,16 @@ export const receiveDataFromMain = async (event, shoesName) => {
   await getReviewList(currentTarget);
 };
 
+export const checkReviewBtn = () => {
+  const checkReview = reviewCheck.value.length;
+  let uploadReviewBtn = document.getElementById('uploadReview');
+  if (checkReview > 0 && uploadReviewBtn.innerHTML.length > 5) {
+    uploadReviewBtn.disabled = false;
+  } else {
+    uploadReviewBtn.disabled = true;
+  }
+};
+
 export const imgFileUpload = (event) => {
   const btnName = event.target.parentNode;
   const theFile = event.target.files[0];
@@ -110,6 +121,7 @@ export const imgFileUpload = (event) => {
     localStorage.setItem('reviewImgDataUrl', reviewImgDataUrl);
     btnName.innerText = theFile.name;
   };
+  checkReviewBtn();
 };
 
 export const saveReview = async (event) => {
@@ -164,6 +176,19 @@ export const saveReview = async (event) => {
 };
 
 export const getReviewList = async (shoeName) => {
+  let cmtObjList2 = [];
+  const reviewId = localStorage.getItem('id');
+  const q2 = query(collection(dbService, 'comments'), where('reviewId', '==', reviewId), orderBy('createdAt', 'desc'));
+  const querySnapshot2 = await getDocs(q2);
+  querySnapshot2.forEach((doc) => {
+    const commentObj2 = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    cmtObjList2.push(commentObj2);
+  });
+  const countReview2 = cmtObjList2.length;
+
   let cmtObjList = [];
   const q = query(collection(dbService, 'reviews'), where('shoeName', '==', shoeName), orderBy('createdAt', 'desc'));
   const querySnapShot = await getDocs(q);
@@ -174,9 +199,9 @@ export const getReviewList = async (shoeName) => {
     };
     cmtObjList.push(reviewsObj);
   });
+  const countReview = cmtObjList.length;
   const reviewList = document.querySelector('.boardReviews');
   reviewList.innerHTML = '';
-  const countReview = cmtObjList.length;
   let temp_html = '';
   if (countReview === 0) {
     temp_html = `
@@ -208,7 +233,7 @@ export const getReviewList = async (shoeName) => {
            <div class="boardReviewersRow boardReviewText">${cmtObj.text}</div>
            <div class="boardReviewersRow boardReviewersSmileAndComment">
              <i class="fa-regular fa-comment"></i>
-             <p>${countReview}</p>
+             <p>${countReview2}</p>
            </div>
            </a>
          `;
