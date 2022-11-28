@@ -118,7 +118,7 @@ export const getUserReviewList = async () => {
     });
     const temp_html = `
         <div class="boardReviewersImg">
-          <img class="reviewPostingImg" src="${cmtObjList[i].profileImg ?? '/assets/blank-profile-picture.png'}" alt="" />
+          <img class="reviewPostingImg" src="${cmtObjList[i].ReviewImg}" alt="" />
         </div>
         <div class="boardReviewersRow boardProfileImageAndNickName">
           <img
