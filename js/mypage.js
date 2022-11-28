@@ -2,14 +2,7 @@ import { dbService, authService, storageService } from './firebase.js';
 import { ref, uploadString, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
 import { updateProfile, updatePassword } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
-import {
-  collection,
-  addDoc,
-  doc,
-  getDocs,
-  query,
-  where,
-} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import { collection, addDoc, doc, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 
 export const changeProfiles = async (event) => {
   event.preventDefault();
@@ -53,22 +46,6 @@ export const onChangeNickname = async (event) => {
   });
 };
 
-// 삭제버튼 기능 구현 중
-// export const onDeleteImg = async (event) => {
-//   console.log('삭제함수')
-//   await updateProfile(authService.currentUser, {
-//     displayName: null,
-//     photoURL: null,
-//   }).then(()=>{
-//   console.log(authService.currentUser);
-//   }).catch(error=>{
-//     console.log('error:', error)
-//   })
-//   ;
-
-// };
-// "https://firebasestorage.googleapis.com/v0/b/swivee-ddd5a.appspot.com/o/n3KEkQvNjihCbpNqENAfrf6obZO2%2F625ed9da-ce34-486d-a5a0-27f5424e377b?alt=media&token=91ddb350-0cc6-4e2e-a478-950d8ccd1dd9"
-
 export const onDeleteImg = async (event) => {
   event.preventDefault();
   const defaultImage =
@@ -92,7 +69,6 @@ export const changeUserPassword = async (event) => {
   const userInputPassword = document.getElementById('userPasswordInput');
   const user = authService.currentUser;
   const newPassword = userInputPassword.value;
-
   await updatePassword(user, newPassword)
     .then(() => {
       alert('비밀번호 변경 완료!');
@@ -130,7 +106,6 @@ export const getUserReviewList = async () => {
   userReviewList.innerHTML = '';
   for (let i = 0; i < cmtObjList.length; i++) {
     const reviewId = cmtObjList[i].id;
-
     let userReviewsCmtList = [];
     const q = query(collection(dbService, 'comments'), where('reviewId', '==', reviewId));
     const querySnapshot = await getDocs(q);
@@ -141,12 +116,9 @@ export const getUserReviewList = async () => {
       };
       userReviewsCmtList.push(commentObj);
     });
-
     const temp_html = `
         <div class="boardReviewersImg">
-          <img class="reviewPostingImg" src="${
-            cmtObjList[i].profileImg ?? '/assets/blank-profile-picture.png'
-          }" alt="" />
+          <img class="reviewPostingImg" src="${cmtObjList[i].profileImg ?? '/assets/blank-profile-picture.png'}" alt="" />
         </div>
         <div class="boardReviewersRow boardProfileImageAndNickName">
           <img
