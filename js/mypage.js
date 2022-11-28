@@ -2,7 +2,14 @@ import { dbService, authService, storageService } from './firebase.js';
 import { ref, uploadString, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
 import { updateProfile, updatePassword } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
-import { collection, addDoc, doc, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import {
+  collection,
+  addDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 
 export const changeProfiles = async (event) => {
   event.preventDefault();
@@ -118,7 +125,7 @@ export const getUserReviewList = async () => {
     });
     const temp_html = `
         <div class="boardReviewersImg">
-          <img class="reviewPostingImg" src="${cmtObjList[i].ReviewImg}" alt="" />
+          <img class="reviewPostingImg" src="${cmtObjList[i].reviewImg}" alt="" />
         </div>
         <div class="boardReviewersRow boardProfileImageAndNickName">
           <img
