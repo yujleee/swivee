@@ -143,8 +143,11 @@ h4 {
 }
 
 #mypostList {
-  font-size: 1.2rem;
-  margin-top: 20px;
+  font-size: 1.3rem;
+  margin-top: 60px;
+  margin-bottom: 80px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 20px;
 }
 
 .boardReviews {

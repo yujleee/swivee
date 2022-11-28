@@ -225,7 +225,7 @@ export const getReviewList = async (shoeName) => {
            <div class="boardReviewersRow boardProfileImageAndNickName">
              <img
                class="boardReviewersProfile"
-               src="${cmtObj.profileImg}"
+               src="${cmtObj.profileImg ?? '/assets/blank-profile-picture.png'}"
                alt=""
              />
              <div class="boardReviewersNickname">${cmtObj.nickname}</div>

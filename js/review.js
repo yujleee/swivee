@@ -275,19 +275,15 @@ export const reviseReview = async (event) => {
 };
 
 export const updateReviews = async (event) => {
-  // event.preventDefault();
   const parentNode = event.target.parentNode;
   console.log(parentNode);
   const commentText = parentNode.children[0];
-  console.log(commentText); //수정연습중 input확인
-  // commentText.classList.remove('noDisplay');
+  console.log(commentText);
   const commentInputP = commentText.value;
-  console.log(commentInputP);
-  // commentInputP.classList.remove('d-flex');
-  // commentInputP.classList.add('noDisplay');
-  // const id = event.target.parentNode.id;
 
-  //######## 수정 부분 #############
+
+
+
   const creatorId = localStorage.getItem("id");
   const commentRef = doc(dbService, "reviews", creatorId);
   const savebtn = document.querySelector(".saveReviseComment");
@@ -295,11 +291,10 @@ export const updateReviews = async (event) => {
 
   try {
     await updateDoc(commentRef, { text: commentInputP });
-    // getReviseComment(commentInputP);
     const changeComment = document.querySelector("#reviseComment");
     changeComment.value = commentInputP;
     const changeDiv = document.querySelector(".reviewBody");
-    $("changeDiv").empty();
+    changeDiv.innerHTML = '';
     const p = `<p class="reviewComment">${commentInputP}`;
     changeDiv.innerHTML = p;
   } catch (error) {
