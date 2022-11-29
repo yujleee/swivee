@@ -1,7 +1,7 @@
 import { handleLocation, goToLogin, goToJoin, goToBoard, goToReview, goToMypage } from './router.js';
 import { handleAuth, socialLogin, logout } from './pages/auth.js';
 import { authService } from './firebase.js';
-import { imgFileUpload, saveReview, receiveDataFromMain, shoesBrandLike, checkReviewBtn } from './board.js';
+import { imgFileUpload, saveReview, receiveDataFromMain, shoesBrandLike, checkReviewBtn } from './pages/board.js';
 import {
   toggleMoreBrand,
   changeShoesList,
@@ -17,7 +17,7 @@ import {
   onDeleteImg,
   changeUserPassword,
   getUserReviewList,
-} from './mypage.js';
+} from './pages/mypage.js';
 import {
   saveComment,
   updateComment,
@@ -27,7 +27,7 @@ import {
   receiveDataFromBoard,
   reviseReview,
   updateReviews,
-} from './review.js';
+} from './pages/review.js';
 
 const activeMenu = document.querySelector('.active');
 window.addEventListener('hashchange', handleLocation);

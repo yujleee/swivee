@@ -1,4 +1,4 @@
-import { dbService, authService, storageService } from './firebase.js';
+import { dbService, authService, storageService } from '../firebase.js';
 import {
   doc,
   addDoc,
@@ -12,7 +12,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
 import { ref, uploadString, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
-import { searchOnYoutube } from './utill.js';
+import { searchOnYoutube } from '../utill.js';
 
 export const receiveDataFromMain = async (event, shoesName) => {
   const currentTarget = !event ? shoesName : event.target.parentNode.children[0].alt;

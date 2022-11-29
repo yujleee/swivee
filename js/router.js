@@ -1,7 +1,7 @@
 import { authService } from './firebase.js';
 import { renderBrandList, changeShoesList, getRealtimeReviews, renderTopbrands } from './pages/home.js';
-import { getUserReviewList } from './mypage.js';
-import { getReviewList, receiveDataFromMain } from './board.js';
+import { getUserReviewList } from './pages/mypage.js';
+import { getReviewList, receiveDataFromMain } from './pages/board.js';
 
 const routes = {
   '/': '/pages/main.html',
