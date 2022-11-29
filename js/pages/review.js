@@ -245,23 +245,18 @@ export const reviseReview = async (event) => {
   const udBtns = document.querySelectorAll('.editButtons');
   udBtns.forEach((udBtn) => udBtn.classList.add('noDisplay'));
   const reviewBody = event.target; //수정 아이콘
-  console.log(reviewBody);
   const commentText = document.querySelector('#reviseComment');
   //commentText : board에서 들고 온 textarea
-  console.log(commentText);
   const userOriginText = document.querySelector('.reviewComment');
   const reviseBtn = document.querySelector('.saveReviseComment'); //수정완료버튼
   commentText.classList.remove('noDisplay');
   userOriginText.classList.add('noDisplay');
   reviseBtn.classList.remove('noDisplay');
-  console.log(userOriginText);
 };
 
 export const updateReviews = async (event) => {
   const parentNode = event.target.parentNode;
-  console.log(parentNode);
   const commentText = parentNode.children[0];
-  console.log(commentText);
   const commentInputP = commentText.value;
 
   const creatorId = localStorage.getItem('id');
