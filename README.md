@@ -1,10 +1,11 @@
 # 👟 **SWIVEE**
 
-![swivee_main](https://user-images.githubusercontent.com/82587107/204229458-fd68928e-b064-4f31-a1e2-a23e4d939382.gif)
+![swivee-mockup](https://user-images.githubusercontent.com/82587107/207751153-d6e53b27-0853-4bac-8082-9c4f54f22c3e.jpg)
+
+- 프로젝트 기간 : 2022.11.18 ~ 2022.11.28
+- 파이어베이스 무료 요금제를 쓰고 있어 읽기 할당량 하루 초과시 제대로 접속이 되지 않을 수 있습니다. (오후 5시 리셋됩니다.)
 
 🔗 [배포링크](http://swivee.shop/)
-
-- 파이어베이스 무료 요금제를 쓰고 있어 읽기 할당량 하루 초과시 제대로 접속이 되지 않을 수 있습니다. (할당량이 초과되었을 경우 대략 오후 5시경 리셋됩니다.)
 
 🔗 [시연영상 유튜브](https://www.youtube.com/watch?v=i2lWnXUfahQ)
 
@@ -14,18 +15,18 @@
 
 - **사용자들이 작성한 리뷰**를 통해 **브랜드 별 신발**과 **사용자**간의 **연결고리**가 되어주는 서비스입니다.
 - 신발을 구매할 때 리뷰가 구매 사이트별로 나뉘어져 있어 원하는 정보를 한 번에 얻기 힘들다는 점에서 서비스를 착안했습니다.
-- **SWIVEE** 라는 프로젝트 이름은 **받침**이라는 뜻을 가진 단어 `Swivel`에서 모티브를 얻었습니다.
-- **바닐라 자바스크립트**를 이용해 **SPA**로 구현했으며 메인페이지를 포함 일정부분 반응형으로 구현되어 있습니다.
+- **SWIVEE** 라는 프로젝트 이름은 받침이라는 뜻을 가진 단어 `Swivel`에서 모티브를 얻었습니다.
+- **바닐라 자바스크립트**를 이용해 `SPA`로 구현했으며 메인페이지를 포함 일정부분 반응형으로 구현되어 있습니다.
 
 <br/>
 <br/>
 
-## 팀원 소개
+## 🙌 팀원 소개
 
 | 이름   | 깃허브                                       |
 | ------ | -------------------------------------------- |
+| 이유정 | [@yujleee](https://github.com/yujleee)       |
 | 김태욱 | [@rlaxodnr30](https://github.com/rlaxodnr30) |
-| 이유정(팀장) | [@yujleee](https://github.com/yujleee)       |
 | 정다인 | [@dada992](https://github.com/dada992)       |
 | 조성아 | [@Jocooh](https://github.com/Jocooh)         |
 | 최희라 | [@heerachoi](https://github.com/heerachoi)   |
@@ -108,7 +109,7 @@
 <br/>
 <br/>
 
-## 깃허브 협업 방식
+## 👥 깃허브 협업 방식
 
 Git Flow 방식을 일부 활용했습니다.
 
@@ -119,7 +120,7 @@ Git Flow 방식을 일부 활용했습니다.
 <br/>
 <br/>
 
-## 구현 기능
+## 💡 구현 기능
 
 - login, join
   * 이메일 회원가입, 로그인
@@ -147,7 +148,7 @@ Git Flow 방식을 일부 활용했습니다.
 <br/>
 <br/>
 
-## 트러블 슈팅
+## 🔥 트러블 슈팅
 
 프로젝트 노션의 마지막 항목을 참고해주세요.
 
@@ -156,10 +157,10 @@ Git Flow 방식을 일부 활용했습니다.
 <br/>
 <br/>
 
-## 회고 및 관련 블로그 기록
+## 📝 회고 및 관련 블로그 기록
 
-🎉[프로젝트 S.A](https://i-ten.tistory.com/215)
+🎉 [프로젝트 S.A](https://i-ten.tistory.com/215)
 
-📑[프로젝트 진행 관련 기록](https://i-ten.tistory.com/217)
+📑 [프로젝트 진행 관련 기록](https://i-ten.tistory.com/217)
 
-📓[프로젝트를 마치며, KPT 회고](https://i-ten.tistory.com/229)
+📓 [프로젝트를 마치며, KPT 회고](https://i-ten.tistory.com/229)
