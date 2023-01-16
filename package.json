@@ -1,0 +1,23 @@
+{
+  "name": "swivee",
+  "version": "1.0.0",
+  "description": "![swivee-mockup](https://user-images.githubusercontent.com/82587107/207751153-d6e53b27-0853-4bac-8082-9c4f54f22c3e.jpg)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yujleee/swivee.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yujleee/swivee/issues"
+  },
+  "homepage": "https://github.com/yujleee/swivee#readme",
+  "dependencies": {
+    "typescript": "^4.9.4"
+  }
+}
