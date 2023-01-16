@@ -5,7 +5,7 @@
 - 프로젝트 기간 : 2022.11.18 ~ 2022.11.28
 - 파이어베이스 무료 요금제를 쓰고 있어 읽기 할당량 하루 초과시 제대로 접속이 되지 않을 수 있습니다. (오후 5시 리셋됩니다.)
 
-🔗 [배포링크](http://swivee.shop/)
+🔗 [배포링크](https://swivee-liart.vercel.app/)
 
 🔗 [시연영상 유튜브](https://www.youtube.com/watch?v=i2lWnXUfahQ)
 
@@ -50,7 +50,7 @@
 
 ### Deploy
 
-`AWS S3`
+`Vercel`
 
 <br/>
 <br/>
